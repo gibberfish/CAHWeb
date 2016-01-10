@@ -1,7 +1,18 @@
 
-body {background: #CCFFCC;}
+body {
+	text-align: center;
+	background-image: url("../img/skull-and-bones.jpg");
+}
 
-.miniCard {border-color: #808080 #000000 #000000 #808080;
+.mainContainer {
+	margin: 0 auto;
+	width: 1024px;
+	height: 100%;
+	background: #CCFFCC;
+}
+
+.miniCard {
+	border-color: #808080 #000000 #000000 #808080;
     border-width: 1px;
     border-style: solid;
     border-radius: 7px;
@@ -16,9 +27,10 @@ body {background: #CCFFCC;}
 	font-weight: bold;
 	font-size: 10pt;
 	line-height: 100%;
-    }
+}
 
-.card {border-color: #808080 #000000 #000000 #808080;
+.card {
+	border-color: #808080 #000000 #000000 #808080;
     border-width: 1px;
     border-style: solid;
     border-radius: 7px;
@@ -29,29 +41,38 @@ body {background: #CCFFCC;}
     float: top;
     width: 120px;
     height: 180px;
-    }
+ }
     
-.front {font: 14px "Helvetica" bold;
-   }
+.front {
+	font: 14px "Helvetica" bold;
+}
 
-.back {font-family: "Helvetica";
+.back {
+	font-family: "Helvetica";
 	font-weight: bold;
 	font-size: 20pt;
-	line-height: 90%;}
+	line-height: 90%;
+}
 
-.white {background: white;
+.white {
+	background: white;
 	color: black;
-	}
+}
 
-.black {background: black;
+.black {
+	background: black;
 	color: white;
-	}
+}
 
-.person {content:url("../img/person.png");
+.person {
+	content:url("../img/person.png");
 	width:60px;
-	height:60px;}
+	height:60px;
+}
 
-.personName {font: 20px "Arial Black" bold;}
+.personName {
+	font: 20px "Arial Black" bold;
+}
 
 .circle {
 	width:50px;
