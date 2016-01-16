@@ -9,6 +9,44 @@ body {
 	width: 1024px;
 	height: 100%;
 	background: #CCFFCC;
+	border-width: 1px;
+}
+
+.players {
+	border-style: none;
+	height: 220px;
+	background: cyan;
+	position: relative;
+}
+
+.table {
+	border-style: solid;
+	height: 192px;
+	padding: 10px;
+}
+
+.your-hand {
+	border-style: solid;
+	height: 192px;
+	float: bottom;
+}
+
+.player {
+	border-style: solid;
+	height: 200px;
+	width: 150px;
+	position: relative;
+	background: grey;
+	float: left;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-top: 2px;
+}
+
+.minCard-NEW {
+    zoom: 0.4;
+    -moz-transform: scale(0.4);
+	margin: 10px;
 }
 
 .miniCard {
@@ -22,11 +60,12 @@ body {
     float: left;
     float: top;
     width: 60px;
-    height: 89px;
+    height: 80px;
     font-family: "Helvetica";
 	font-weight: bold;
 	font-size: 10pt;
 	line-height: 100%;
+	text-align: left;
 }
 
 .card {
@@ -40,9 +79,21 @@ body {
     float: left;
     float: top;
     width: 120px;
-    height: 180px;
+    height: 160px;
  }
-    
+
+.in-background{
+    zoom: 0.6;
+    -moz-transform: scale(0.6);
+	margin: 8px;
+}
+
+.played-card{
+    zoom: 0.9;
+    -moz-transform: scale(0.9);
+	margin: 6px;
+}
+ 
 .front {
 	font: 14px "Helvetica" bold;
 }
@@ -52,6 +103,7 @@ body {
 	font-weight: bold;
 	font-size: 20pt;
 	line-height: 90%;
+	text-align: left;
 }
 
 .white {
