@@ -1,13 +1,14 @@
 <html>
 	<head>
 		<title>Cards Against Humanity</title>
-		<link rel="stylesheet" type="text/css" href="css/cah.css">
+		<link rel="stylesheet" type="text/css" href="css/cah.css"/>
 	</head>
 	<body>
 		<div class="mainContainer">
 			<div class="players">
 				<div class="game-control">
 					<div>ROUND 1</div>
+					<a class="btn" href="">Click me</a>
 				</div>
 				<div class="active player">
 					<div class="personName">Anne</div>
@@ -59,18 +60,29 @@
 				Your hand...
 			</div>
 			<div class="your-hand">
-				<div class="card white front in-background">Sharing a public restroom with a weeping angel.</div>
-				<div class="card white front in-background">Sharing a public restroom with a weeping angel.</div>
-				<div class="card white front in-background">Sharing a public restroom with a weeping angel.</div>
-				<div class="card white front in-background">Sharing a public restroom with a weeping angel.</div>
-				<div class="card white front">Sharing a public restroom with a weeping angel.</div>
-				<div class="card white front in-background">Sharing a public restroom with a weeping angel.</div>
-				<div class="card white front in-background">Sharing a public restroom with a weeping angel.</div>
-				<div class="card white front in-background">Sharing a public restroom with a weeping angel.</div>
-				<div class="card white front in-background">Sharing a public restroom with a weeping angel.</div>
-				<div class="card white front in-background">Sharing a public restroom with a weeping angel.</div>
+				<div class="my card white front in-background">Sharing a public restroom with a weeping angel.</div>
+				<div class="my card white front in-background">Sharing a public restroom with a weeping angel.</div>
+				<div class="my card white front in-background">Sharing a public restroom with a weeping angel.</div>
+				<div class="my card white front in-background">Sharing a public restroom with a weeping angel.</div>
+				<div class="my card white front in-background">Sharing a public restroom with a weeping angel.</div>
+				<div class="my card white front in-background">Sharing a public restroom with a weeping angel.</div>
+				<div class="my card white front in-background">Sharing a public restroom with a weeping angel.</div>
+				<div class="my card white front in-background">Sharing a public restroom with a weeping angel.</div>
+				<div class="my card white front in-background">Sharing a public restroom with a weeping angel.</div>
+				<div class="my card white front in-background">Sharing a public restroom with a weeping angel.</div>
 			</div>
-				
+			<div id="popup" class="simplemodal-data" style="display: block;">
+				Here is a popup that we want to display.
+			</div>
+
+			<!-- preload the images -->
+			<div style='display:none'>
+				<img src='img/x.png' alt='' />
+			</div>
 		</div>
+
+		<script src="js\jquery-2.2.0.min.js"></script>
+		<script src="js\jquery.simplemodal.js"></script>
+		<script src="js\cah.js"></script>
 	</body>
 </html>
