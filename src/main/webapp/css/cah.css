@@ -1,46 +1,79 @@
 
 body {
 	text-align: center;
-	background-image: url("../img/skull-and-bones.jpg");
+/*	background-image: url("../img/skull-and-bones.jpg");   */
+	background: #FFFFCC;
+	margin: none;
 }
 
 .mainContainer {
 	margin: 0 auto;
 	width: 1024px;
 	height: 100%;
-	background: #CCFFCC;
-	border-width: 1px;
+	background: #FFFFCC;
+	border-width: 0px;
 }
 
 .players {
 	border-style: none;
 	height: 220px;
-	background: cyan;
-	position: relative;
 }
 
 .table {
-	border-style: solid;
+	border-style: none;
 	height: 192px;
-	padding: 10px;
+	padding: 5px;
+	position: relative;
 }
 
 .your-hand {
-	border-style: solid;
+	border-style: none;
 	height: 192px;
-	float: bottom;
+	vertical-align: bottom;
+	position: relative;
+	bottom: 0px;
+}
+
+.game-control {
+border-style: solid;
+	border-width: 2px;
+	height: 200px;
+	width: 156px;
+	position: relative;
+	background: grey;
+	float: left;
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-top: 0px;
+	border-radius: 6px;
 }
 
 .player {
 	border-style: solid;
+	border-width: 2px;
 	height: 200px;
-	width: 150px;
+	width: 133px;
 	position: relative;
 	background: grey;
 	float: left;
-	margin-left: 5px;
-	margin-right: 5px;
-	margin-top: 2px;
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-top: 0px;
+	border-radius: 6px;
+}
+
+.active {
+	background: #CCFF99;
+}
+
+.inactive {
+	background: #FFFFCC;
+	border-color: #FFFF66;
+	border-style: dotted;
+}
+
+.reader {
+	background: #FF9966;
 }
 
 .minCard-NEW {
@@ -59,13 +92,25 @@ body {
     margin: 2px;
     float: left;
     float: top;
-    width: 60px;
-    height: 80px;
+    width: 54px;
+    height: 70px;
     font-family: "Helvetica";
 	font-weight: bold;
-	font-size: 10pt;
+	font-size: 9pt;
 	line-height: 100%;
 	text-align: left;
+	position: relative;
+}
+
+.won-cards {
+	text-align: center;
+	width: 100%;
+	vertical-align: text-bottom;
+	position: absolute;
+    bottom: 10px;
+	font-size:18px;
+	color: red;
+    left: 0;
 }
 
 .card {
@@ -116,14 +161,15 @@ body {
 	color: white;
 }
 
-.person {
+.person-img {
 	content:url("../img/person.png");
-	width:60px;
 	height:60px;
+	display: block;
+	text-align:center;
 }
 
 .personName {
-	font: 20px "Arial Black" bold;
+	font: 18px "Arial Black" bold;
 }
 
 .circle {
