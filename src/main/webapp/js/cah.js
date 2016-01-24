@@ -4,6 +4,8 @@ $(function() {
 	$(".my").mouseleave(mouseLeavesCardInMyHand);
 	
 	$(".btn").click(popupModal);
+	
+	openSocket();
 });
 
 function mouseOverCardInMyHand () {
@@ -71,6 +73,15 @@ function openSocket(){
     webSocket.onclose = function(event){
         writeResponse("Connection closed");
     };
+}
+
+function login () {
+    var name = document.getElementById("name").value;
+    var message = {};
+    message.command = 'login';
+    message.value = name;
+    var messageString = JSON.stringify(message);
+    webSocket.send(messageString);
 }
 
 /**
