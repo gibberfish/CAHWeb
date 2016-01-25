@@ -11,6 +11,10 @@ public class PlayerSessionManager {
 	// A map containing all of the sessions, keyed by player name
 	private static final Map<String, Session> sessions = Collections.synchronizedMap(new HashMap<String, Session> ());
 	
+	public PlayerSessionManager () {
+		System.out.println ("PlayerSessionManager created");
+	}
+	
 	public Collection<Session> getSessions () {
 		Collection<Session> values = sessions.values();
 		values.remove(null);
