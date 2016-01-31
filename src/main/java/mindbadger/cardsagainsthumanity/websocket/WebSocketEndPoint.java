@@ -2,25 +2,61 @@ package mindbadger.cardsagainsthumanity.websocket;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
-import javax.websocket.*;
-import javax.websocket.server.*;
+import javax.annotation.Resource;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/game")
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.socket.server.standard.SpringConfigurator;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@ServerEndpoint(value="/game", configurator = SpringConfigurator.class)
 public class WebSocketEndPoint {
 
+	final static Logger logger = Logger.getLogger(WebSocketEndPoint.class);
+
+	@Autowired
+//	@Resource(name="playerSessionManager")
+	private PlayerSessionManager playerSessionManager;
+	
+	private String name;
+	
 	// A set containing all of the sessions
-	private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
+	//private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<Session>());
 	
 	@OnMessage
     public void onMessage(String message, Session session) {
-		System.out.println("Message from " + session.getId() + ": " + message);
+		logger.info("Message from " + session.getId() + ": " + message);
+
+		ObjectMapper mapper = new ObjectMapper();
 		
-		for(Session s : sessions){
+		try {
+			CommandMessage messageObject = mapper.readValue(message, CommandMessage.class);
+
+			logger.info("Message command: " + messageObject.getCommand());
+			logger.info("Message value: " + messageObject.getValue());			
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(Session s : playerSessionManager.getSessions()){
 	        try {
 	            s.getBasicRemote().sendText(session.getId() + " says: " + message);
 	        } catch (IOException ex) {
@@ -31,10 +67,10 @@ public class WebSocketEndPoint {
 	
 	@OnOpen
 	public void onOpen (Session session) {
-		System.out.println(session.getId() + " has opened a connection");
+		logger.info(session.getId() + " has opened a connection");
 		
-		sessions.add(session);
-		System.out.println("We now have " + sessions.size() + " sessions. " + this);
+		//sessions.add(session);
+		//logger.info("We now have " + sessions.size() + " sessions. " + this);
 		
         try {
             session.getBasicRemote().sendText("Connection Established");
@@ -45,10 +81,10 @@ public class WebSocketEndPoint {
 
 	@OnClose
 	public void onClose (Session session) {
-		sessions.remove(session);
+		//sessions.remove(session);
 		
-		System.out.println("Session " +session.getId()+" has ended");
-		System.out.println("We now have " + sessions.size() + " sessions. " + this);
+		logger.info("Session " +session.getId()+" has ended");
+		//logger.info("We now have " + sessions.size() + " sessions. " + this);
 	}
 
 }

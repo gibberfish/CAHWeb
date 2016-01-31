@@ -88,3 +88,12 @@ function closeSocket(){
 function writeResponse(text){
     messages.innerHTML += "<br/>" + text;
 }
+
+function login () {
+    var name = document.getElementById("name").value;
+    var message = {};
+    message.command = 'login';
+    message.value = name;
+    var messageString = JSON.stringify(message);
+    webSocket.send(messageString);
+}
