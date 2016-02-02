@@ -1,3 +1,4 @@
-C:\m\git\CAHWeb\src\main\java\mindbadger\cardsagainsthumanity\websocket\WebSocketEndPoint.java
+C:\m\git\CAHWeb\src\main\java\mindbadger\cardsagainsthumanity\websocket\GameWebsocketEndpoint.java
+C:\m\git\CAHWeb\src\main\java\mindbadger\cardsagainsthumanity\websocket\HandshakeInterceptor.java
 C:\m\git\CAHWeb\src\main\java\mindbadger\cardsagainsthumanity\websocket\CommandMessage.java
 C:\m\git\CAHWeb\src\main\java\mindbadger\cardsagainsthumanity\websocket\PlayerSessionManager.java
