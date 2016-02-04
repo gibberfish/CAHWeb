@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>Cards Against Humanity</title>
+		<link rel="stylesheet" type="text/css" href="css/cah.css"/>
+	</head>
+	<body>
+		<div>
+            Message: <input type="text" id="messageinput"/><br>
+            Name: <input type="text" id="name"/>
+        </div>
+        <div>
+            <button type="button" onclick="openSocket();" >Open</button>
+            <button type="button" onclick="send();" >Send</button>
+            <button type="button" onclick="closeSocket();" >Close</button>
+            <button type="button" onclick="login();" >Login</button>
+        </div>
+        <!-- Server responses get written here -->
+        <div id="messages"></div>
+
+		<script src="js\jquery-2.2.0.min.js"></script>
+		<script src="js\jquery.simplemodal.js"></script>
+		<script src="js\cah.js"></script>
+	</body>
+</html>
