@@ -23,7 +23,7 @@ function popupModal () {
     }, 5000);
 
 	return false;
-}
+};
 
 function slowOpenDialog (dialog) {
 	dialog.overlay.fadeIn('slow', function () {
@@ -31,69 +31,43 @@ function slowOpenDialog (dialog) {
 				dialog.data.fadeIn('slow');
 			});
 		});		
+};
+
+
+
+
+
+
+
+
+
+function connectWebsocket () {
+       var socket = new SockJS('/hello');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/topic/greetings', function(greeting){
+                    showGreeting(JSON.parse(greeting.body).content);
+                });
+            });
 }
 
+function disconnectWebsocket () {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            console.log("Disconnected");
+        }
+        
+function showGreeting(message) {
+            var response = document.getElementById('messages');
+            var p = document.createElement('p');
+            p.style.wordWrap = 'break-word';
+            p.appendChild(document.createTextNode(message));
+            response.appendChild(p);
+        }
 
-
-
-
-
-var webSocket;
-var messages = document.getElementById("messages");
-
-
-function openSocket(){
-    // Ensures only one connection is open at a time
-    if(webSocket !== undefined && webSocket.readyState !== WebSocket.CLOSED){
-       writeResponse("WebSocket is already opened.");
-        return;
-    }
-    // Create a new instance of the websocket
-    webSocket = new WebSocket("ws://localhost:1970/cahweb/game");
-     
-    /**
-     * Binds functions to the listeners for the websocket.
-     */
-    webSocket.onopen = function(event){
-        // For reasons I can't determine, onopen gets called twice
-        // and the first time event.data is undefined.
-        // Leave a comment if you know the answer.
-        if(event.data === undefined)
-            return;
-
-        writeResponse(event.data);
-    };
-
-    webSocket.onmessage = function(event){
-        writeResponse(event.data);
-    };
-
-    webSocket.onclose = function(event){
-        writeResponse("Connection closed");
-    };
-}
-
-/**
- * Sends the value of the text input to the server
- */
-function send(){
-    var text = document.getElementById("messageinput").value;
-    webSocket.send(text);
-}
-
-function closeSocket(){
-    webSocket.close();
-}
-
-function writeResponse(text){
-    messages.innerHTML += "<br/>" + text;
-}
-
-function login () {
-    var name = document.getElementById("name").value;
-    var message = {};
-    message.command = 'login';
-    message.value = name;
-    var messageString = JSON.stringify(message);
-    webSocket.send(messageString);
-}
+function requestGreeting() {
+	var myName = $("#name").val();
+            stompClient.send("/app/hello", {}, JSON.stringify({ 'name': myName }));
+        }

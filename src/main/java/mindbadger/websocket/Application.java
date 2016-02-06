@@ -1,4 +1,4 @@
-package hello;
+package mindbadger.websocket;
 
 import java.util.Arrays;
 
