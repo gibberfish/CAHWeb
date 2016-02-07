@@ -11,7 +11,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @EnableWebSocketMessageBroker
 public class StompWebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 	final static Logger logger = Logger.getLogger(StompWebSocketConfig.class);
-	
+	    
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
 		config.enableSimpleBroker("/gamestate");

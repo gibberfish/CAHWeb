@@ -42,35 +42,30 @@ function slowOpenDialog (dialog) {
 
 
 function connectWebsocket () {
-       var socket = new SockJS('/gameserver');
-            stompClient = Stomp.over(socket);
-            stompClient.connect({}, function(frame) {
-                console.log('Connected: ' + frame);
-                stompClient.subscribe('/gamestate/gameStateUpdates', function(gameStateActionResponse){
-                	var gameStateActionResponseObject = JSON.parse(gameStateActionResponse.body);
-                    showGameStateChange(gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value);
-                });
-            });
+	var name = $("#name").val();
+    var socket = new SockJS('/gameserver');
+    
+    stompClient = Stomp.over(socket);
+    stompClient.connect({"name" : name}, function(frame) {
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/gamestate/gameStateUpdates', function(gameStateActionResponse){
+            var gameStateActionResponseObject = JSON.parse(gameStateActionResponse.body);
+            showGameStateChange(gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value);
+        });
+    });
 }
 
 function disconnectWebsocket () {
-            if (stompClient != null) {
-                stompClient.disconnect();
-            }
-            console.log("Disconnected");
-        }
+    if (stompClient != null) {
+        stompClient.disconnect();
+    }
+    console.log("Disconnected");
+}
         
 function showGameStateChange(player, command, value) {
 	var result = "I have received a message from " + player + ". Command = " + command + ", value = " + value;
-
 	$("#messages").append ("<p>"+result+"</p>");
-
-//    var response = document.getElementById('messages');
-//            var p = document.createElement('p');
-//            p.style.wordWrap = 'break-word';
-//            p.appendChild(document.createTextNode(message));
-//            response.appendChild(p);
-        }
+}
 
 function sendCommandToGame() {
     var command = $("#command").val();
