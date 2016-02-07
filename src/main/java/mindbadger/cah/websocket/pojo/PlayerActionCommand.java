@@ -1,4 +1,4 @@
-package mindbadger.cah.websocket;
+package mindbadger.cah.websocket.pojo;
 
 public class PlayerActionCommand {
 
