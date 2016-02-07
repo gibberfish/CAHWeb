@@ -14,15 +14,34 @@ public class Players {
 	private Map<String, String> sessions = new HashMap<String,String> ();
 	
 	public void addPlayer (String name, String session) {
+		
+		int playersBefore = players.size();
+		int sessionsBefore = sessions.size();
+		
+		String oldSession = players.get(name);
+		if (oldSession != null && !oldSession.equals(session)) {
+			logger.info("...registering a player under a new session - removing the old one first");
+			sessions.remove(oldSession);
+		}
+		
 		players.put(name, session);
 		sessions.put(session, name);
+		
 		logger.info("Registered new player " + name + " with session " + session);
+		logger.info("...[players, was="+playersBefore+",now="+players.size()+"]");
+		logger.info("...[sessions, was="+sessionsBefore+",now="+sessions.size()+"]");
 	}
 	
 	public void removePlayerWithSession (String session) {
+		int playersBefore = players.size();
+		int sessionsBefore = sessions.size();
+
 		players.remove(sessions.get(session));
 		sessions.remove(session);
+		
 		logger.info("Removed session " + session);
+		logger.info("...[players, was="+playersBefore+",now="+players.size()+"]");
+		logger.info("...[sessions, was="+sessionsBefore+",now="+sessions.size()+"]");
 	}
 	
 	public String getSessionForPlayer (String name) {

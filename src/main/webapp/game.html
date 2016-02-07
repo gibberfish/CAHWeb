@@ -10,9 +10,9 @@
             Value: <input type="text" id="value"/>
         </div>
         <div>
-            <button type="button" onclick="connectWebsocket();" >Connect</button>
-            <button type="button" onclick="sendCommandToGame();" >Send Command to Game</button>
-            <button type="button" onclick="disconnectWebsocket();" >Disconnect</button>
+            <button id="connectButton" type="button" onclick="connectWebsocket();" >Connect</button>
+            <button id="commandButton" disabled="true" type="button" onclick="sendCommandToGame();" >Send Command to Game</button>
+            <button id="disconnectButton" disabled="true" type="button" onclick="disconnectWebsocket();" >Disconnect</button>
         </div>
 
         <!-- Server responses get written here -->

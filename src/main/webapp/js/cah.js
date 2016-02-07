@@ -53,12 +53,18 @@ function connectWebsocket () {
             showGameStateChange(gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value);
         });
     });
+    $("#connectButton").attr("disabled", true);
+    $("#disconnectButton").removeAttr("disabled");
+    $("#commandButton").removeAttr("disabled");
 }
 
 function disconnectWebsocket () {
     if (stompClient != null) {
         stompClient.disconnect();
     }
+    $("#connectButton").removeAttr("disabled");
+    $("#disconnectButton").attr("disabled", true);
+    $("#commandButton").attr("disabled", true);
     console.log("Disconnected");
 }
         
