@@ -42,12 +42,13 @@ function slowOpenDialog (dialog) {
 
 
 function connectWebsocket () {
-       var socket = new SockJS('/hello');
+       var socket = new SockJS('/gameserver');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function(frame) {
                 console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/greetings', function(greeting){
-                    showGreeting(JSON.parse(greeting.body).content);
+                stompClient.subscribe('/gamestate/gameStateUpdates', function(gameStateActionResponse){
+                	var gameStateActionResponseObject = JSON.parse(gameStateActionResponse.body);
+                    showGameStateChange(gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value);
                 });
             });
 }
@@ -59,15 +60,20 @@ function disconnectWebsocket () {
             console.log("Disconnected");
         }
         
-function showGreeting(message) {
-            var response = document.getElementById('messages');
-            var p = document.createElement('p');
-            p.style.wordWrap = 'break-word';
-            p.appendChild(document.createTextNode(message));
-            response.appendChild(p);
+function showGameStateChange(player, command, value) {
+	var result = "I have received a message from " + player + ". Command = " + command + ", value = " + value;
+
+	$("#messages").append ("<p>"+result+"</p>");
+
+//    var response = document.getElementById('messages');
+//            var p = document.createElement('p');
+//            p.style.wordWrap = 'break-word';
+//            p.appendChild(document.createTextNode(message));
+//            response.appendChild(p);
         }
 
-function requestGreeting() {
-	var myName = $("#name").val();
-            stompClient.send("/app/hello", {}, JSON.stringify({ 'name': myName }));
-        }
+function sendCommandToGame() {
+    var command = $("#command").val();
+    var value = $("#value").val();
+    stompClient.send("/cah/gameserver", {}, JSON.stringify({ 'command': command, 'value': value }));
+}

@@ -1,4 +1,4 @@
-package mindbadger.websocket;
+package mindbadger.cah.spring.config;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Configuration;
@@ -14,13 +14,13 @@ public class StompWebSocketConfig extends AbstractWebSocketMessageBrokerConfigur
 	
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/topic");
-		config.setApplicationDestinationPrefixes("/app");
+		config.enableSimpleBroker("/gamestate");
+		config.setApplicationDestinationPrefixes("/cah");
 	}
 	
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/hello").withSockJS();
+		registry.addEndpoint("/gameserver").withSockJS();
 	}
 
 }

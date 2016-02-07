@@ -5,13 +5,13 @@
 	</head>
 	<body>
 		<div>
-            Message: <input type="text" id="messageinput"/><br>
-            Name: <input type="text" id="name"/>
+            Command: <input type="text" id="command"/><br>
+            Value: <input type="text" id="value"/>
         </div>
         <div>
-            <button type="button" onclick="connectWebsocket();" >Connect2</button>
-            <button type="button" onclick="requestGreeting();" >Ask for Greeting</button>
-            <button type="button" onclick="disconnectWebsocket();" >Disconnect2</button>
+            <button type="button" onclick="connectWebsocket();" >Connect</button>
+            <button type="button" onclick="sendCommandToGame();" >Send Command to Game</button>
+            <button type="button" onclick="disconnectWebsocket();" >Disconnect</button>
         </div>
 
         <!-- Server responses get written here -->
