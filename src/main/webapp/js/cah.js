@@ -49,7 +49,7 @@ function connectWebsocket () {
     stompClient.connect({"name" : name}, function(frame) {
         console.log('Connected: ' + frame);
         
-        sendCommandToGame("joined", name);
+        sendCommandToGame("login", name);
         
         stompClient.subscribe('/gamestate/gameStateUpdates', function(gameStateActionResponse){
             var gameStateActionResponseObject = JSON.parse(gameStateActionResponse.body);
