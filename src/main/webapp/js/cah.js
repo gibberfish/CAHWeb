@@ -48,6 +48,9 @@ function connectWebsocket () {
     stompClient = Stomp.over(socket);
     stompClient.connect({"name" : name}, function(frame) {
         console.log('Connected: ' + frame);
+        
+        sendCommandToGame("joined", name);
+        
         stompClient.subscribe('/gamestate/gameStateUpdates', function(gameStateActionResponse){
             var gameStateActionResponseObject = JSON.parse(gameStateActionResponse.body);
             showGameStateChange(gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value);
@@ -73,8 +76,12 @@ function showGameStateChange(player, command, value) {
 	$("#messages").append ("<p>"+result+"</p>");
 }
 
-function sendCommandToGame() {
+function sendCommandToGameFromScreen() {
     var command = $("#command").val();
     var value = $("#value").val();
+    sendCommandToGame(command, value);
+}
+
+function sendCommandToGame(command, value) {
     stompClient.send("/cah/gameserver", {}, JSON.stringify({ 'command': command, 'value': value }));
 }
