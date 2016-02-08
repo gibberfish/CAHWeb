@@ -22,9 +22,17 @@ public class GameMessageController {
     @MessageMapping("/gameserver")
     @SendTo("/gamestate/gameStateUpdates")
     public GameStateChange handlePlayerActionMessage(SimpMessageHeaderAccessor headerAccessor, @Payload PlayerActionCommand command) throws Exception {
+    	String playerNameForSession = players.getPlayerNameForSession(headerAccessor.getSessionId());
+    	
+    	/*
+    	 *  We need to put something in here that takes the incoming payload supplied by the front-end
+    	 *  and then map this into a class that will execute the requested command
+    	 *  e.g. join, leave, drawCard, playCard, selectCard
+    	 */
+    	
     	
     	GameStateChange gar = new GameStateChange();
-    	gar.setPlayer(players.getPlayerNameForSession(headerAccessor.getSessionId()));
+		gar.setPlayer(playerNameForSession);
     	gar.setCommand(command.getCommand());
     	gar.setValue(command.getValue());
     	
