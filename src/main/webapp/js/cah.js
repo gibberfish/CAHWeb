@@ -62,7 +62,9 @@ function connectWebsocket () {
 }
 
 function disconnectWebsocket () {
+	var name = $("#name").val();
     if (stompClient != null) {
+    	sendCommandToGame("logout", name);
         stompClient.disconnect();
     }
     $("#connectButton").removeAttr("disabled");

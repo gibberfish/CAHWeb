@@ -11,7 +11,6 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 import mindbadger.cah.command.Command;
-import mindbadger.cah.command.Commands;
 import mindbadger.cah.player.Players;
 import mindbadger.cah.websocket.pojo.GameStateChange;
 import mindbadger.cah.websocket.pojo.PlayerActionCommand;
@@ -26,16 +25,9 @@ public class GameMessageController {
 	@Autowired
 	private Map<String, Command> commandList;
 	
-	@Autowired
-	private Commands commands;
-
     @MessageMapping("/gameserver")
     @SendTo("/gamestate/gameStateUpdates")
     public GameStateChange handlePlayerActionMessage(SimpMessageHeaderAccessor headerAccessor, @Payload PlayerActionCommand command) throws Exception {
-    	
-    	
-    	
-    	
     	
     	for (String s : commandList.keySet()) {
     		logger.info("Autowired key : " + s);
@@ -44,12 +36,6 @@ public class GameMessageController {
     	for (Command c : commandList.values()) {
     		logger.info("Autowired value : " + c);
     	}
-    	
-    	
-    	
-    	
-    	
-    	
     	
     	String playerNameForSession = players.getPlayerNameForSession(headerAccessor.getSessionId());
     	//String playerNameForSession = headerAccessor.getNativeHeader("name").get(0);

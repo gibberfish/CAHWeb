@@ -21,11 +21,11 @@ public class StompConnectEvent implements ApplicationListener<SessionConnectEven
     public void onApplicationEvent(SessionConnectEvent event) {
         StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
  
-//        String  name = sha.getNativeHeader("name").get(0);
-//        logger.info("Connect event [sessionId: " + sha.getSessionId() +"; name: "+ name + " ]");
-//        logger.info(event);
-//        
-//        players.addPlayer(name, sha.getSessionId());
+        String  name = sha.getNativeHeader("name").get(0);
+        logger.info("Connect event [sessionId: " + sha.getSessionId() +"; name: "+ name + " ]");
+        logger.info(event);
+        
+        players.addPlayer(name, sha.getSessionId());
     }
 }
 
