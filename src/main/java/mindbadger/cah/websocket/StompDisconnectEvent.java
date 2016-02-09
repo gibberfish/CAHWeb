@@ -8,20 +8,23 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import mindbadger.cah.player.Players;
+import mindbadger.cah.player.Sessions;
 
 @Component
 public class StompDisconnectEvent implements ApplicationListener<SessionDisconnectEvent> {
 	final static Logger logger = Logger.getLogger(StompDisconnectEvent.class);
 
 	@Autowired
-	private Players players;
+	private Sessions players;
 
 	@EventListener
     public void onApplicationEvent(SessionDisconnectEvent event) {
         StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
-        logger.info("Disconnect event [sessionId: " + sha.getSessionId() + " ]");
-        players.removePlayerWithSession(sha.getSessionId());
+        
+        String sessionId = sha.getSessionId();
+		players.removePlayerWithSession(sessionId);
+
+        logger.info("Disconnect event [sessionId: " + sessionId + "]");
     }
 }
 

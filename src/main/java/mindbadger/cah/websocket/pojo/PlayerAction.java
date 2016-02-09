@@ -1,14 +1,14 @@
 package mindbadger.cah.websocket.pojo;
 
-public class PlayerActionCommand {
+public class PlayerAction {
 
-    private String command;
+    private String action;
     private String value;
-	public String getCommand() {
-		return command;
+	public String getAction() {
+		return action;
 	}
-	public void setCommand(String command) {
-		this.command = command;
+	public void setAction(String action) {
+		this.action = action;
 	}
 	public String getValue() {
 		return value;

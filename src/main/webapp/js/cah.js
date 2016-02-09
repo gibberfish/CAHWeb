@@ -85,5 +85,5 @@ function sendCommandToGameFromScreen() {
 }
 
 function sendCommandToGame(command, value) {
-    stompClient.send("/cah/gameserver", {}, JSON.stringify({ 'command': command, 'value': value }));
+    stompClient.send("/cah/gameserver", {}, JSON.stringify({ 'action': command, 'value': value }));
 }

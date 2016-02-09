@@ -7,13 +7,13 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Players {
-	final static Logger logger = Logger.getLogger(Players.class);
+public class Sessions {
+	final static Logger logger = Logger.getLogger(Sessions.class);
 	
 	private Map<String, String> players = new HashMap<String,String> ();
 	private Map<String, String> sessions = new HashMap<String,String> ();
 	
-	public void addPlayer (String name, String session) {
+	public void addPlayerSession (String name, String session) {
 		
 		int playersBefore = players.size();
 		int sessionsBefore = sessions.size();

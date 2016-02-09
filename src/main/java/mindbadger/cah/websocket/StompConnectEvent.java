@@ -8,24 +8,26 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 
-import mindbadger.cah.player.Players;
+import mindbadger.cah.player.Sessions;
 
 @Component
 public class StompConnectEvent implements ApplicationListener<SessionConnectEvent> {
 	final static Logger logger = Logger.getLogger(StompConnectEvent.class);
 
 	@Autowired
-	private Players players;
+	private Sessions sessions;
 
+	/*
+	 * Get the name once and associate this with the session 
+	 */
 	@EventListener
     public void onApplicationEvent(SessionConnectEvent event) {
         StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
  
         String  name = sha.getNativeHeader("name").get(0);
-        logger.info("Connect event [sessionId: " + sha.getSessionId() +"; name: "+ name + " ]");
-        logger.info(event);
+        String sessionId = sha.getSessionId();
+        sessions.addPlayerSession(name, sessionId);
         
-        players.addPlayer(name, sha.getSessionId());
+		logger.info("Connect event [sessionId: " + sessionId +"; name: "+ name + " ]");
     }
 }
-

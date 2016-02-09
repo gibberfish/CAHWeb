@@ -10,57 +10,40 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
-import mindbadger.cah.command.Command;
-import mindbadger.cah.player.Players;
+import mindbadger.cah.action.Action;
+import mindbadger.cah.player.Sessions;
 import mindbadger.cah.websocket.pojo.GameStateChange;
-import mindbadger.cah.websocket.pojo.PlayerActionCommand;
+import mindbadger.cah.websocket.pojo.PlayerAction;
 
 @Controller
 public class GameMessageController {
 	final static Logger logger = Logger.getLogger(GameMessageController.class);
 	
 	@Autowired
-	private Players players;
+	private Sessions players;
 
 	@Autowired
-	private Map<String, Command> commandList;
+	private Map<String, Action> actions;
 	
     @MessageMapping("/gameserver")
     @SendTo("/gamestate/gameStateUpdates")
-    public GameStateChange handlePlayerActionMessage(SimpMessageHeaderAccessor headerAccessor, @Payload PlayerActionCommand command) throws Exception {
+    public GameStateChange handlePlayerActionMessage(SimpMessageHeaderAccessor headerAccessor, @Payload PlayerAction action) throws Exception {
+    	logger.info("Received Player Action Message: " + action.getAction());
+
+    	String sessionId = headerAccessor.getSessionId();
+		String playerNameForSession = players.getPlayerNameForSession(sessionId);
     	
-    	for (String s : commandList.keySet()) {
-    		logger.info("Autowired key : " + s);
+    	Action commandObject = actions.get(action.getAction());
+    	
+    	if (commandObject != null) {
+    		return commandObject.executeCommand(sessionId, playerNameForSession, action);
+    	} else {
+    		logger.info("No Action found for " + action.getAction());
+    		GameStateChange gsc = new GameStateChange();
+    		gsc.setPlayer(playerNameForSession);
+    		gsc.setCommand(action.getAction());
+    		gsc.setValue("ACTION NOT FOUND");
+    		return gsc;
     	}
-    	
-    	for (Command c : commandList.values()) {
-    		logger.info("Autowired value : " + c);
-    	}
-    	
-    	String playerNameForSession = players.getPlayerNameForSession(headerAccessor.getSessionId());
-    	//String playerNameForSession = headerAccessor.getNativeHeader("name").get(0);
-    	/*
-    	 *  We need to put something in here that takes the incoming payload supplied by the front-end
-    	 *  and then map this into a class that will execute the requested command
-    	 *  e.g. join, leave, drawCard, playCard, selectCard
-    	 */
-    	logger.info("Received Player Action Message: " + command.getCommand());
-    	
-    	//Command commandObject = commands.getCommand(command.getCommand());
-    	Command commandObject = commandList.get(command.getCommand());
-    	
-    	
-    	logger.info("command object: " + commandObject);
-    	
-		GameStateChange gar = commandObject.executeCommand(headerAccessor.getSessionId(), playerNameForSession, command);
-    	
-//    	GameStateChange gar = new GameStateChange();
-//		gar.setPlayer(playerNameForSession);
-//    	gar.setCommand(command.getCommand());
-//    	gar.setValue(command.getValue());
-    	
-    	//logger.info("Created new response in handlePlayerActionMessage in object " + this);
-    	
-        return gar;
     }
 }
