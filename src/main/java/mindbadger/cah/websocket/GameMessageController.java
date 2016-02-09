@@ -1,5 +1,7 @@
 package mindbadger.cah.websocket;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,13 +24,35 @@ public class GameMessageController {
 	private Players players;
 
 	@Autowired
+	private Map<String, Command> commandList;
+	
+	@Autowired
 	private Commands commands;
 
     @MessageMapping("/gameserver")
     @SendTo("/gamestate/gameStateUpdates")
     public GameStateChange handlePlayerActionMessage(SimpMessageHeaderAccessor headerAccessor, @Payload PlayerActionCommand command) throws Exception {
-    	//String playerNameForSession = players.getPlayerNameForSession(headerAccessor.getSessionId());
-    	String playerNameForSession = headerAccessor.getNativeHeader("name").get(0);
+    	
+    	
+    	
+    	
+    	
+    	for (String s : commandList.keySet()) {
+    		logger.info("Autowired key : " + s);
+    	}
+    	
+    	for (Command c : commandList.values()) {
+    		logger.info("Autowired value : " + c);
+    	}
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	String playerNameForSession = players.getPlayerNameForSession(headerAccessor.getSessionId());
+    	//String playerNameForSession = headerAccessor.getNativeHeader("name").get(0);
     	/*
     	 *  We need to put something in here that takes the incoming payload supplied by the front-end
     	 *  and then map this into a class that will execute the requested command
@@ -36,7 +60,10 @@ public class GameMessageController {
     	 */
     	logger.info("Received Player Action Message: " + command.getCommand());
     	
-    	Command commandObject = commands.getCommand(command.getCommand());
+    	//Command commandObject = commands.getCommand(command.getCommand());
+    	Command commandObject = commandList.get(command.getCommand());
+    	
+    	
     	logger.info("command object: " + commandObject);
     	
 		GameStateChange gar = commandObject.executeCommand(headerAccessor.getSessionId(), playerNameForSession, command);
