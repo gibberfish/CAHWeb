@@ -20,6 +20,7 @@ import mindbadger.cah.websocket.pojo.PlayerAction;
 public class GameMessageControllerTest {
 	
 	private static final String PLAYER_ACTION = "login";
+	private static final String INVALID_PLAYER_ACTION = "blahblah";
 	private static final String PLAYER1 = "player1";
 	private static final String SESSION_ID1 = "sessionId1";
 	private static final String ACTION1 = "action1";
@@ -48,14 +49,32 @@ public class GameMessageControllerTest {
 		objectUnderTest = new GameMessageController(); 
 		
 		Map<String, Action> actions = new HashMap<String, Action> ();
-		actions.put(ACTION1, mockAction);
+		actions.put(PLAYER_ACTION, mockAction);
 		objectUnderTest.actions = actions;
 		
 		objectUnderTest.players = mockSessions;
 	}
 	
 	@Test
-	public void test () throws Exception {
+	public void shouldExecuteACommandIfFound () throws Exception {
+		// Given
+		when(mockSimpMessageHeaderAccessor.getSessionId()).thenReturn(SESSION_ID1);
+		when(mockSessions.getPlayerNameForSession(SESSION_ID1)).thenReturn(PLAYER1);
+		when(mockPlayerAction.getAction()).thenReturn(INVALID_PLAYER_ACTION);
+		when(mockAction.executeCommand(SESSION_ID1, PLAYER1, mockPlayerAction)).thenReturn(mockGameStateChange);
+		
+		// When
+		GameStateChange gsc = objectUnderTest.handlePlayerActionMessage(mockSimpMessageHeaderAccessor, mockPlayerAction);
+		
+		// Then
+		verify(mockAction,never()).executeCommand(SESSION_ID1, PLAYER1, mockPlayerAction);
+		assertEquals (gsc.getValue(), "ACTION NOT FOUND");
+		assertEquals (gsc.getCommand(), INVALID_PLAYER_ACTION);
+		assertEquals (gsc.getPlayer(), PLAYER1);
+	}
+	
+	@Test
+	public void shouldReturnAnInvalidGameStateChangeIfNoCommandFound () throws Exception {
 		// Given
 		when(mockSimpMessageHeaderAccessor.getSessionId()).thenReturn(SESSION_ID1);
 		when(mockSessions.getPlayerNameForSession(SESSION_ID1)).thenReturn(PLAYER1);
@@ -67,6 +86,7 @@ public class GameMessageControllerTest {
 		
 		// Then
 		verify(mockAction.executeCommand(SESSION_ID1, PLAYER1, mockPlayerAction));
-		assertEquals (gsc, eq(mockGameStateChange));
+		assertEquals (gsc, mockGameStateChange);
 	}
+
 }
