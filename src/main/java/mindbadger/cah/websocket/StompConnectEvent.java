@@ -8,7 +8,7 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 
-import mindbadger.cah.player.Sessions;
+import mindbadger.cah.sessions.Sessions;
 
 @Component
 public class StompConnectEvent implements ApplicationListener<SessionConnectEvent> {

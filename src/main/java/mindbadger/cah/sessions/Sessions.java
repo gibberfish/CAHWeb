@@ -1,4 +1,4 @@
-package mindbadger.cah.player;
+package mindbadger.cah.sessions;
 
 import java.util.HashMap;
 import java.util.Map;

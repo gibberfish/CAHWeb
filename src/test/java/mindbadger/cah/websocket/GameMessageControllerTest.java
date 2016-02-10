@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 import mindbadger.cah.action.Action;
-import mindbadger.cah.player.Sessions;
+import mindbadger.cah.sessions.Sessions;
 import mindbadger.cah.websocket.pojo.GameStateChange;
 import mindbadger.cah.websocket.pojo.PlayerAction;
 
