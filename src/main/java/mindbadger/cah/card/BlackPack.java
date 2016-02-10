@@ -1,8 +1,14 @@
 package mindbadger.cah.card;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,11 +17,31 @@ public class BlackPack extends AbstractPack {
 
 	@Override
 	protected void initialisePack() {
-		allBlackCards.add(new BlackCard ("{}? There's an app for that."));
-		allBlackCards.add(new BlackCard ("Why can't I sleep at night?"));
-		allBlackCards.add(new BlackCard ("What's that smell?"));
-		allBlackCards.add(new BlackCard ("I got 99 problems but {} ain't one."));
-		
+		readCardsFromFile("blackcards.txt");		
 		pack = new ArrayList<Card>(allBlackCards);
+	}
+	
+	//TODO Duplicated in the WhitePack - needs refactoring
+	private void readCardsFromFile(String filename) {
+		Resource resource = new ClassPathResource(filename);
+
+		BufferedReader reader = null;
+		try {
+			InputStream resourceInputStream = resource.getInputStream();
+			reader = new BufferedReader(new InputStreamReader(resourceInputStream));
+			
+			String line;
+			 while ((line = reader.readLine()) != null) {
+				allBlackCards.add(new BlackCard (line));
+			} 
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+	        try {
+	            reader.close();
+	        } catch (IOException e) {
+	        	e.printStackTrace();
+	        }
+	    }
 	}
 }
