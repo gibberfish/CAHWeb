@@ -15,14 +15,17 @@ public class StompConnectEvent implements ApplicationListener<SessionConnectEven
 	final static Logger logger = Logger.getLogger(StompConnectEvent.class);
 
 	@Autowired
-	private Sessions sessions;
+	Sessions sessions;
 
+	@Autowired
+	StompHeaderAccessorWrapper stompHeaderAccessorWrapper;
+	
 	/*
 	 * Get the name once and associate this with the session 
 	 */
 	@EventListener
     public void onApplicationEvent(SessionConnectEvent event) {
-        StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
+        StompHeaderAccessor sha = stompHeaderAccessorWrapper.wrap(event.getMessage());
  
         String  name = sha.getNativeHeader("name").get(0);
         String sessionId = sha.getSessionId();

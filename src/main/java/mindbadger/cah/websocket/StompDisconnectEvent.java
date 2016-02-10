@@ -15,14 +15,17 @@ public class StompDisconnectEvent implements ApplicationListener<SessionDisconne
 	final static Logger logger = Logger.getLogger(StompDisconnectEvent.class);
 
 	@Autowired
-	private Sessions players;
+	Sessions sessions;
+
+	@Autowired
+	StompHeaderAccessorWrapper stompHeaderAccessorWrapper;
 
 	@EventListener
     public void onApplicationEvent(SessionDisconnectEvent event) {
-        StompHeaderAccessor sha = StompHeaderAccessor.wrap(event.getMessage());
+		StompHeaderAccessor sha = stompHeaderAccessorWrapper.wrap(event.getMessage());
         
         String sessionId = sha.getSessionId();
-		players.removePlayerWithSession(sessionId);
+		sessions.removePlayerWithSession(sessionId);
 
         logger.info("Disconnect event [sessionId: " + sessionId + "]");
     }

@@ -23,7 +23,6 @@ public class GameMessageControllerTest {
 	private static final String INVALID_PLAYER_ACTION = "blahblah";
 	private static final String PLAYER1 = "player1";
 	private static final String SESSION_ID1 = "sessionId1";
-	private static final String ACTION1 = "action1";
 
 	private GameMessageController objectUnderTest;
 	
@@ -85,7 +84,7 @@ public class GameMessageControllerTest {
 		GameStateChange gsc = objectUnderTest.handlePlayerActionMessage(mockSimpMessageHeaderAccessor, mockPlayerAction);
 		
 		// Then
-		verify(mockAction.executeCommand(SESSION_ID1, PLAYER1, mockPlayerAction));
+		verify(mockAction).executeCommand(SESSION_ID1, PLAYER1, mockPlayerAction);
 		assertEquals (gsc, mockGameStateChange);
 	}
 
