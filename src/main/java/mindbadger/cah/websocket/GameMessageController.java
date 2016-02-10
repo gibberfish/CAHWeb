@@ -20,10 +20,10 @@ public class GameMessageController {
 	final static Logger logger = Logger.getLogger(GameMessageController.class);
 	
 	@Autowired
-	private Sessions players;
+	Sessions players;
 
 	@Autowired
-	private Map<String, Action> actions;
+	Map<String, Action> actions;
 	
     @MessageMapping("/gameserver")
     @SendTo("/gamestate/gameStateUpdates")
