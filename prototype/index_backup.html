@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>Game Server</title>
+		<link rel="stylesheet" type="text/css" href="..\src\main\webapp\css\bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="..\src\main\webapp\css\cah.css"/>
+	</head>
+	<body>
+		<div class="mainContainer">
+			<div class="you">
+			<h2>Welcome back Mark</h2>
+			Please select a game you'd like to join...
+			</div>
+			<div class="games">
+				<h3>Games Available</h3>
+				<ul>
+					<li>Cards Against Humanity</li>
+					<li>Fluxx</li>
+				</ul>
+			</div>
+			
+			<div id="popup" class="modal fade" role="dialog" style="display: none;">
+				<h2>Please enter your name to register with the Game Server:</h2>
+				<div>
+					Your Name: <input type="text" id="name"/>
+				</div>
+				<div>
+					<button id="connectButton" type="button" onclick="connectWebsocket();" >Connect</button>
+				</div>
+			</div>
+
+			<!-- preload the images -->
+			<div style='display:none'>
+				<img src='img/x.png' alt='' />
+			</div>
+		</div>
+
+		<script src="..\src\main\webapp\js\jquery-2.2.0.min.js"></script>
+		<script src="..\src\main\webapp\js\bootstrap.min.js"></script>
+		<script src="..\src\main\webapp\js\lobby.js"></script>
+	</body>
+</html>

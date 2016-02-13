@@ -1,7 +1,8 @@
 
 /* **************************** MAIN PAGE JQUERY ON-LOAD ******************************* */
 $(function() {
-	popupModal();
+	$("#popup").modal('show');
+	//popupModal();
 	//$(".connectButton").click(popupModal);
 });
 
