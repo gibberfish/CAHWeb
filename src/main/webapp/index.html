@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>Game Server Home</title>
+		<link rel="stylesheet" type="text/css" href="css/cah.css"/>
+	</head>
+	<body>
+		<form id="loginform">
+			<h2>Please enter your name to register with the Game Server:</h2>
+			<div>
+				Your Name: <input type="text" id="name"/>
+			</div>
+			<div>
+				<button id="connectButton" type="button" onclick="connectWebsocket();" >Connect</button>
+			</div>
+		</form>
+
+		<script src="js\sockjs-0.3.4.js"></script>
+    	<script src="js\stomp.js"></script>
+		<script src="js\jquery-2.2.0.min.js"></script>
+		<script src="js\jquery.simplemodal.js"></script>
+		<script src="js\websocket.js"></script>
+		<script src="js\lobby.js"></script>
+	</body>
+</html>
