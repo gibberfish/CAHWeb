@@ -1,28 +1,20 @@
 
+/* **************************** MAIN PAGE JQUERY ON-LOAD ******************************* */
 $(function() {
-	$(".my").mouseenter(mouseOverCardInMyHand);
-	$(".my").mouseleave(mouseLeavesCardInMyHand);
-	
-	$(".btn").click(popupModal);
+	popupModal();
+	//$(".connectButton").click(popupModal);
 });
 
-function mouseOverCardInMyHand () {
-	$(this).removeClass("in-background");
-};
-
-function mouseLeavesCardInMyHand () {
-	$(".my").addClass("in-background");
-};
-
+/* **************************** MODAL HANDLING ******************************* */
 // See http://www.ericmmartin.com/projects/simplemodal/#options
 function popupModal () {
-	$("#popup").modal({overlayClose:true, onOpen: slowOpenDialog});
+	$("#popup").modal({overlayClose:false, onOpen: slowOpenDialog});
 
-	setTimeout(function () {
-          $.modal.close();
-    }, 5000);
+//	setTimeout(function () {
+//          $.modal.close();
+//    }, 5000);
 
-	return false;
+//	return false;
 };
 
 function slowOpenDialog (dialog) {
