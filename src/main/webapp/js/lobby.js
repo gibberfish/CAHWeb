@@ -40,7 +40,11 @@ function retrieveGameTypesAndDisplay (data) {
 		$("#accordion").append(newGamePanel(i, data[i]));
 		
 		$('#collapse'+i).on('shown.bs.collapse', function () {
-			newGameButton($(this));
+			// Get the list of games for this type
+		
+		
+		
+			newGameButton(i, $(this));
 			//$(this).html("<div class='panel'><button type='button' class='btn btn-default'>New Game 2</button></div>");
 		});
 	}
@@ -70,8 +74,14 @@ function newGamePanel (index, gameType) {
 	return output;
 };
 
-function newGameButton (collapsiblePanel) {
-	collapsiblePanel.html("<div class='panel'><button type='button' class='btn btn-default'>New Game</button></div>");
+function newGameButton (index, collapsiblePanel) {
+	collapsiblePanel.html("<div class='panel'><button id='newGame"+index+"' type='button' class='btn btn-default'>New Game</button></div>");
+	$('#newGame'+index).click (function () {
+		// HARD CODED AS TEST FOR NOW
+		$.post({url: "/game/addPlayerToNewGame", data: "{gameType: 'fluxx', player: 'Mark'}"}).then(function (data) {
+			alert("Added New Player to Game");
+		});
+	});
 }
 
 function readCookie (cookieName) {

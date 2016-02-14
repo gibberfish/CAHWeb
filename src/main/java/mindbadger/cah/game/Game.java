@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
+	private int gameId;
 	private GameType gameType;
 	private List<String> players = new ArrayList<String> ();
 
-	public Game (GameType gameType) {
+	public Game (int gameId, GameType gameType) {
+		this.gameId = gameId;
 		this.gameType = gameType;
 	}
 
@@ -21,5 +23,9 @@ public class Game {
 
 	public List<String> getPlayers() {
 		return players;
+	}
+
+	public int getGameId() {
+		return gameId;
 	}
 }
