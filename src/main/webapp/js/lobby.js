@@ -17,6 +17,8 @@ $(function() {
 	name = readCookie ("name");
 
 	if (name == "") {
+		$('#welcome-back').text("Please identify yourself first...");
+	
 		// Show the modal
 		$('#login-modal').modal({
 			show: true,
@@ -24,7 +26,12 @@ $(function() {
 			keyboard: false
 		});
 	} else {
+		$('#welcome-back').text("Welcome back " + name + ". Please choose a game below...");
+	
 		connectWebsocket(name);
+		
+		// Get the list of games
+		
 	}
 });
 
