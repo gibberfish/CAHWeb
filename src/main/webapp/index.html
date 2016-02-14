@@ -1,24 +1,102 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 	<head>
-		<title>Game Server Home</title>
-		<link rel="stylesheet" type="text/css" href="css/cah.css"/>
+		<title>Game Server</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="css\bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css\lobby.css"/>
 	</head>
 	<body>
-		<form id="loginform">
-			<h2>Please enter your name to register with the Game Server:</h2>
-			<div>
-				Your Name: <input type="text" id="name"/>
-			</div>
-			<div>
-				<button id="connectButton" type="button" onclick="connectWebsocket();" >Connect</button>
-			</div>
-		</form>
 
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Game Server</h1>
+			<p>Welcome to the Game Server. Please choose a game below...</p>
+			<a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+		</div>
+		  
+		<div class="panel-group" id="accordion">
+			<div class="panel panel-default" id="panel1">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-target="#collapse1" href="#collapse1" class="collapsed">
+						Cards Against Humanity
+						</a>
+					</h4>
+				</div>
+				<div id="collapse1" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div class="panel">
+							Game 1: Anne, Matt
+							<button type="button" class="btn btn-primary">Join</button>
+						</div>
+						<div class="panel">
+							<button type="button" class="btn btn-default">New Game</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default" id="panel2">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-target="#collapseTwo" href="#collapseTwo" class="collapsed">
+						Fluxx
+						</a>
+					</h4>
+				</div>
+				<div id="collapseTwo" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div class="panel">
+							<button type="button" class="btn btn-default">New Game</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default" id="panel3">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-target="#collapseThree" href="#collapseThree" class="collapsed">
+						Poker
+						</a>
+					</h4>
+				</div>
+				<div id="collapseThree" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div class="panel">
+							<button type="button" class="btn btn-default">New Game</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog">
+				<div class="loginmodal-container">
+					<h3>Please enter the following details to connect to the Game Server:</h3><br>
+					<form class="form-horizontal" role="form">
+					  <div class="form-group">
+						<label class="control-label col-sm-2" for="name">Name:</label>
+						<div class="col-sm-10"> 
+						  <input type="text" class="form-control" id="name" placeholder="Enter your name">
+						</div>
+					  </div>
+					  <div class="form-group"> 
+						<div class="col-sm-12">
+						  <input type="submit" id="login" name="login" class="login loginmodal-submit" value="Confirm">
+						</div>
+					  </div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
 		<script src="js\sockjs-0.3.4.js"></script>
     	<script src="js\stomp.js"></script>
-		<script src="js\jquery-2.2.0.min.js"></script>
-		<script src="js\jquery.simplemodal.js"></script>
 		<script src="js\websocket.js"></script>
+		<script src="js\jquery-2.2.0.min.js"></script>
+		<script src="js\bootstrap.min.js"></script>
 		<script src="js\lobby.js"></script>
 	</body>
 </html>

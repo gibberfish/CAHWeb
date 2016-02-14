@@ -1,6 +1,5 @@
 
-function connectWebsocket () {
-	var name = $("#name").val();
+function connectWebsocket (name) {
     var socket = new SockJS('/gameserver');
     
     stompClient = Stomp.over(socket);
