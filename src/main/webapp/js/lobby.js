@@ -3,6 +3,10 @@ var name = "";
 
 /* **************************** MAIN PAGE JQUERY ON-LOAD ******************************* */
 $(function() {
+	$('.panel-collapse').on('shown.bs.collapse', function () {
+		$(this).append("<div class='panel'><button type='button' class='btn btn-default'>New Game 2</button></div>");
+	})
+
 	$('#login').click (function () {
 		$('#login-modal').modal({
 			show: false,
