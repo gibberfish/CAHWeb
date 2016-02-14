@@ -3,10 +3,6 @@ var name = "";
 
 /* **************************** MAIN PAGE JQUERY ON-LOAD ******************************* */
 $(function() {
-	$('.panel-collapse').on('shown.bs.collapse', function () {
-		$(this).append("<div class='panel'><button type='button' class='btn btn-default'>New Game 2</button></div>");
-	})
-
 	$('#login').click (function () {
 		$('#login-modal').modal({
 			show: false,
@@ -35,9 +31,48 @@ $(function() {
 		connectWebsocket(name);
 		
 		// Get the list of games
-		
+		$.ajax({url: "/game/type/getAll"}).then(retrieveGameTypesAndDisplay);
 	}
 });
+
+function retrieveGameTypesAndDisplay (data) {
+	for (var i in data) {
+		$("#accordion").append(newGamePanel(i, data[i]));
+		
+		$('#collapse'+i).on('shown.bs.collapse', function () {
+			newGameButton($(this));
+			//$(this).html("<div class='panel'><button type='button' class='btn btn-default'>New Game 2</button></div>");
+		});
+	}
+}
+
+function newGamePanel (index, gameType) {
+
+	var output = '<div class="panel panel-default" id="panel1">' +
+			'<div class="panel-heading">' +
+			'<h4 class="panel-title">' +
+			'<a data-toggle="collapse" id="'+gameType.type+'" data-target="#collapse'+index+'" href="#collapse'+index+'" class="collapsed">' +
+			gameType.displayName +
+			'</a>' +
+			'</h4>' +
+			'</div>' +
+			'<div id="collapse'+index+'" class="panel-collapse collapse">' +
+			'<div class="panel-body">' +
+//						<div class="panel">
+//							Game 1: Anne, Matt
+//							<button type="button" class="btn btn-primary">Join</button>
+//						</div>
+//						<div class="panel">
+//							<button type="button" class="btn btn-default">New Game</button>
+//						</div>
+			'</div></div></div>';
+
+	return output;
+};
+
+function newGameButton (collapsiblePanel) {
+	collapsiblePanel.html("<div class='panel'><button type='button' class='btn btn-default'>New Game</button></div>");
+}
 
 function readCookie (cookieName) {
 	var name = cookieName + "=";

@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>Fluxx</title>
+		<link rel="stylesheet" type="text/css" href="css/cah.css"/>
+	</head>
+	<body>
+		<div>
+			Name: <input type="text" id="name"/><br>
+            Command: <input type="text" id="command"/><br>
+            Value: <input type="text" id="value"/>
+        </div>
+        <div>
+            <button id="connectButton" type="button" onclick="connectWebsocket();" >Connect</button>
+            <button id="commandButton" disabled="true" type="button" onclick="sendCommandToGameFromScreen();" >Send Command to Game</button>
+            <button id="disconnectButton" disabled="true" type="button" onclick="disconnectWebsocket();" >Disconnect</button>
+        </div>
+
+        <!-- Server responses get written here -->
+        <div id="messages"></div>
+
+		<script src="js\sockjs-0.3.4.js"></script>
+    	<script src="js\stomp.js"></script>
+		<script src="js\jquery-2.2.0.min.js"></script>
+		<script src="js\jquery.simplemodal.js"></script>
+		<script src="js\websocket.js"></script>
+		<script src="js\cah.js"></script>
+	</body>
+</html>
