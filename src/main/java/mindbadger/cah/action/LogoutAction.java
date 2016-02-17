@@ -7,11 +7,11 @@ import mindbadger.cah.websocket.pojo.GameStateChange;
 import mindbadger.cah.websocket.pojo.PlayerAction;
 
 @Component("logout")
-public class LogoutAction implements Action {
+public class LogoutAction extends Action {
 	final static Logger logger = Logger.getLogger(LogoutAction.class);
 	
 	@Override
-	public GameStateChange executeCommand(String sessionId, String player, PlayerAction command) {
+	protected GameStateChange executeCommand(String sessionId, String player, PlayerAction command) {
         logger.info("Logout [sessionId: " + sessionId +"; name: "+ player + " ]");
         GameStateChange gsc = new GameStateChange();
         gsc.setPlayer(player);

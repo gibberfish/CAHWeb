@@ -21,7 +21,6 @@ public class GameMessageControllerTest {
 	
 	private static final String PLAYER_ACTION = "login";
 	private static final String INVALID_PLAYER_ACTION = "blahblah";
-	private static final String PLAYER1 = "player1";
 	private static final String SESSION_ID1 = "sessionId1";
 
 	private GameMessageController objectUnderTest;
@@ -58,33 +57,30 @@ public class GameMessageControllerTest {
 	public void shouldExecuteACommandIfFound () throws Exception {
 		// Given
 		when(mockSimpMessageHeaderAccessor.getSessionId()).thenReturn(SESSION_ID1);
-		when(mockSessions.getPlayerNameForSession(SESSION_ID1)).thenReturn(PLAYER1);
 		when(mockPlayerAction.getAction()).thenReturn(INVALID_PLAYER_ACTION);
-		when(mockAction.executeCommand(SESSION_ID1, PLAYER1, mockPlayerAction)).thenReturn(mockGameStateChange);
+		when(mockAction.executeCommand(SESSION_ID1, mockPlayerAction)).thenReturn(mockGameStateChange);
 		
 		// When
 		GameStateChange gsc = objectUnderTest.handlePlayerActionMessage(mockSimpMessageHeaderAccessor, mockPlayerAction);
 		
 		// Then
-		verify(mockAction,never()).executeCommand(SESSION_ID1, PLAYER1, mockPlayerAction);
-		assertEquals (gsc.getValue(), "ACTION NOT FOUND");
+		verify(mockAction,never()).executeCommand(SESSION_ID1, mockPlayerAction);
+		assertEquals (gsc.getValue(), "ACTION NOT FOUND (session sessionId1)");
 		assertEquals (gsc.getCommand(), INVALID_PLAYER_ACTION);
-		assertEquals (gsc.getPlayer(), PLAYER1);
 	}
 	
 	@Test
 	public void shouldReturnAnInvalidGameStateChangeIfNoCommandFound () throws Exception {
 		// Given
 		when(mockSimpMessageHeaderAccessor.getSessionId()).thenReturn(SESSION_ID1);
-		when(mockSessions.getPlayerNameForSession(SESSION_ID1)).thenReturn(PLAYER1);
 		when(mockPlayerAction.getAction()).thenReturn(PLAYER_ACTION);
-		when(mockAction.executeCommand(SESSION_ID1, PLAYER1, mockPlayerAction)).thenReturn(mockGameStateChange);
+		when(mockAction.executeCommand(SESSION_ID1, mockPlayerAction)).thenReturn(mockGameStateChange);
 		
 		// When
 		GameStateChange gsc = objectUnderTest.handlePlayerActionMessage(mockSimpMessageHeaderAccessor, mockPlayerAction);
 		
 		// Then
-		verify(mockAction).executeCommand(SESSION_ID1, PLAYER1, mockPlayerAction);
+		verify(mockAction).executeCommand(SESSION_ID1, mockPlayerAction);
 		assertEquals (gsc, mockGameStateChange);
 	}
 

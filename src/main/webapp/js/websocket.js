@@ -6,12 +6,12 @@ function connectWebsocket (name) {
     stompClient.connect({"name" : name}, function(frame) {
         console.log('Connected: ' + frame);
         
-        sendCommandToGame("login", name);
-        
         stompClient.subscribe('/gamestate/gameStateUpdates', function(gameStateActionResponse){
             var gameStateActionResponseObject = JSON.parse(gameStateActionResponse.body);
             showGameStateChange(gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value);
         });
+        
+        sendCommandToGame("login", name);
     });
     $("#connectButton").attr("disabled", true);
     $("#disconnectButton").removeAttr("disabled");
