@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import mindbadger.cah.game.Player;
 import mindbadger.cah.sessions.PlayerSessions;
 
 public class PlayerSessionsTest {
@@ -23,8 +24,8 @@ public class PlayerSessionsTest {
 		// Given
 		
 		// When
-		String session1 = objectUnderTest.getPlayerNameForSession(SESSION1);
-		String player1 = objectUnderTest.getSessionForPlayer(PLAYER1);
+		Player player1 = objectUnderTest.getPlayerNameForSession(SESSION1);
+		String session1 = objectUnderTest.getSessionForPlayer(PLAYER1);
 		
 		// Then
 		assertEquals (null, session1);
@@ -37,12 +38,12 @@ public class PlayerSessionsTest {
 		objectUnderTest.addPlayerSession(PLAYER1, SESSION1);
 		
 		// When
-		String player1 = objectUnderTest.getPlayerNameForSession(SESSION1);
+		Player player1 = objectUnderTest.getPlayerNameForSession(SESSION1);
 		String session1 = objectUnderTest.getSessionForPlayer(PLAYER1);
 		
 		// Then
 		assertEquals (SESSION1, session1);
-		assertEquals (PLAYER1, player1);
+		assertEquals (PLAYER1, player1.getName());
 	}
 
 	@Test
@@ -52,14 +53,14 @@ public class PlayerSessionsTest {
 		objectUnderTest.addPlayerSession(PLAYER1, SESSION2);
 		
 		// When
-		String playerForSession1 = objectUnderTest.getPlayerNameForSession(SESSION1);
-		String playerForSession2 = objectUnderTest.getPlayerNameForSession(SESSION2);
+		Player playerForSession1 = objectUnderTest.getPlayerNameForSession(SESSION1);
+		Player playerForSession2 = objectUnderTest.getPlayerNameForSession(SESSION2);
 		String session = objectUnderTest.getSessionForPlayer(PLAYER1);
 		
 		// Then
 		assertEquals (SESSION2, session);
 		assertEquals (null, playerForSession1);
-		assertEquals (PLAYER1, playerForSession2);
+		assertEquals (PLAYER1, playerForSession2.getName());
 	}
 	
 	@Test
@@ -71,7 +72,7 @@ public class PlayerSessionsTest {
 		objectUnderTest.removePlayerWithSession(SESSION1);
 		
 		// Then
-		String player1 = objectUnderTest.getPlayerNameForSession(SESSION1);
+		Player player1 = objectUnderTest.getPlayerNameForSession(SESSION1);
 		String session1 = objectUnderTest.getSessionForPlayer(PLAYER1);
 		assertEquals (null, session1);
 		assertEquals (null, player1);
