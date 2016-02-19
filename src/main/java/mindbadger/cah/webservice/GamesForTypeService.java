@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mindbadger.cah.game.Game;
 import mindbadger.cah.game.GameManager;
+import mindbadger.cah.sessions.PlayerSessions;
 
 @RestController
 public class GamesForTypeService {
 	final static Logger logger = Logger.getLogger(GamesForTypeService.class);
 	
+	@Autowired
+	PlayerSessions players;
+
 	@Autowired
 	GameManager gameManager;
 
@@ -30,7 +34,7 @@ public class GamesForTypeService {
     public void addPlayerToExistingGame(@RequestParam(value="gameId") String gameId, @RequestParam(value="player") String player) {
 		logger.info("addPlayerToExistingGame, gameId: " + gameId + ", player: " + player);
 		Game game = gameManager.getGames().get(gameId);
-		game.addPlayerToGame(player);
+		game.addPlayerToGame(players.getPlayer(player));
     }
 
 	@RequestMapping(value="/game/addPlayerToNewGame", method=RequestMethod.POST)

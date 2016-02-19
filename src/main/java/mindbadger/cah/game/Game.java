@@ -6,14 +6,14 @@ import java.util.List;
 public class Game {
 	private int gameId;
 	private GameType gameType;
-	private List<String> players = new ArrayList<String> ();
+	private List<Player> players = new ArrayList<Player> ();
 
 	public Game (int gameId, GameType gameType) {
 		this.gameId = gameId;
 		this.gameType = gameType;
 	}
 
-	public void addPlayerToGame (String player) {
+	public void addPlayerToGame (Player player) {
 		this.players.add(player);
 	}
 	
@@ -21,7 +21,7 @@ public class Game {
 		return gameType;
 	}
 
-	public List<String> getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 

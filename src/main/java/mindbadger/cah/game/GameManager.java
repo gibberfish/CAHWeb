@@ -5,13 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import mindbadger.cah.sessions.PlayerSessions;
 
 @Component
 public class GameManager {
 	Map<String, GameType> gameTypes = new HashMap<String, GameType> ();
 	private int nextGameId = 1;
 	
+	@Autowired
+	PlayerSessions players;
+
 	// keyed on GameType 'type'
 	Map<String, List<Game>> gamesForType = new HashMap <String, List<Game>> ();
 	
@@ -25,7 +31,7 @@ public class GameManager {
 	public synchronized void createNewGameAndAddFirstPlayer (String gameType, String playerName) {
 		Game newGame = new Game(nextGameId, gameTypes.get(gameType));
 		nextGameId++;
-		newGame.addPlayerToGame(playerName);
+		newGame.addPlayerToGame(players.getPlayer(playerName));
 		
 		List<Game> gamesForThisType = gamesForType.get(gameType);
 		if (gamesForThisType == null) {

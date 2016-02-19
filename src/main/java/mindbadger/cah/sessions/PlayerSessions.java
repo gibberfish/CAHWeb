@@ -53,9 +53,11 @@ public class PlayerSessions {
 		int playersBefore = playerskeyedOnSessionId.size();
 
 		Player player = playerskeyedOnSessionId.get(session);
-		sessionsKeyedOnPlayerName.remove(player.getName());
+		if (player != null) {
+			sessionsKeyedOnPlayerName.remove(player.getName());
+			playerskeyedOnPlayerName.remove(player.getName());
+		}
 		playerskeyedOnSessionId.remove(session);
-		playerskeyedOnPlayerName.remove(player.getName());
 		
 		logger.info("Removed session " + session);
 		logger.info("...[sessions, was="+playersBefore+",now="+playerskeyedOnSessionId.size()+"]");
@@ -68,5 +70,9 @@ public class PlayerSessions {
 	
 	public Player getPlayerNameForSession (String session) {
 		return playerskeyedOnSessionId.get(session);
+	}
+	
+	public Player getPlayer (String playerName) {
+		return playerskeyedOnPlayerName.get(playerName);
 	}
 }

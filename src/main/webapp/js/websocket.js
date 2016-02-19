@@ -8,7 +8,7 @@ function connectWebsocket (name) {
         
         stompClient.subscribe('/gamestate/gameStateUpdates', function(gameStateActionResponse){
             var gameStateActionResponseObject = JSON.parse(gameStateActionResponse.body);
-            showGameStateChange(gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value);
+            showGameStateChange(gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value, gameStateActionResponseObject.gameId);
         });
         
         sendCommandToGame("login", name);
@@ -30,8 +30,8 @@ function disconnectWebsocket () {
     console.log("Disconnected");
 }
         
-function showGameStateChange(player, command, value) {
-	var result = "I have received a message from " + player + ". Command = " + command + ", value = " + value;
+function showGameStateChange(player, command, value, game) {
+	var result = "I have received a message from " + player + ". Command = " + command + ", value = " + value + ", game = " + game;
 	$("#messages").append ("<p>"+result+"</p>");
 }
 

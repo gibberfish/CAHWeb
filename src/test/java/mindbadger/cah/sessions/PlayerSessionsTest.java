@@ -77,4 +77,21 @@ public class PlayerSessionsTest {
 		assertEquals (null, session1);
 		assertEquals (null, player1);
 	}
+	
+	@Test
+	public void shouldNotFailIfRemovingSessionWhereThePlayerNoLongerExists () {
+		// Given
+		objectUnderTest.addPlayerSession(PLAYER1, SESSION1);
+		objectUnderTest.removePlayerWithSession(SESSION1);
+		
+		// When
+		objectUnderTest.removePlayerWithSession(SESSION1);
+		
+		// Then
+		Player player1 = objectUnderTest.getPlayerNameForSession(SESSION1);
+		String session1 = objectUnderTest.getSessionForPlayer(PLAYER1);
+		assertEquals (null, session1);
+		assertEquals (null, player1);
+	}
+
 }
