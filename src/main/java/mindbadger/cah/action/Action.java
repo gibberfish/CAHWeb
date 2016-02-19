@@ -2,6 +2,7 @@ package mindbadger.cah.action;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import mindbadger.cah.game.Player;
 import mindbadger.cah.sessions.PlayerSessions;
 import mindbadger.cah.websocket.pojo.GameStateChange;
 import mindbadger.cah.websocket.pojo.PlayerAction;
@@ -12,7 +13,8 @@ public abstract class Action {
 	PlayerSessions players;
 
 	public GameStateChange executeCommand (String sessionId, PlayerAction command) {
-		String playerNameForSession = players.getPlayerNameForSession(sessionId);
+		Player player = players.getPlayerNameForSession(sessionId);
+		String playerNameForSession = player.getName();
 		GameStateChange commandResults = executeCommand(sessionId, playerNameForSession, command);
 		commandResults.setPlayer(playerNameForSession);
 		return commandResults;

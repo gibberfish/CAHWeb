@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import mindbadger.cah.game.Player;
 import mindbadger.cah.sessions.PlayerSessions;
 import mindbadger.cah.websocket.pojo.GameStateChange;
 import mindbadger.cah.websocket.pojo.PlayerAction;
@@ -27,6 +28,9 @@ public class ActionTest {
 	@Mock
 	private PlayerSessions mockSessions;
 
+	@Mock
+	private Player mockPlayer;
+
 	@Before
 	public void init () {
 		MockitoAnnotations.initMocks(this);
@@ -40,7 +44,8 @@ public class ActionTest {
 		
 		objectUnderTest.players = mockSessions;
 		
-		when(mockSessions.getPlayerNameForSession(SESSION_ID)).thenReturn(PLAYER_NAME);
+		when(mockSessions.getPlayerNameForSession(SESSION_ID)).thenReturn(mockPlayer);
+		when(mockPlayer.getName()).thenReturn(PLAYER_NAME);
 	}
 	
 	@Test

@@ -49,8 +49,6 @@ public class GameMessageControllerTest {
 		Map<String, Action> actions = new HashMap<String, Action> ();
 		actions.put(PLAYER_ACTION, mockAction);
 		objectUnderTest.actions = actions;
-		
-		objectUnderTest.players = mockSessions;
 	}
 	
 	@Test
