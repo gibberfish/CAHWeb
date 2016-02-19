@@ -7,8 +7,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Sessions {
-	final static Logger logger = Logger.getLogger(Sessions.class);
+public class PlayerSessions {
+	final static Logger logger = Logger.getLogger(PlayerSessions.class);
 	
 	private Map<String, String> players = new HashMap<String,String> ();
 	private Map<String, String> sessions = new HashMap<String,String> ();

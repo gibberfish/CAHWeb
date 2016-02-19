@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import mindbadger.cah.sessions.Sessions;
+import mindbadger.cah.sessions.PlayerSessions;
 import mindbadger.cah.websocket.pojo.GameStateChange;
 import mindbadger.cah.websocket.pojo.PlayerAction;
 
@@ -25,7 +25,7 @@ public class ActionTest {
 	private PlayerAction mockPlayerAction;
 	
 	@Mock
-	private Sessions mockSessions;
+	private PlayerSessions mockSessions;
 
 	@Before
 	public void init () {

@@ -5,6 +5,7 @@ public class GameStateChange {
 	private String player;
 	private String command;
 	private String value;
+	private String gameId;
 	public String getPlayer() {
 		return player;
 	}
@@ -22,5 +23,11 @@ public class GameStateChange {
 	}
 	public void setValue(String value) {
 		this.value = value;
+	}
+	public String getGameId() {
+		return gameId;
+	}
+	public void setGameId(String gameId) {
+		this.gameId = gameId;
 	}
 }

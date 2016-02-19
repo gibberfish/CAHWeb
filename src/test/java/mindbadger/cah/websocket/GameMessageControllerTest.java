@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 import mindbadger.cah.action.Action;
-import mindbadger.cah.sessions.Sessions;
+import mindbadger.cah.sessions.PlayerSessions;
 import mindbadger.cah.websocket.pojo.GameStateChange;
 import mindbadger.cah.websocket.pojo.PlayerAction;
 
@@ -29,7 +29,7 @@ public class GameMessageControllerTest {
 	private SimpMessageHeaderAccessor mockSimpMessageHeaderAccessor;
 	
 	@Mock
-	private Sessions mockSessions;
+	private PlayerSessions mockSessions;
 	
 	@Mock
 	private PlayerAction mockPlayerAction;

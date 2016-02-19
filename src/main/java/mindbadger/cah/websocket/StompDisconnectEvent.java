@@ -8,14 +8,14 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import mindbadger.cah.sessions.Sessions;
+import mindbadger.cah.sessions.PlayerSessions;
 
 @Component
 public class StompDisconnectEvent implements ApplicationListener<SessionDisconnectEvent> {
 	final static Logger logger = Logger.getLogger(StompDisconnectEvent.class);
 
 	@Autowired
-	Sessions sessions;
+	PlayerSessions sessions;
 
 	@Autowired
 	StompHeaderAccessorWrapper stompHeaderAccessorWrapper;

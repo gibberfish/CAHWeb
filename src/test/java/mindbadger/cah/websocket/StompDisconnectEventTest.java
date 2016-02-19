@@ -11,14 +11,14 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import mindbadger.cah.sessions.Sessions;
+import mindbadger.cah.sessions.PlayerSessions;
 
 public class StompDisconnectEventTest {
 	private static final String SESSIONID = "sessionid";
 	
 	private StompDisconnectEvent objectUnderTest;
 	
-	@Mock private Sessions mockSessions;
+	@Mock private PlayerSessions mockSessions;
 	@Mock private SessionDisconnectEvent mockSessionDisconnectEvent;
 	@Mock private StompHeaderAccessorWrapper mockStompHeaderAccessorWrapper;
 	@Mock private StompHeaderAccessor mockStompHeaderAccessor;

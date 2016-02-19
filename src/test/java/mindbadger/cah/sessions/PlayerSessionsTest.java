@@ -5,17 +5,17 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import mindbadger.cah.sessions.Sessions;
+import mindbadger.cah.sessions.PlayerSessions;
 
-public class SessionsTest {
+public class PlayerSessionsTest {
 	private static final String SESSION1 = "SESSION1";
 	private static final String SESSION2 = "SESSION2";
 	private static final String PLAYER1 = "PLAYER1";
-	private Sessions objectUnderTest;
+	private PlayerSessions objectUnderTest;
 	
 	@Before
 	public void init () {
-		objectUnderTest = new Sessions ();
+		objectUnderTest = new PlayerSessions ();
 	}
 	
 	@Test
