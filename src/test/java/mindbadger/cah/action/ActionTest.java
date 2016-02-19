@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import mindbadger.cah.game.Game;
 import mindbadger.cah.game.Player;
 import mindbadger.cah.sessions.PlayerSessions;
 import mindbadger.cah.websocket.pojo.GameStateChange;
@@ -17,6 +18,7 @@ import mindbadger.cah.websocket.pojo.PlayerAction;
 public class ActionTest {
 	private static final String PLAYER_NAME = "PLAYER1";
 	private static final String SESSION_ID = "Session1";
+	private static final Integer GAME_ID = 1234;
 
 	private Action objectUnderTest;
 	
@@ -30,6 +32,9 @@ public class ActionTest {
 
 	@Mock
 	private Player mockPlayer;
+	
+	@Mock
+	private Game mockGame;
 
 	@Before
 	public void init () {
@@ -51,6 +56,8 @@ public class ActionTest {
 	@Test
 	public void shouldGetPlayerNameBeforeExecutingCommand () {
 		// Given
+		when (mockPlayer.getGame()).thenReturn(mockGame);
+		when (mockGame.getGameId()).thenReturn(GAME_ID);
 		
 		// When
 		GameStateChange returnedGameStateChange = objectUnderTest.executeCommand(SESSION_ID, mockPlayerAction);
@@ -58,6 +65,37 @@ public class ActionTest {
 		// Then
 		assertEquals (gameStateChange, returnedGameStateChange);
 		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
+		verify(mockSessions).getPlayerNameForSession(SESSION_ID);
+	}
+	
+	@Test
+	public void shouldGetGameFromPlayerIfOneExists () {
+		// Given
+		when (mockPlayer.getGame()).thenReturn(mockGame);
+		when (mockGame.getGameId()).thenReturn(GAME_ID);
+		
+		// When
+		GameStateChange returnedGameStateChange = objectUnderTest.executeCommand(SESSION_ID, mockPlayerAction);
+		
+		// Then
+		assertEquals (gameStateChange, returnedGameStateChange);
+		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
+		assertEquals (GAME_ID, returnedGameStateChange.getGameId());
+		verify(mockSessions).getPlayerNameForSession(SESSION_ID);
+	}
+	
+	@Test
+	public void shouldGetNoGameFromPlayerIfOneDoesntExist () {
+		// Given
+		when (mockPlayer.getGame()).thenReturn(null);
+		
+		// When
+		GameStateChange returnedGameStateChange = objectUnderTest.executeCommand(SESSION_ID, mockPlayerAction);
+		
+		// Then
+		assertEquals (gameStateChange, returnedGameStateChange);
+		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
+		assertNull (returnedGameStateChange.getGameId());
 		verify(mockSessions).getPlayerNameForSession(SESSION_ID);
 	}
 }
