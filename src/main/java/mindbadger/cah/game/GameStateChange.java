@@ -1,4 +1,4 @@
-package mindbadger.cah.websocket.pojo;
+package mindbadger.cah.game;
 
 public class GameStateChange {
     

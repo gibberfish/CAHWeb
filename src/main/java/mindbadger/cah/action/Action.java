@@ -3,10 +3,10 @@ package mindbadger.cah.action;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import mindbadger.cah.game.Game;
+import mindbadger.cah.game.GameStateChange;
 import mindbadger.cah.game.Player;
+import mindbadger.cah.game.PlayerAction;
 import mindbadger.cah.sessions.PlayerSessions;
-import mindbadger.cah.websocket.pojo.GameStateChange;
-import mindbadger.cah.websocket.pojo.PlayerAction;
 
 public abstract class Action {
 	

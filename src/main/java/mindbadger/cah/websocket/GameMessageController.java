@@ -11,9 +11,9 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
 import mindbadger.cah.action.Action;
+import mindbadger.cah.game.GameStateChange;
+import mindbadger.cah.game.PlayerAction;
 import mindbadger.cah.sessions.PlayerSessions;
-import mindbadger.cah.websocket.pojo.GameStateChange;
-import mindbadger.cah.websocket.pojo.PlayerAction;
 
 @Controller
 public class GameMessageController {
