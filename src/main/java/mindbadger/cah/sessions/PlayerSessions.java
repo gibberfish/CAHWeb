@@ -32,8 +32,7 @@ public class PlayerSessions {
 		
 		Player player = playerskeyedOnPlayerName.get(name);
 		if (player == null) {
-			player = new Player();
-			player.setName(name);
+			player = new Player(name);
 			playerskeyedOnPlayerName.put(name, player);
 		}
 		

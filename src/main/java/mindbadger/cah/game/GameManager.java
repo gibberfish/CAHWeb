@@ -29,7 +29,10 @@ public class GameManager {
 	public synchronized void createNewGameAndAddFirstPlayer (String gameType, String playerName) {
 		Game newGame = new Game(nextGameId, gameTypes.get(gameType));
 		nextGameId++;
-		newGame.addPlayerToGame(players.getPlayer(playerName));
+		
+		Player player = players.getPlayer(playerName);
+		newGame.addPlayerToGame(player);
+		player.setGame(newGame);
 		
 		List<Game> gamesForThisType = gamesForType.get(gameType);
 		if (gamesForThisType == null) {
