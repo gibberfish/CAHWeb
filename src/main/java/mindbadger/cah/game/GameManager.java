@@ -12,20 +12,18 @@ import mindbadger.cah.sessions.PlayerSessions;
 
 @Component
 public class GameManager {
-	Map<String, GameType> gameTypes = new HashMap<String, GameType> ();
-	private int nextGameId = 1;
-	
 	@Autowired
 	PlayerSessions players;
 
-	// keyed on GameType 'type'
+	@Autowired
+	Map<String, GameType> gameTypes;
+
+	private int nextGameId = 1;
+
 	Map<String, List<Game>> gamesForType = new HashMap <String, List<Game>> ();
-	
 	Map<Integer, Game> games = new HashMap<Integer, Game> ();
 	
 	public GameManager () {
-		gameTypes.put("cardsAgainstHumanity", new GameType ("cardsAgainstHumanity", "Cards Against Humanity", "cah.html"));
-		gameTypes.put("fluxx", new GameType ("fluxx", "Fluxx", "fluxx.html"));
 	}
 	
 	public synchronized void createNewGameAndAddFirstPlayer (String gameType, String playerName) {
