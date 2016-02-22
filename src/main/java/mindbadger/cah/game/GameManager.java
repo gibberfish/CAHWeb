@@ -42,7 +42,12 @@ public class GameManager {
 	}
 	
 	public List<Game> getGamesForType (String gameType) {
-		return gamesForType.get(gameType);
+		List<Game> gamesOfType = gamesForType.get(gameType);
+		if (gamesOfType == null) {
+			return new ArrayList<Game> ();
+		} else {
+			return gamesOfType;
+		}
 	}
 	
 	public List<GameType> getGameTypes () {
