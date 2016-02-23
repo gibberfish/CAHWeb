@@ -39,7 +39,7 @@ public class GamesForTypeService {
 
 	@RequestMapping(value="/game/addPlayerToNewGame", method=RequestMethod.POST)
     public void addPlayerToNewGame(@RequestParam(value="gameType") String gameType, @RequestParam(value="player") String player) {
-		logger.info("addPlayerToNewGame, gameId: " + gameType + ", player: " + player);
+		logger.info("addPlayerToNewGame, gameType: " + gameType + ", player: " + player);
 		gameManager.createNewGameAndAddFirstPlayer(gameType, player);
     }
 }

@@ -41,9 +41,11 @@ function retrieveGameTypesAndDisplay (data) {
 		
 		$('#collapse'+i).on('shown.bs.collapse', function () {
 			// Get the list of games for this type
-			// HARD CODED FOR NOW
-			$.ajax({url: "/games/getForType", data: {gameType: 'Fluxx'}}).then(displayGamesForType);
-		
+			$.ajax({
+				url: "/games/getForType",
+				data: {gameType: data[i].type},
+				success: displayGamesForType
+			});
 		
 			newGameButton(i, $(this));
 			//$(this).html("<div class='panel'><button type='button' class='btn btn-default'>New Game 2</button></div>");
@@ -53,14 +55,15 @@ function retrieveGameTypesAndDisplay (data) {
 
 function displayGamesForType (data) {
 	for (var i in data) {
-		var panel = $("#"+data[i].gameType);
+		console.log("displayGamesForType [data:"+  JSON.stringify(data[i])  +"]");
+		var panel = $("#"+data[i].gameType.type);
 		displayExistingGames(data[i],i,panel);
 	}
 }
 
 function newGamePanel (index, gameType) {
 
-	var output = '<div class="panel panel-default" id="panel1">' +
+	var output = '<div class="panel panel-default" id="panel'+index'">' +
 			'<div class="panel-heading">' +
 			'<h4 class="panel-title">' +
 			'<a data-toggle="collapse" id="'+gameType.type+'" data-target="#collapse'+index+'" href="#collapse'+index+'" class="collapsed">' +
@@ -90,7 +93,7 @@ function newGameButton (index, collapsiblePanel) {
 	collapsiblePanel.html("<div class='panel'><button id='newGame"+index+"' type='button' class='btn btn-default'>New Game</button></div>");
 	$('#newGame'+index).click (function () {
 		// HARD CODED AS TEST FOR NOW
-		$.post({url: "/game/addPlayerToNewGame", data: {gameType: 'fluxx', player: 'Mark'}}).then(function (data) {
+		$.post({url: "/game/addPlayerToNewGame", data: {gameType: 'fluxx', player: name}}).then(function (data) {
 			alert("Added New Player to Game");
 		});
 	});

@@ -4,8 +4,10 @@ import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -13,6 +15,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import jdk.nashorn.internal.ir.SetSplitState;
 import mindbadger.cah.action.Action;
 import mindbadger.cah.sessions.PlayerSessions;
 
@@ -39,13 +42,17 @@ public class GameManagerTest {
 	@Before
 	public void init () {
 		MockitoAnnotations.initMocks(this);
-		
-		objectUnderTest = new GameManager ();
 
-		Map<String, GameType> gameTypes = new HashMap<String, GameType> ();
-		gameTypes.put(TYPE1_ID, GAME_TYPE_1);
-		gameTypes.put(TYPE2_ID, GAME_TYPE_2);
-		objectUnderTest.gameTypes = gameTypes;
+//		Map<String, GameType> gameTypes = new HashMap<String, GameType> ();
+//		gameTypes.put(TYPE1_ID, GAME_TYPE_1);
+//		gameTypes.put(TYPE2_ID, GAME_TYPE_2);
+//		objectUnderTest.gameTypes = gameTypes;
+//		objectUnderTest = new GameManager ();
+		
+		Set<GameType> gameTypes = new HashSet<GameType> ();
+		gameTypes.add(GAME_TYPE_1);
+		gameTypes.add(GAME_TYPE_2);
+		objectUnderTest = new GameManager (gameTypes);
 		
 		when (mockPlayerSessions.getPlayer(PLAYER1_NAME)).thenReturn(PLAYER1);
 		when (mockPlayerSessions.getPlayer(PLAYER2_NAME)).thenReturn(PLAYER2);

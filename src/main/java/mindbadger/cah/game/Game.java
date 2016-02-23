@@ -3,9 +3,13 @@ package mindbadger.cah.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 public class Game {
 	private int gameId;
 	private GameType gameType;
+	
+	@JsonSerialize(using = GameSerializer.class)
 	private List<Player> players = new ArrayList<Player> ();
 
 	public Game (int gameId, GameType gameType) {
