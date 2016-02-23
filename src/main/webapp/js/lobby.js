@@ -54,6 +54,11 @@ function retrieveGameTypesAndDisplay (data) {
 function populatePanelWhenCollapsed (collapsiblePanel) {
 	var gameType = collapsiblePanel.find(".panel-body").attr("data-game");
 	console.log("Collapsing panel for " + gameType);
+
+	// reset the panel	
+	var gamePanel = $("div[data-game='"+gameType+"'] > .gameList");
+	gamePanel.html("");
+	
 	ajaxGetGamesForType(gameType, displayGamesForType);
 	newGameButton(gameType);
 }
@@ -61,9 +66,7 @@ function populatePanelWhenCollapsed (collapsiblePanel) {
 function displayGamesForType (data) {
 	// Will receive an array of games
 	for (var i in data) {
-		console.log("displayGamesForType [data:"+  JSON.stringify(data[i])  +"]");
-		var panel = $("#"+data[i].gameType.type);
-		displayExistingGames(data[i],i,panel);
+		displayExistingGames(data[i]);
 	}
 }
 
@@ -82,8 +85,14 @@ function newGameButton(gameType) {
 	});
 }
 
-function displayExistingGames (game, index, collapsiblePanel) {
-	collapsiblePanel.html("<div class='panel'>Game "+game.id+"<button type='button' class='btn btn-primary'>Join</button></div>");
+function displayExistingGames (game) {
+	console.log("displayGamesForType [data:" + JSON.stringify(game) + "]");
+	
+	var gameType = game.gameType.type;
+	var gameId = game.gameId;
+	var gamePanel = $("div[data-game='"+gameType+"'] > .gameList");
+	
+	gamePanel.append("<div class='panel'>Game "+gameId+"<button type='button' class='btn btn-primary'>Join</button></div>");
 }
 
 function newGamePanel (index, gameType) {
