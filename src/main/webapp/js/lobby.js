@@ -30,30 +30,36 @@ $(function() {
 	
 		connectWebsocket(name);
 		
-		// Get the list of games
-		$.ajax({url: "/game/type/getAll"}).then(retrieveGameTypesAndDisplay);
+		ajaxGetGameTypes(retrieveGameTypesAndDisplay);
 	}
 });
 
+/* **************************** PAGE PANEL MANIPULATION ******************************* */
+
 function retrieveGameTypesAndDisplay (data) {
-	for (var i in data) {
-		$("#accordion").append(newGamePanel(i, data[i]));
+	// Will receive an array of game types
+	for (var index in data) {
+		var gameType = data[index];
+		var gameTypesPanel = newGamePanel(index, gameType);
+	
+		$("#accordion").append(gameTypesPanel);
 		
-		$('#collapse'+i).on('shown.bs.collapse', function () {
-			// Get the list of games for this type
-			$.ajax({
-				url: "/games/getForType",
-				data: {gameType: data[i].type},
-				success: displayGamesForType
-			});
-		
-			newGameButton(i, $(this));
-			//$(this).html("<div class='panel'><button type='button' class='btn btn-default'>New Game 2</button></div>");
+		// Behaviour for expanding a game type panel...
+		$('#collapse'+index).on('shown.bs.collapse', function () {
+			populatePanelWhenCollapsed($(this));
 		});
 	}
 }
 
+function populatePanelWhenCollapsed (collapsiblePanel) {
+	var gameType = collapsiblePanel.find(".panel-body").attr("data-game");
+	console.log("Collapsing panel for " + gameType);
+	ajaxGetGamesForType(gameType, displayGamesForType);
+	newGameButton(gameType);
+}
+
 function displayGamesForType (data) {
+	// Will receive an array of games
 	for (var i in data) {
 		console.log("displayGamesForType [data:"+  JSON.stringify(data[i])  +"]");
 		var panel = $("#"+data[i].gameType.type);
@@ -61,18 +67,36 @@ function displayGamesForType (data) {
 	}
 }
 
-function newGamePanel (index, gameType) {
+function newPlayerAddedToGame () {
+	alert("Added New Player to Game");
+}
 
-	var output = '<div class="panel panel-default" id="panel'+index'">' +
-			'<div class="panel-heading">' +
-			'<h4 class="panel-title">' +
-			'<a data-toggle="collapse" id="'+gameType.type+'" data-target="#collapse'+index+'" href="#collapse'+index+'" class="collapsed">' +
-			gameType.displayName +
-			'</a>' +
-			'</h4>' +
-			'</div>' +
-			'<div id="collapse'+index+'" class="panel-collapse collapse">' +
-			'<div class="panel-body">' +
+/* **************************** DIRECT HTML GENERATION ******************************* */
+function newGameButton(gameType) {
+	var newGamePanel = $("div[data-game='"+gameType+"'] > .newGamePanel");
+	
+	newGamePanel.html("<div class='panel'><button type='button' class='btn btn-default'>New Game</button></div>");
+
+	newGamePanel.find(".btn").click (function () {
+		addPlayerToNewGameOfType (gameType, newPlayerAddedToGame);
+	});
+}
+
+function displayExistingGames (game, index, collapsiblePanel) {
+	collapsiblePanel.html("<div class='panel'>Game "+game.id+"<button type='button' class='btn btn-primary'>Join</button></div>");
+}
+
+function newGamePanel (index, gameType) {
+	var output =
+		'<div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title">' +
+//		'<a id="'+gameType.type+'" class="collapsed" data-toggle="collapse" data-target="#collapse'+index+'" href="#collapse'+index+'">' +
+		'<a class="collapsed" data-toggle="collapse" data-target="#collapse'+index+'" href="#">' +
+		gameType.displayName +
+		'</a></h4></div>' +
+		'<div id="collapse'+index+'" class="panel-collapse collapse">' +
+		'<div data-game="' + gameType.type + '" class="panel-body">' +
+		'<div class="gameList"></div>' +
+		'<div class="newGamePanel"></div>' +
 //						<div class="panel">
 //							Game 1: Anne, Matt
 //							<button type="button" class="btn btn-primary">Join</button>
@@ -80,24 +104,13 @@ function newGamePanel (index, gameType) {
 //						<div class="panel">
 //							<button type="button" class="btn btn-default">New Game</button>
 //						</div>
-			'</div></div></div>';
+		'</div></div></div>';
 
 	return output;
 };
 
-function displayExistingGames (game, index, collapsiblePanel) {
-	collapsiblePanel.html("<div class='panel'>Game "+game.id+"<button type='button' class='btn btn-primary'>Join</button></div>");
-}
 
-function newGameButton (index, collapsiblePanel) {
-	collapsiblePanel.html("<div class='panel'><button id='newGame"+index+"' type='button' class='btn btn-default'>New Game</button></div>");
-	$('#newGame'+index).click (function () {
-		// HARD CODED AS TEST FOR NOW
-		$.post({url: "/game/addPlayerToNewGame", data: {gameType: 'fluxx', player: name}}).then(function (data) {
-			alert("Added New Player to Game");
-		});
-	});
-}
+/* **************************** COOKIE HANDLING ******************************* */
 
 function readCookie (cookieName) {
 	var name = cookieName + "=";
@@ -115,4 +128,29 @@ function writeCookie(cname, cvalue, exdays) {
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+/* **************************** AJAX CALLS ******************************* */
+
+function ajaxGetGameTypes (successFunction) {
+	$.ajax({
+		url: "/game/type/getAll",
+		success: successFunction
+	});
+}
+
+function ajaxGetGamesForType (gameType, successFunction) {
+	$.ajax({
+		url: "/games/getForType",
+		data: {gameType: gameType},
+		success: successFunction
+	});
+}
+
+function addPlayerToNewGameOfType (gameType, successFunction) {
+	$.post({
+		url: "/game/addPlayerToNewGame",
+		data: {gameType: gameType, player: name},
+		success: successFunction
+	});
 }
