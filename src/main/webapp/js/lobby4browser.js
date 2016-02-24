@@ -1,6 +1,29 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
+module.exports.readCookie = function (cookieName) {
+	var name = cookieName + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+
+module.exports.writeCookie = function (cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+},{}],2:[function(require,module,exports){
+
+var Cookie = require('../common/cookie.js');
 var Websocket = require('../websocket/websocket.js');
+var Ajax = require('./lobbyAjax.js');
+
 var name = "";
 
 /* **************************** MAIN PAGE JQUERY ON-LOAD ******************************* */
@@ -13,10 +36,10 @@ $(function() {
 		});
 		
 		name = $('#name').val();
-		writeCookie("name", name, 365);
+		Cookie.writeCookie("name", name, 365);
 	});
 
-	name = readCookie ("name");
+	name = Cookie.readCookie ("name");
 
 	if (name == "") {
 		$('#welcome-back').text("Please identify yourself first...");
@@ -32,7 +55,7 @@ $(function() {
 	
 		Websocket.connectWebsocket(name);
 		
-		ajaxGetGameTypes(retrieveGameTypesAndDisplay);
+		Ajax.getGameTypes(retrieveGameTypesAndDisplay);
 	}
 });
 
@@ -61,7 +84,7 @@ function populatePanelWhenCollapsed (collapsiblePanel) {
 	var gamePanel = $("div[data-game='"+gameType+"'] > .gameList");
 	gamePanel.html("");
 	
-	ajaxGetGamesForType(gameType, displayGamesForType);
+	Ajax.getGamesForType(gameType, displayGamesForType);
 	newGameButton(gameType);
 }
 
@@ -89,7 +112,7 @@ function newGameButton(gameType) {
 	newGamePanel.html("<div class='panel'><button type='button' class='btn btn-default'>New Game</button></div>");
 
 	newGamePanel.find(".btn").click (function () {
-		addPlayerToNewGameOfType (gameType, newPlayerAddedToGame);
+		Ajax.addPlayerToNewGameOfType (gameType, name, newPlayerAddedToGame);
 	});
 }
 
@@ -119,7 +142,7 @@ function displayExistingGame (game) {
 	gamePanel.append(html);
 	
 	gamePanel.find(".btn").click (function () {
-		addPlayerToExistingGame(gameId, newPlayerAddedToExistingGame);
+		Ajax.addPlayerToExistingGame(gameId, name, newPlayerAddedToExistingGame);
 	});
 }
 
@@ -147,36 +170,16 @@ function newGamePanel (index, gameType) {
 };
 
 
-/* **************************** COOKIE HANDLING ******************************* */
+},{"../common/cookie.js":1,"../websocket/websocket.js":4,"./lobbyAjax.js":3}],3:[function(require,module,exports){
 
-function readCookie (cookieName) {
-	var name = cookieName + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
-        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
-    }
-    return "";
-}
-
-function writeCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
-}
-
-/* **************************** AJAX CALLS ******************************* */
-
-function ajaxGetGameTypes (successFunction) {
+module.exports.getGameTypes = function (successFunction) {
 	$.ajax({
 		url: "/game/type/getAll",
 		success: successFunction
 	});
 }
 
-function ajaxGetGamesForType (gameType, successFunction) {
+module.exports.getGamesForType = function (gameType, successFunction) {
 	$.ajax({
 		url: "/games/getForType",
 		data: {gameType: gameType},
@@ -184,7 +187,7 @@ function ajaxGetGamesForType (gameType, successFunction) {
 	});
 }
 
-function addPlayerToNewGameOfType (gameType, successFunction) {
+module.exports.addPlayerToNewGameOfType = function (gameType, name, successFunction) {
 	$.post({
 		url: "/game/addPlayerToNewGame",
 		data: {gameType: gameType, player: name},
@@ -192,7 +195,7 @@ function addPlayerToNewGameOfType (gameType, successFunction) {
 	});
 }
 
-function addPlayerToExistingGame (gameId, successFunction) {
+module.exports.addPlayerToExistingGame = function (gameId, name, successFunction) {
 	$.post({
 		url: "/game/addPlayerToExistingGame",
 		data: {gameId: gameId, player: name},
@@ -200,7 +203,7 @@ function addPlayerToExistingGame (gameId, successFunction) {
 	});
 }
 
-},{"../websocket/websocket.js":2}],2:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var socket = new SockJS('/gameserver');
 var stompClient = Stomp.over(socket);
 
@@ -265,4 +268,4 @@ var sendCommandToGame = function(command, value) {
 }
 module.exports.sendCommandToGame = sendCommandToGame;
 
-},{}]},{},[1]);
+},{}]},{},[2]);
