@@ -10,7 +10,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mindbadger.cah.sessions.PlayerSessions;
+import mindbadger.cah.players.Player;
+import mindbadger.cah.players.PlayerSessions;
 
 @Component
 public class GameManager {

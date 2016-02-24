@@ -1,4 +1,4 @@
-package mindbadger.cah.game;
+package mindbadger.cah.action;
 
 public class PlayerAction {
 

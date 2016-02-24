@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import mindbadger.cah.game.Player;
-import mindbadger.cah.sessions.PlayerSessions;
+import mindbadger.cah.players.Player;
+import mindbadger.cah.players.PlayerSessions;
 
 public class PlayerSessionsTest {
 	private static final String SESSION1 = "SESSION1";

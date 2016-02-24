@@ -9,6 +9,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
+import mindbadger.cah.players.Player;
+
 public class GameSerializer extends JsonSerializer<List<Player>> {
     @Override
     public void serialize(final List<Player> players, final JsonGenerator generator, final SerializerProvider provider)

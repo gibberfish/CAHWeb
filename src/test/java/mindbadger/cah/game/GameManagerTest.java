@@ -17,7 +17,8 @@ import org.mockito.MockitoAnnotations;
 
 import jdk.nashorn.internal.ir.SetSplitState;
 import mindbadger.cah.action.Action;
-import mindbadger.cah.sessions.PlayerSessions;
+import mindbadger.cah.players.Player;
+import mindbadger.cah.players.PlayerSessions;
 
 public class GameManagerTest {
 

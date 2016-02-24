@@ -3,8 +3,7 @@ package mindbadger.cah.action;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
-import mindbadger.cah.game.GameStateChange;
-import mindbadger.cah.game.PlayerAction;
+import mindbadger.cah.websocket.GameStateChange;
 
 @Component("logout")
 public class LogoutAction extends Action {

@@ -1,11 +1,14 @@
-package mindbadger.cah.game;
+package mindbadger.cah.websocket;
+
+import mindbadger.cah.game.Game;
 
 public class GameStateChange {
     
 	private String player;
 	private String command;
 	private String value;
-	private Integer gameId;
+	private Game game;
+	
 	public String getPlayer() {
 		return player;
 	}
@@ -24,10 +27,10 @@ public class GameStateChange {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public Integer getGameId() {
-		return gameId;
+	public Game getGame() {
+		return game;
 	}
-	public void setGameId(Integer gameId) {
-		this.gameId = gameId;
+	public void setGame(Game game) {
+		this.game = game;
 	}
 }

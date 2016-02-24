@@ -10,10 +10,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import mindbadger.cah.game.Game;
-import mindbadger.cah.game.GameStateChange;
-import mindbadger.cah.game.Player;
-import mindbadger.cah.game.PlayerAction;
-import mindbadger.cah.sessions.PlayerSessions;
+import mindbadger.cah.players.Player;
+import mindbadger.cah.players.PlayerSessions;
+import mindbadger.cah.websocket.GameStateChange;
 
 public class ActionTest {
 	private static final String PLAYER_NAME = "PLAYER1";
@@ -80,7 +79,7 @@ public class ActionTest {
 		// Then
 		assertEquals (gameStateChange, returnedGameStateChange);
 		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
-		assertEquals (GAME_ID, returnedGameStateChange.getGameId());
+		assertEquals (mockGame, returnedGameStateChange.getGame());
 		verify(mockSessions).getPlayerNameForSession(SESSION_ID);
 	}
 	
@@ -95,7 +94,7 @@ public class ActionTest {
 		// Then
 		assertEquals (gameStateChange, returnedGameStateChange);
 		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
-		assertNull (returnedGameStateChange.getGameId());
+		assertNull (returnedGameStateChange.getGame());
 		verify(mockSessions).getPlayerNameForSession(SESSION_ID);
 	}
 }

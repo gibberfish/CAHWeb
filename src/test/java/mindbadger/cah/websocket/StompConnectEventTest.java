@@ -14,7 +14,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 
-import mindbadger.cah.sessions.PlayerSessions;
+import mindbadger.cah.players.PlayerSessions;
 
 public class StompConnectEventTest {
 	private static final String NAME = "Mark";

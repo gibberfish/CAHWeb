@@ -4,10 +4,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import mindbadger.cah.game.Game;
-import mindbadger.cah.game.GameStateChange;
-import mindbadger.cah.game.Player;
-import mindbadger.cah.game.PlayerAction;
-import mindbadger.cah.sessions.PlayerSessions;
+import mindbadger.cah.players.Player;
+import mindbadger.cah.players.PlayerSessions;
+import mindbadger.cah.websocket.GameStateChange;
 
 public abstract class Action {
 	final static Logger logger = Logger.getLogger(Action.class);
@@ -25,7 +24,7 @@ public abstract class Action {
 		logger.info("Action has set player name " + playerNameForSession + " onto the game state change.");
 		logger.info("  this player has game " + game);
 		if (game != null) {
-			commandResults.setGameId(game.getGameId());
+			commandResults.setGame(game);
 		}
 		return commandResults;
 	}

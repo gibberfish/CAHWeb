@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mindbadger.cah.game.Game;
 import mindbadger.cah.game.GameManager;
-import mindbadger.cah.sessions.PlayerSessions;
+import mindbadger.cah.players.PlayerSessions;
 
 @RestController
 public class GamesForTypeService {

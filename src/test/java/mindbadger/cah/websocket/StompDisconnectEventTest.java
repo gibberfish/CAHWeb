@@ -11,7 +11,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import mindbadger.cah.sessions.PlayerSessions;
+import mindbadger.cah.players.PlayerSessions;
 
 public class StompDisconnectEventTest {
 	private static final String SESSIONID = "sessionid";

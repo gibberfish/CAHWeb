@@ -1,12 +1,10 @@
-package mindbadger.cah.sessions;
+package mindbadger.cah.players;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
-
-import mindbadger.cah.game.Player;
 
 @Component
 public class PlayerSessions {

@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import mindbadger.cah.players.Player;
+
 public class Game {
 	private int gameId;
 	private GameType gameType;
