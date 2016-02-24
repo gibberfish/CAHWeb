@@ -1,5 +1,10 @@
 
+var Cookie = require('../common/cookie.js');
+var Websocket = require('../websocket/websocket.js');
+
 $(function() {
+	Websocket.connectWebsocket(name);
+	
 	$(".my").mouseenter(mouseOverCardInMyHand);
 	$(".my").mouseleave(mouseLeavesCardInMyHand);
 	
