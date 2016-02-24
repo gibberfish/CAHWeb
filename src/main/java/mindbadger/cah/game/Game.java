@@ -20,7 +20,10 @@ public class Game {
 	}
 
 	public void addPlayerToGame (Player player) {
-		this.players.add(player);
+		if (player != null) {
+			this.players.add(player);
+			player.setGame(this);
+		}
 	}
 	
 	public GameType getGameType() {

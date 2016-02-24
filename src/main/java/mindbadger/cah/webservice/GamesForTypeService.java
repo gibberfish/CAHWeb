@@ -33,8 +33,11 @@ public class GamesForTypeService {
 	@RequestMapping(value="/game/addPlayerToExistingGame", method=RequestMethod.POST)
     public void addPlayerToExistingGame(@RequestParam(value="gameId") String gameId, @RequestParam(value="player") String player) {
 		logger.info("addPlayerToExistingGame, gameId: " + gameId + ", player: " + player);
-		Game game = gameManager.getGames().get(gameId);
-		game.addPlayerToGame(players.getPlayer(player));
+		Game game = gameManager.getGameForId(Integer.parseInt(gameId));
+		logger.info("..got game: " + game);
+		if (game != null) {
+			game.addPlayerToGame(players.getPlayer(player));
+		}
     }
 
 	@RequestMapping(value="/game/addPlayerToNewGame", method=RequestMethod.POST)

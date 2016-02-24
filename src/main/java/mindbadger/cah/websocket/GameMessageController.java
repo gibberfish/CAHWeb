@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -21,6 +22,10 @@ public class GameMessageController {
 	@Autowired
 	Map<String, Action> actions;
 	
+	@Autowired
+	@Qualifier("invalidAction")
+	Action invalidAction;
+	
     @MessageMapping("/gameserver")
     @SendTo("/gamestate/gameStateUpdates")
     public GameStateChange handlePlayerActionMessage(SimpMessageHeaderAccessor headerAccessor, @Payload PlayerAction action) throws Exception {
@@ -33,11 +38,7 @@ public class GameMessageController {
     		return commandObject.executeCommand(sessionId, action);
     	} else {
     		logger.info("No Action found for " + action.getAction());
-    		GameStateChange gsc = new GameStateChange();
-    		gsc.setPlayer(null);
-    		gsc.setCommand(action.getAction());
-    		gsc.setValue("ACTION NOT FOUND (session " + sessionId + ")");
-    		return gsc;
+    		return invalidAction.executeCommand(sessionId, action);
     	}
     }
 }

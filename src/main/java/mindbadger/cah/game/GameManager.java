@@ -51,7 +51,9 @@ public class GameManager {
 			gamesForThisType = new ArrayList<Game> ();
 		}
 		gamesForThisType.add(newGame);
-		games.put(newGame.getGameId(), newGame);
+		this.games.put(newGame.getGameId(), newGame);
+		
+		logger.info("New Game: " + this.games.get(newGame.getGameId()));
 		
 		this.gamesForType.put(gameType, gamesForThisType);
 	}
@@ -73,5 +75,9 @@ public class GameManager {
 
 	public Map<Integer, Game> getGames() {
 		return games;
+	}
+	
+	public Game getGameForId (int id) {
+		return this.games.get(id);
 	}
 }

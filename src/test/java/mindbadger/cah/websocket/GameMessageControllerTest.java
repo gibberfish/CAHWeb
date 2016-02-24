@@ -35,7 +35,10 @@ public class GameMessageControllerTest {
 	
 	@Mock
 	private Action mockAction;
-	
+
+	@Mock
+	private Action mockInvalidAction;
+
 	@Mock
 	private GameStateChange mockGameStateChange;
 	
@@ -48,10 +51,11 @@ public class GameMessageControllerTest {
 		Map<String, Action> actions = new HashMap<String, Action> ();
 		actions.put(PLAYER_ACTION, mockAction);
 		objectUnderTest.actions = actions;
+		objectUnderTest.invalidAction = mockInvalidAction;
 	}
 	
 	@Test
-	public void shouldExecuteACommandIfFound () throws Exception {
+	public void shouldReturnAnInvalidGameStateChangeIfNoCommandFound () throws Exception {
 		// Given
 		when(mockSimpMessageHeaderAccessor.getSessionId()).thenReturn(SESSION_ID1);
 		when(mockPlayerAction.getAction()).thenReturn(INVALID_PLAYER_ACTION);
@@ -62,12 +66,11 @@ public class GameMessageControllerTest {
 		
 		// Then
 		verify(mockAction,never()).executeCommand(SESSION_ID1, mockPlayerAction);
-		assertEquals (gsc.getValue(), "ACTION NOT FOUND (session sessionId1)");
-		assertEquals (gsc.getCommand(), INVALID_PLAYER_ACTION);
+		verify(mockInvalidAction,times(1)).executeCommand(SESSION_ID1, mockPlayerAction);
 	}
 	
 	@Test
-	public void shouldReturnAnInvalidGameStateChangeIfNoCommandFound () throws Exception {
+	public void shouldExecuteACommandIfFound () throws Exception {
 		// Given
 		when(mockSimpMessageHeaderAccessor.getSessionId()).thenReturn(SESSION_ID1);
 		when(mockPlayerAction.getAction()).thenReturn(PLAYER_ACTION);

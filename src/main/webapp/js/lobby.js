@@ -71,9 +71,14 @@ function displayGamesForType (data) {
 }
 
 function newPlayerAddedToGame () {
-	alert("Added New Player to Game");
+	console.log("Added New Player to New Game");
+	sendCommandToGame("createGame", name);
 }
 
+function newPlayerAddedToExistingGame () {
+	console.log("Added New Player to Existing Game");
+	sendCommandToGame("joinGame", name);
+}
 /* **************************** DIRECT HTML GENERATION ******************************* */
 
 function newGameButton(gameType) {
@@ -110,6 +115,10 @@ function displayExistingGame (game) {
 		"</div>";
 	
 	gamePanel.append(html);
+	
+	gamePanel.find(".btn").click (function () {
+		addPlayerToExistingGame(gameId, newPlayerAddedToExistingGame);
+	});
 }
 
 function newGamePanel (index, gameType) {
@@ -177,6 +186,14 @@ function addPlayerToNewGameOfType (gameType, successFunction) {
 	$.post({
 		url: "/game/addPlayerToNewGame",
 		data: {gameType: gameType, player: name},
+		success: successFunction
+	});
+}
+
+function addPlayerToExistingGame (gameId, successFunction) {
+	$.post({
+		url: "/game/addPlayerToExistingGame",
+		data: {gameId: gameId, player: name},
 		success: successFunction
 	});
 }
