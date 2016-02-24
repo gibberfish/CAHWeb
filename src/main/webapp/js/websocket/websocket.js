@@ -1,8 +1,7 @@
+var socket = new SockJS('/gameserver');
+var stompClient = Stomp.over(socket);
 
-function connectWebsocket (name) {
-    var socket = new SockJS('/gameserver');
-    
-    stompClient = Stomp.over(socket);
+module.exports.connectWebsocket = function (name) {
     stompClient.connect({"name" : name}, function(frame) {
         console.log('WEBSOCKET Connected: ' + frame);
         
@@ -19,8 +18,8 @@ function connectWebsocket (name) {
     //$("#commandButton").removeAttr("disabled");
 }
 
-function disconnectWebsocket () {
-	var name = $("#name").val();
+module.exports.disconnectWebsocket = function (name) {
+	//var name = $("#name").val();
     if (stompClient != null) {
     	sendCommandToGame("logout", name);
         stompClient.disconnect();
@@ -31,7 +30,7 @@ function disconnectWebsocket () {
     console.log("WEBSOCKET Disconnected");
 }
         
-function handleGameStateChange(player, command, value, game) {
+var handleGameStateChange = function(player, command, value, game) {
 	var gameId, gameType;
 	if (game != undefined) {
 		gameId = game.gameId;
@@ -50,14 +49,15 @@ function handleGameStateChange(player, command, value, game) {
 	
 	//$("#messages").append ("<p>"+result+"</p>");
 }
-
+module.exports.handleGameStateChange = handleGameStateChange;
 //TODO Remove - this was only for demo purposes
-function sendCommandToGameFromScreen() {
-    var command = $("#command").val();
-    var value = $("#value").val();
-    sendCommandToGame(command, value);
-}
+//function sendCommandToGameFromScreen() {
+//    var command = $("#command").val();
+//    var value = $("#value").val();
+//    sendCommandToGame(command, value);
+//}
 
-function sendCommandToGame(command, value) {
+var sendCommandToGame = function(command, value) {
     stompClient.send("/cah/gameserver", {}, JSON.stringify({ 'action': command, 'value': value }));
 }
+module.exports.sendCommandToGame = sendCommandToGame;

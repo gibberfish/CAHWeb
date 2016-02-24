@@ -1,4 +1,5 @@
 
+var Websocket = require('../websocket/websocket.js');
 var name = "";
 
 /* **************************** MAIN PAGE JQUERY ON-LOAD ******************************* */
@@ -28,7 +29,7 @@ $(function() {
 	} else {
 		$('#welcome-back').text("Welcome back " + name + ". Please choose a game below...");
 	
-		connectWebsocket(name);
+		Websocket.connectWebsocket(name);
 		
 		ajaxGetGameTypes(retrieveGameTypesAndDisplay);
 	}
@@ -72,12 +73,12 @@ function displayGamesForType (data) {
 
 function newPlayerAddedToGame () {
 	console.log("Added New Player to New Game");
-	sendCommandToGame("createGame", name);
+	Websocket.sendCommandToGame("createGame", name);
 }
 
 function newPlayerAddedToExistingGame () {
 	console.log("Added New Player to Existing Game");
-	sendCommandToGame("joinGame", name);
+	Websocket.sendCommandToGame("joinGame", name);
 }
 /* **************************** DIRECT HTML GENERATION ******************************* */
 
