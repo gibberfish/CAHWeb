@@ -17,6 +17,13 @@ public class PlayerSessions {
 	private Map<String, Player> playerskeyedOnPlayerName = new HashMap<String,Player> ();
 	
 	public void addPlayerSession (String name, String session) {
+		logger.info("ADD PLAYER SESSION...");
+		logger.info("..name: " + name);
+		logger.info("..session: " + session);
+		logger.info("..sessionsKeyedOnPlayerName: " + sessionsKeyedOnPlayerName.size());
+		logger.info("..playerskeyedOnSessionId: " + playerskeyedOnSessionId.size());
+		logger.info("..playerskeyedOnPlayerName: " + playerskeyedOnPlayerName.size());
+		
 		
 		int sessionsBefore = sessionsKeyedOnPlayerName.size();
 		int playersBefore = playerskeyedOnSessionId.size();
@@ -32,6 +39,7 @@ public class PlayerSessions {
 		
 		Player player = playerskeyedOnPlayerName.get(name);
 		if (player == null) {
+			logger.info("Can't find a player already registered with this name - creating a new one");
 			player = new Player(name);
 			playerskeyedOnPlayerName.put(name, player);
 		}
@@ -54,7 +62,6 @@ public class PlayerSessions {
 		Player player = playerskeyedOnSessionId.get(session);
 		if (player != null) {
 			sessionsKeyedOnPlayerName.remove(player.getName());
-			playerskeyedOnPlayerName.remove(player.getName());
 		}
 		playerskeyedOnSessionId.remove(session);
 		

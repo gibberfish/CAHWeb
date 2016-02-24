@@ -47,7 +47,7 @@ function retrieveGameTypesAndDisplay (data) {
 		// Behaviour for expanding a game type panel...
 		$('#collapse'+index).on('shown.bs.collapse', function () {
 			populatePanelWhenCollapsed($(this));
-		});
+		}); 
 	}
 }
 
@@ -66,7 +66,7 @@ function populatePanelWhenCollapsed (collapsiblePanel) {
 function displayGamesForType (data) {
 	// Will receive an array of games
 	for (var i in data) {
-		displayExistingGames(data[i]);
+		displayExistingGame(data[i]);
 	}
 }
 
@@ -75,6 +75,7 @@ function newPlayerAddedToGame () {
 }
 
 /* **************************** DIRECT HTML GENERATION ******************************* */
+
 function newGameButton(gameType) {
 	var newGamePanel = $("div[data-game='"+gameType+"'] > .newGamePanel");
 	
@@ -85,14 +86,30 @@ function newGameButton(gameType) {
 	});
 }
 
-function displayExistingGames (game) {
+function displayExistingGame (game) {
 	console.log("displayGamesForType [data:" + JSON.stringify(game) + "]");
 	
 	var gameType = game.gameType.type;
 	var gameId = game.gameId;
+	var players = game.players;
 	var gamePanel = $("div[data-game='"+gameType+"'] > .gameList");
 	
-	gamePanel.append("<div class='panel'>Game "+gameId+"<button type='button' class='btn btn-primary'>Join</button></div>");
+	var html =
+		"<div class='panel'>" +
+		"<label for='btn_"+gameId+"' class='col-sm-10 control-label'>" +
+		"Game "+gameId+" (";
+	
+	for (i in players) {
+		html += players[i].name;
+		if (i != players.length-1) {
+			html += ", ";
+		}
+	}
+	
+	html +=	")</label><div class='col-sm-2'><button type='button' class='btn btn-primary'>Join</button></div>" +
+		"</div>";
+	
+	gamePanel.append(html);
 }
 
 function newGamePanel (index, gameType) {

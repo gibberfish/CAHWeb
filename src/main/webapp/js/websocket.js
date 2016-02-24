@@ -8,6 +8,7 @@ function connectWebsocket (name) {
         
         stompClient.subscribe('/gamestate/gameStateUpdates', function(gameStateActionResponse){
             var gameStateActionResponseObject = JSON.parse(gameStateActionResponse.body);
+            console.log('Subscribed: ' + gameStateActionResponse.body);
             showGameStateChange(gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value, gameStateActionResponseObject.gameId);
         });
         

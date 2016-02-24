@@ -72,10 +72,12 @@ public class PlayerSessionsTest {
 		objectUnderTest.removePlayerWithSession(SESSION1);
 		
 		// Then
-		Player player1 = objectUnderTest.getPlayerNameForSession(SESSION1);
+		Player player1InSession = objectUnderTest.getPlayerNameForSession(SESSION1);
 		String session1 = objectUnderTest.getSessionForPlayer(PLAYER1);
-		assertEquals (null, session1);
-		assertEquals (null, player1);
+		Player player1 = objectUnderTest.getPlayer(PLAYER1);
+		assertNull (session1);
+		assertNull (player1InSession);
+		assertNotNull (player1);
 	}
 	
 	@Test
@@ -88,10 +90,12 @@ public class PlayerSessionsTest {
 		objectUnderTest.removePlayerWithSession(SESSION1);
 		
 		// Then
-		Player player1 = objectUnderTest.getPlayerNameForSession(SESSION1);
+		Player player1InSession = objectUnderTest.getPlayerNameForSession(SESSION1);
 		String session1 = objectUnderTest.getSessionForPlayer(PLAYER1);
-		assertEquals (null, session1);
-		assertEquals (null, player1);
+		Player player1 = objectUnderTest.getPlayer(PLAYER1);
+		assertNull (session1);
+		assertNull (player1InSession);
+		assertNotNull (player1);
 	}
 
 }
