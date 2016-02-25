@@ -2,8 +2,10 @@
 
 var Cookie = require('../common/cookie.js');
 var Websocket = require('../websocket/websocket.js');
+var name = "";
 
 $(function() {
+	name = Cookie.readCookie ("name");
 	Websocket.connectWebsocket(name);
 	
 	$(".my").mouseenter(mouseOverCardInMyHand);

@@ -1,22 +1,19 @@
 package mindbadger.cah.game;
 
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import jdk.nashorn.internal.ir.SetSplitState;
-import mindbadger.cah.action.Action;
 import mindbadger.cah.players.Player;
 import mindbadger.cah.players.PlayerSessions;
 
@@ -27,11 +24,13 @@ public class GameManagerTest {
 	private static final String TYPE_1_GAME_URL = "Type 1 url";
 	private static final String TYPE_1_DISPLAY_NAME = "Game Type 1";
 	private static final String TYPE1_ID = "TYPE1";
+	private static final String TYPE1_CLASS = "CardsAgainstHumanityGame";
 	private static final String TYPE_2_GAME_URL = "Type 2 url";
 	private static final String TYPE_2_DISPLAY_NAME = "Game Type 2";
 	private static final String TYPE2_ID = "TYPE2";
-	private static final GameType GAME_TYPE_1 = new GameType(TYPE1_ID,TYPE_1_DISPLAY_NAME,TYPE_1_GAME_URL);
-	private static final GameType GAME_TYPE_2 = new GameType(TYPE2_ID,TYPE_2_DISPLAY_NAME,TYPE_2_GAME_URL);
+	private static final String TYPE2_CLASS = "FluxxGame";
+	private static final GameType GAME_TYPE_1 = new GameType(TYPE1_ID,TYPE_1_DISPLAY_NAME,TYPE_1_GAME_URL,TYPE1_CLASS);
+	private static final GameType GAME_TYPE_2 = new GameType(TYPE2_ID,TYPE_2_DISPLAY_NAME,TYPE_2_GAME_URL,TYPE2_CLASS);
 	private static final Player PLAYER1 = new Player(PLAYER1_NAME);
 	private static final Player PLAYER2 = new Player(PLAYER2_NAME);
 	
@@ -44,12 +43,6 @@ public class GameManagerTest {
 	public void init () {
 		MockitoAnnotations.initMocks(this);
 
-//		Map<String, GameType> gameTypes = new HashMap<String, GameType> ();
-//		gameTypes.put(TYPE1_ID, GAME_TYPE_1);
-//		gameTypes.put(TYPE2_ID, GAME_TYPE_2);
-//		objectUnderTest.gameTypes = gameTypes;
-//		objectUnderTest = new GameManager ();
-		
 		Set<GameType> gameTypes = new HashSet<GameType> ();
 		gameTypes.add(GAME_TYPE_1);
 		gameTypes.add(GAME_TYPE_2);
@@ -112,6 +105,7 @@ public class GameManagerTest {
 		assertEquals (1, newGame.getPlayers().size());
 		assertEquals (PLAYER1, newGame.getPlayers().get(0));
 		assertEquals(newGame, PLAYER1.getGame());
+		assertTrue (newGame instanceof CardsAgainstHumanityGame);
 	}
 
 	@Test
@@ -137,13 +131,15 @@ public class GameManagerTest {
 		assertEquals (1, firstNewGame.getPlayers().size());
 		assertEquals (PLAYER1, firstNewGame.getPlayers().get(0));
 		assertEquals(firstNewGame, PLAYER1.getGame());
-
+		assertTrue (firstNewGame instanceof CardsAgainstHumanityGame);
+		
 		Game secondNewGame = gamesOfType1.get(1);
 		assertEquals (GAME_TYPE_1, secondNewGame.getGameType());
 		assertEquals (2, secondNewGame.getGameId());
 		assertEquals (1, secondNewGame.getPlayers().size());
 		assertEquals (PLAYER2, secondNewGame.getPlayers().get(0));
 		assertEquals(secondNewGame, PLAYER2.getGame());
+		assertTrue (secondNewGame instanceof CardsAgainstHumanityGame);
 	}
 
 	@Test
@@ -169,13 +165,15 @@ public class GameManagerTest {
 		assertEquals (1, firstNewGame.getPlayers().size());
 		assertEquals (PLAYER1, firstNewGame.getPlayers().get(0));
 		assertEquals(firstNewGame, PLAYER1.getGame());
-
+		assertTrue (firstNewGame instanceof CardsAgainstHumanityGame);
+		
 		Game secondNewGame = gamesOfType2.get(0);
 		assertEquals (GAME_TYPE_2, secondNewGame.getGameType());
 		assertEquals (2, secondNewGame.getGameId());
 		assertEquals (1, secondNewGame.getPlayers().size());
 		assertEquals (PLAYER2, secondNewGame.getPlayers().get(0));
 		assertEquals(secondNewGame, PLAYER2.getGame());
+		assertTrue (secondNewGame instanceof FluxxGame);
 	}
 
 }

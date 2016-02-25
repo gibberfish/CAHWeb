@@ -9,16 +9,11 @@ import mindbadger.cah.game.GameType;
 public class CardsAgainstHumanityConfiguration {
     @Bean
     public GameType cardsAgainstHumanityGameType () {
-        return new GameType ("cardsAgainstHumanity", "Cards Against Humanity", "cah.html");
+        return new GameType ("cardsAgainstHumanity", "Cards Against Humanity", "cah.html", "CardsAgainstHumanityGame");
     }
     
     @Bean
     public GameType fluxxGameType () {
-        return new GameType ("fluxx", "Fluxx", "fluxx.html");
-    }
-    
-    @Bean
-    public GameType pokerGameType () {
-        return new GameType ("poker", "Poker", "poker.html");
-    }
+        return new GameType ("fluxx", "Fluxx", "fluxx.html", "FluxxGame");
+    }    
 }

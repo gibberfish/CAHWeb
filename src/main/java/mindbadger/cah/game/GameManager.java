@@ -1,5 +1,7 @@
 package mindbadger.cah.game;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +41,33 @@ public class GameManager {
 		
 		logger.info("createNewGameAndAddFirstPlayer, gameType: " + gameType + ", playerName: " + playerName);
 		
-		Game newGame = new Game(nextGameId, gameTypeObject);
+//		Game newGame = new Game(nextGameId, gameTypeObject);
+		Class<?>[] type = { Integer.class, GameType.class };
+		Class<?> myClass;
+		Game newGame = null;
+		try {
+			myClass = Class.forName("mindbadger.cah.game."+gameTypeObject.getClazz());
+			Constructor<?> cons = myClass.getConstructor(type);
+			Object[] obj = { nextGameId, gameTypeObject};
+			newGame = (Game) cons.newInstance(obj);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		
 		nextGameId++;
 		
 		Player player = players.getPlayer(playerName);

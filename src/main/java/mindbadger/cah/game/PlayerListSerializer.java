@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import mindbadger.cah.players.Player;
 
-public class GameSerializer extends JsonSerializer<List<Player>> {
+public class PlayerListSerializer extends JsonSerializer<List<Player>> {
     @Override
     public void serialize(final List<Player> players, final JsonGenerator generator, final SerializerProvider provider)
     	throws IOException, JsonProcessingException {

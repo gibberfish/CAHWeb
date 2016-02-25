@@ -7,14 +7,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import mindbadger.cah.players.Player;
 
-public class Game {
-	private int gameId;
-	private GameType gameType;
+public abstract class Game {
+	protected int gameId;
+	protected GameType gameType;
 	
-	@JsonSerialize(using = GameSerializer.class)
-	private List<Player> players = new ArrayList<Player> ();
+	@JsonSerialize(using = PlayerListSerializer.class)
+	protected List<Player> players = new ArrayList<Player> ();
 
-	public Game (int gameId, GameType gameType) {
+	public Game (Integer gameId, GameType gameType) {
 		this.gameId = gameId;
 		this.gameType = gameType;
 	}
