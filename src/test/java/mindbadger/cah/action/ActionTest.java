@@ -48,7 +48,7 @@ public class ActionTest {
 		
 		objectUnderTest.players = mockSessions;
 		
-		when(mockSessions.getPlayerNameForSession(SESSION_ID)).thenReturn(mockPlayer);
+		when(mockSessions.getPlayerForSession(SESSION_ID)).thenReturn(mockPlayer);
 		when(mockPlayer.getName()).thenReturn(PLAYER_NAME);
 	}
 	
@@ -64,7 +64,7 @@ public class ActionTest {
 		// Then
 		assertEquals (gameStateChange, returnedGameStateChange);
 		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
-		verify(mockSessions).getPlayerNameForSession(SESSION_ID);
+		verify(mockSessions).getPlayerForSession(SESSION_ID);
 	}
 	
 	@Test
@@ -80,7 +80,7 @@ public class ActionTest {
 		assertEquals (gameStateChange, returnedGameStateChange);
 		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
 		assertEquals (mockGame, returnedGameStateChange.getGame());
-		verify(mockSessions).getPlayerNameForSession(SESSION_ID);
+		verify(mockSessions).getPlayerForSession(SESSION_ID);
 	}
 	
 	@Test
@@ -95,6 +95,6 @@ public class ActionTest {
 		assertEquals (gameStateChange, returnedGameStateChange);
 		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
 		assertNull (returnedGameStateChange.getGame());
-		verify(mockSessions).getPlayerNameForSession(SESSION_ID);
+		verify(mockSessions).getPlayerForSession(SESSION_ID);
 	}
 }

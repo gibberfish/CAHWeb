@@ -1,15 +1,17 @@
-package mindbadger.cah.sessions;
+package mindbadger.cah.players;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import mindbadger.cah.game.CardsAgainstHumanityGame;
-import mindbadger.cah.players.CardsAgainstHumanityPlayer;
-import mindbadger.cah.players.Player;
-import mindbadger.cah.players.PlayerNotInGame;
-import mindbadger.cah.players.PlayerSessions;
+import mindbadger.cah.game.Game;
 
 public class PlayerSessionsTest {
 	private static final String SESSION1 = "SESSION1";
@@ -17,9 +19,20 @@ public class PlayerSessionsTest {
 	private static final String PLAYER1 = "PLAYER1";
 	private PlayerSessions objectUnderTest;
 	
+	@Mock
+	Player mockPlayerNotInGame;
+	
+	@Mock
+	Game mockGame;
+	
 	@Before
 	public void init () {
+		MockitoAnnotations.initMocks(this);
 		objectUnderTest = new PlayerSessions ();
+		
+		when(mockPlayerNotInGame.getGame()).thenReturn(mockGame);
+		when(mockPlayerNotInGame.getName()).thenReturn(PLAYER1);
+		when(mockPlayerNotInGame.getRootPlayer()).thenReturn(mockPlayerNotInGame);
 	}
 	
 	@Test
@@ -27,7 +40,7 @@ public class PlayerSessionsTest {
 		// Given
 		
 		// When
-		Player player1 = objectUnderTest.getPlayerNameForSession(SESSION1);
+		Player player1 = objectUnderTest.getPlayerForSession(SESSION1);
 		String session1 = objectUnderTest.getSessionForPlayer(PLAYER1);
 		
 		// Then
@@ -41,7 +54,7 @@ public class PlayerSessionsTest {
 		objectUnderTest.addPlayerSession(PLAYER1, SESSION1);
 		
 		// When
-		Player player1 = objectUnderTest.getPlayerNameForSession(SESSION1);
+		Player player1 = objectUnderTest.getPlayerForSession(SESSION1);
 		String session1 = objectUnderTest.getSessionForPlayer(PLAYER1);
 		
 		// Then
@@ -57,8 +70,8 @@ public class PlayerSessionsTest {
 		objectUnderTest.addPlayerSession(PLAYER1, SESSION2);
 		
 		// When
-		Player playerForSession1 = objectUnderTest.getPlayerNameForSession(SESSION1);
-		Player playerForSession2 = objectUnderTest.getPlayerNameForSession(SESSION2);
+		Player playerForSession1 = objectUnderTest.getPlayerForSession(SESSION1);
+		Player playerForSession2 = objectUnderTest.getPlayerForSession(SESSION2);
 		String session = objectUnderTest.getSessionForPlayer(PLAYER1);
 		
 		// Then
@@ -76,7 +89,7 @@ public class PlayerSessionsTest {
 		objectUnderTest.removePlayerWithSession(SESSION1);
 		
 		// Then
-		Player player1InSession = objectUnderTest.getPlayerNameForSession(SESSION1);
+		Player player1InSession = objectUnderTest.getPlayerForSession(SESSION1);
 		String session1 = objectUnderTest.getSessionForPlayer(PLAYER1);
 		Player player1 = objectUnderTest.getPlayer(PLAYER1);
 		assertNull (session1);
@@ -94,7 +107,7 @@ public class PlayerSessionsTest {
 		objectUnderTest.removePlayerWithSession(SESSION1);
 		
 		// Then
-		Player player1InSession = objectUnderTest.getPlayerNameForSession(SESSION1);
+		Player player1InSession = objectUnderTest.getPlayerForSession(SESSION1);
 		String session1 = objectUnderTest.getSessionForPlayer(PLAYER1);
 		Player player1 = objectUnderTest.getPlayer(PLAYER1);
 		assertNull (session1);
@@ -106,13 +119,35 @@ public class PlayerSessionsTest {
 	public void shouldReRegisterPlayerWhenTheyJoinAGame () {
 		// Given
 		objectUnderTest.addPlayerSession(PLAYER1, SESSION1);
-		Player playerInGame = new CardsAgainstHumanityPlayer(PLAYER1);
+		Player playerInGame = new CardsAgainstHumanityPlayer(mockPlayerNotInGame);
 		
 		// When
-		objectUnderTest.registerPlayerInGame(playerInGame);
+		objectUnderTest.replacePlayerNotInGameWithGameSpecificPlayer(playerInGame);
 		
 		// Then
+		Player player = objectUnderTest.getPlayer(PLAYER1);
+		assertEquals (playerInGame, player);
 		
+		player = objectUnderTest.getPlayerForSession(SESSION1);
+		assertEquals (playerInGame, player);
 	}
-	
+
+	@Test
+	public void shouldReRegisterPlayerWhenTheyLeaveAGame () {
+		// Given
+		objectUnderTest.addPlayerSession(PLAYER1, SESSION1);
+		Player playerInGame = new CardsAgainstHumanityPlayer(mockPlayerNotInGame);
+		objectUnderTest.replacePlayerNotInGameWithGameSpecificPlayer(playerInGame);
+		
+		// When
+		objectUnderTest.revertToRootPlayer (PLAYER1);
+		
+		// Then
+		Player player = objectUnderTest.getPlayer(PLAYER1);
+		assertEquals (mockPlayerNotInGame, player);
+		
+		player = objectUnderTest.getPlayerForSession(SESSION1);
+		assertEquals (mockPlayerNotInGame, player);
+	}
+
 }

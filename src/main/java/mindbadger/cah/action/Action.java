@@ -15,7 +15,7 @@ public abstract class Action {
 	PlayerSessions players;
 
 	public GameStateChange executeCommand (String sessionId, PlayerAction command) {
-		Player player = players.getPlayerNameForSession(sessionId);
+		Player player = players.getPlayerForSession(sessionId);
 		String playerNameForSession = player.getName();
 		GameStateChange commandResults = executeCommand(sessionId, playerNameForSession, command);
 		

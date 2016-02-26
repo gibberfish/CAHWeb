@@ -54,19 +54,32 @@ public class PlayerSessions {
 		logger.info("...[players, was="+sessionsBefore+",now="+sessionsKeyedOnPlayerName.size()+"]");
 	}
 
-	public void registerPlayerInGame (Player player) {
-		
+	public void replacePlayerNotInGameWithGameSpecificPlayer (Player player) {
+		String playerName = player.getName();
+		String sessionId = sessionsKeyedOnPlayerName.get(playerName);
+
+		playerskeyedOnSessionId.put(sessionId, player);
+		playerskeyedOnPlayerName.put(playerName, player);
+	}
+	
+	public void revertToRootPlayer(String playerName) {
+		Player player = playerskeyedOnPlayerName.get(playerName);
+		String sessionId = sessionsKeyedOnPlayerName.get(playerName);
+
+		playerskeyedOnSessionId.put(sessionId, player.getRootPlayer());
+		playerskeyedOnPlayerName.put(playerName, player.getRootPlayer());
 	}
 	
 	public String getSessionForPlayer (String name) {
 		return sessionsKeyedOnPlayerName.get(name);
 	}
 	
-	public Player getPlayerNameForSession (String session) {
+	public Player getPlayerForSession (String session) {
 		return playerskeyedOnSessionId.get(session);
 	}
 	
 	public Player getPlayer (String playerName) {
 		return playerskeyedOnPlayerName.get(playerName);
 	}
+
 }

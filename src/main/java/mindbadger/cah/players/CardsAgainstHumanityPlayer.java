@@ -1,8 +1,9 @@
 package mindbadger.cah.players;
 
-public class CardsAgainstHumanityPlayer extends Player {
+public class CardsAgainstHumanityPlayer extends PlayerInGame {
 
-	public CardsAgainstHumanityPlayer(String name) {
-		super(name);
-	}	
+	public CardsAgainstHumanityPlayer(Player playerNotInGame) {
+		super(playerNotInGame);
+	}
+
 }

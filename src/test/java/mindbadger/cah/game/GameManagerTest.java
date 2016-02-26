@@ -1,8 +1,7 @@
 package mindbadger.cah.game;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.util.HashSet;
 import java.util.List;
