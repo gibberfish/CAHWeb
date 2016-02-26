@@ -5,7 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import mindbadger.cah.game.CardsAgainstHumanityGame;
+import mindbadger.cah.players.CardsAgainstHumanityPlayer;
 import mindbadger.cah.players.Player;
+import mindbadger.cah.players.PlayerNotInGame;
 import mindbadger.cah.players.PlayerSessions;
 
 public class PlayerSessionsTest {
@@ -44,6 +47,7 @@ public class PlayerSessionsTest {
 		// Then
 		assertEquals (SESSION1, session1);
 		assertEquals (PLAYER1, player1.getName());
+		assertTrue (player1 instanceof PlayerNotInGame);
 	}
 
 	@Test
@@ -98,4 +102,17 @@ public class PlayerSessionsTest {
 		assertNotNull (player1);
 	}
 
+	@Test
+	public void shouldReRegisterPlayerWhenTheyJoinAGame () {
+		// Given
+		objectUnderTest.addPlayerSession(PLAYER1, SESSION1);
+		Player playerInGame = new CardsAgainstHumanityPlayer(PLAYER1);
+		
+		// When
+		objectUnderTest.registerPlayerInGame(playerInGame);
+		
+		// Then
+		
+	}
+	
 }

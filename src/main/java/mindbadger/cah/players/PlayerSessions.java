@@ -15,14 +15,6 @@ public class PlayerSessions {
 	private Map<String, Player> playerskeyedOnPlayerName = new HashMap<String,Player> ();
 	
 	public void addPlayerSession (String name, String session) {
-		logger.info("ADD PLAYER SESSION...");
-		logger.info("..name: " + name);
-		logger.info("..session: " + session);
-		logger.info("..sessionsKeyedOnPlayerName: " + sessionsKeyedOnPlayerName.size());
-		logger.info("..playerskeyedOnSessionId: " + playerskeyedOnSessionId.size());
-		logger.info("..playerskeyedOnPlayerName: " + playerskeyedOnPlayerName.size());
-		
-		
 		int sessionsBefore = sessionsKeyedOnPlayerName.size();
 		int playersBefore = playerskeyedOnSessionId.size();
 		
@@ -32,18 +24,12 @@ public class PlayerSessions {
 			playerskeyedOnSessionId.remove(oldSession);
 		}
 		
-		
-		
-		
 		Player player = playerskeyedOnPlayerName.get(name);
 		if (player == null) {
 			logger.info("Can't find a player already registered with this name - creating a new one");
-			player = new Player(name);
+			player = new PlayerNotInGame(name);
 			playerskeyedOnPlayerName.put(name, player);
 		}
-		
-		
-		
 		
 		sessionsKeyedOnPlayerName.put(name, session);
 		playerskeyedOnSessionId.put(session, player);
@@ -66,6 +52,10 @@ public class PlayerSessions {
 		logger.info("Removed session " + session);
 		logger.info("...[sessions, was="+playersBefore+",now="+playerskeyedOnSessionId.size()+"]");
 		logger.info("...[players, was="+sessionsBefore+",now="+sessionsKeyedOnPlayerName.size()+"]");
+	}
+
+	public void registerPlayerInGame (Player player) {
+		
 	}
 	
 	public String getSessionForPlayer (String name) {

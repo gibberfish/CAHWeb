@@ -15,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import mindbadger.cah.players.Player;
+import mindbadger.cah.players.PlayerNotInGame;
 import mindbadger.cah.players.PlayerSessions;
 
 public class GameManagerTest {
@@ -35,8 +36,8 @@ public class GameManagerTest {
 	private static final String TYPE3_CLASS = "NoSuchGame";
 	private static final GameType GAME_TYPE_1 = new GameType(TYPE1_ID,TYPE_1_DISPLAY_NAME,TYPE_1_GAME_URL,TYPE1_CLASS);
 	private static final GameType GAME_TYPE_2 = new GameType(TYPE2_ID,TYPE_2_DISPLAY_NAME,TYPE_2_GAME_URL,TYPE2_CLASS);
-	private static final Player PLAYER1 = new Player(PLAYER1_NAME);
-	private static final Player PLAYER2 = new Player(PLAYER2_NAME);
+	private static final Player PLAYER1 = new PlayerNotInGame(PLAYER1_NAME);
+	private static final Player PLAYER2 = new PlayerNotInGame(PLAYER2_NAME);
 	
 	private GameManager objectUnderTest;
 	

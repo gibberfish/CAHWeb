@@ -2,7 +2,7 @@ package mindbadger.cah.players;
 
 import mindbadger.cah.game.Game;
 
-public class Player {
+public abstract class Player {
 	private String name;
 	private Game game;
 	
@@ -10,6 +10,10 @@ public class Player {
 		this.name = name;
 	}
 	
+	public Player (Player player) {
+		this (player.getName());
+	}
+
 	public String getName() {
 		return name;
 	}
