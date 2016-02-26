@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import mindbadger.cah.card.BlackCard;
-import mindbadger.cah.card.WhiteCard;
+import mindbadger.cah.card.Card;
+import mindbadger.cah.card.CardType;
 
 public class CardsAgainstHumanityPlayerTest {
 	CardsAgainstHumanityPlayer objectUnderTest;
@@ -27,40 +27,40 @@ public class CardsAgainstHumanityPlayerTest {
 		// Given
 		
 		// When
-		List<WhiteCard> playersHand = objectUnderTest.getHand ();
-		List<BlackCard> blackCardsWon = objectUnderTest.getCardsWon ();
+		List<Card> playersHand = objectUnderTest.getHand ();
+		List<Card> CardsWon = objectUnderTest.getCardsWon ();
 		
 		// Then
 		assertEquals (0, playersHand.size());
-		assertEquals (0, blackCardsWon.size());
+		assertEquals (0, CardsWon.size());
 	}
 	
 	@Test
-	public void shouldAddABlackCardToCardsWon () {
+	public void shouldAddACardToCardsWon () {
 		// Given
-		BlackCard blackCard = new BlackCard ("Black card 1");
+		Card Card = new Card (CardType.BLACK, "Black card 1");
 		
 		// When
-		objectUnderTest.addBlackCardToCardsWon (blackCard);
+		objectUnderTest.addCardToCardsWon (Card);
 		
 		// Then
-		List<BlackCard> blackCardsWon = objectUnderTest.getCardsWon();
-		assertEquals (1, blackCardsWon.size());
-		assertEquals (blackCard, blackCardsWon.get(0));
+		List<Card> CardsWon = objectUnderTest.getCardsWon();
+		assertEquals (1, CardsWon.size());
+		assertEquals (Card, CardsWon.get(0));
 	}
 
 	@Test
-	public void shouldAddAWhiteCardToPlayersHand () {
+	public void shouldAddACardToPlayersHand () {
 		// Given
-		WhiteCard whiteCard = new WhiteCard ("White card 1");
+		Card Card = new Card (CardType.WHITE, "White card 1");
 		
 		// When
-		objectUnderTest.dealWhiteCardToPlayer (whiteCard);
+		objectUnderTest.dealCardToPlayer (Card);
 		
 		// Then
-		List<WhiteCard> hand = objectUnderTest.getHand();
+		List<Card> hand = objectUnderTest.getHand();
 		assertEquals (1, hand.size());
-		assertEquals (whiteCard, hand.get(0));
+		assertEquals (Card, hand.get(0));
 	}
 	
 	@Test
@@ -80,23 +80,23 @@ public class CardsAgainstHumanityPlayerTest {
 	@Test
 	public void shouldDrawBlackCard () {
 		// Given
-		BlackCard blackCard1 = new BlackCard ("Black card 1");
-		BlackCard blackCard2 = new BlackCard ("Black card 2");
-		BlackCard blackCard3 = new BlackCard ("Black card 3");
-		objectUnderTest.addBlackCardToCardsWon (blackCard1);
-		objectUnderTest.addBlackCardToCardsWon (blackCard2);
-		objectUnderTest.addBlackCardToCardsWon (blackCard3);
+		Card Card1 = new Card (CardType.BLACK, "Black card 1");
+		Card Card2 = new Card (CardType.BLACK, "Black card 2");
+		Card Card3 = new Card (CardType.BLACK, "Black card 3");
+		objectUnderTest.addCardToCardsWon (Card1);
+		objectUnderTest.addCardToCardsWon (Card2);
+		objectUnderTest.addCardToCardsWon (Card3);
 		
 		// When
-		BlackCard cardDrawn = objectUnderTest.drawCardFromCardsWon ();
+		Card cardDrawn = objectUnderTest.drawCardFromCardsWon ();
 		
 		// Then
-		assertEquals (blackCard1,cardDrawn);
+		assertEquals (Card1,cardDrawn);
 		
-		List<BlackCard> blackCardsWon = objectUnderTest.getCardsWon();
-		assertEquals (2, blackCardsWon.size());
-		assertEquals (blackCard2, blackCardsWon.get(0));
-		assertEquals (blackCard3, blackCardsWon.get(1));
+		List<Card> CardsWon = objectUnderTest.getCardsWon();
+		assertEquals (2, CardsWon.size());
+		assertEquals (Card2, CardsWon.get(0));
+		assertEquals (Card3, CardsWon.get(1));
 	}
 
 	//TODO Implement test
@@ -120,23 +120,23 @@ public class CardsAgainstHumanityPlayerTest {
 	@Test
 	public void shouldDrawWhiteCard () {
 		// Given
-//		BlackCard blackCard1 = new BlackCard ("Black card 1");
-//		BlackCard blackCard2 = new BlackCard ("Black card 2");
-//		BlackCard blackCard3 = new BlackCard ("Black card 3");
-//		objectUnderTest.addBlackCardToCardsWon (blackCard1);
-//		objectUnderTest.addBlackCardToCardsWon (blackCard2);
-//		objectUnderTest.addBlackCardToCardsWon (blackCard3);
+//		Card Card1 = new Card ("Black card 1");
+//		Card Card2 = new Card ("Black card 2");
+//		Card Card3 = new Card ("Black card 3");
+//		objectUnderTest.addCardToCardsWon (Card1);
+//		objectUnderTest.addCardToCardsWon (Card2);
+//		objectUnderTest.addCardToCardsWon (Card3);
 //		
 //		// When
-//		BlackCard cardDrawn = objectUnderTest.drawCardFromCardsWon ();
+//		Card cardDrawn = objectUnderTest.drawCardFromCardsWon ();
 //		
 //		// Then
-//		assertEquals (blackCard1,cardDrawn);
+//		assertEquals (Card1,cardDrawn);
 //		
-//		List<BlackCard> blackCardsWon = objectUnderTest.getCardsWon();
-//		assertEquals (2, blackCardsWon.size());
-//		assertEquals (blackCard2, blackCardsWon.get(0));
-//		assertEquals (blackCard3, blackCardsWon.get(1));
+//		List<Card> CardsWon = objectUnderTest.getCardsWon();
+//		assertEquals (2, CardsWon.size());
+//		assertEquals (Card2, CardsWon.get(0));
+//		assertEquals (Card3, CardsWon.get(1));
 	}
 
 }

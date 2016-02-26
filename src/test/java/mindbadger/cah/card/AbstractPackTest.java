@@ -16,14 +16,14 @@ public class AbstractPackTest {
 			@Override
 			protected void initialisePack() {
 				pack = new ArrayList<Card> ();
-				pack.add(new WhiteCard("WHITE_CARD_1"));
-				pack.add(new WhiteCard("WHITE_CARD_2"));
-				pack.add(new WhiteCard("WHITE_CARD_3"));
-				pack.add(new WhiteCard("WHITE_CARD_4"));
-				pack.add(new WhiteCard("WHITE_CARD_5"));
-				pack.add(new WhiteCard("WHITE_CARD_6"));
-				pack.add(new WhiteCard("WHITE_CARD_7"));
-				pack.add(new WhiteCard("WHITE_CARD_8"));
+				pack.add(new Card(CardType.WHITE, "WHITE_CARD_1"));
+				pack.add(new Card(CardType.WHITE, "WHITE_CARD_2"));
+				pack.add(new Card(CardType.WHITE, "WHITE_CARD_3"));
+				pack.add(new Card(CardType.WHITE, "WHITE_CARD_4"));
+				pack.add(new Card(CardType.WHITE, "WHITE_CARD_5"));
+				pack.add(new Card(CardType.WHITE, "WHITE_CARD_6"));
+				pack.add(new Card(CardType.WHITE, "WHITE_CARD_7"));
+				pack.add(new Card(CardType.WHITE, "WHITE_CARD_8"));
 			}
 		};
 	}
@@ -83,7 +83,7 @@ public class AbstractPackTest {
 	@Test
 	public void shouldReturnACardToTheBottomOfThePack () {
 		// Given
-		Card newCard = new WhiteCard("WHITE_CARD_9");
+		Card newCard = new Card(CardType.WHITE, "WHITE_CARD_9");
 		
 		// When
 		objectUnderTest.returnCard (newCard);
