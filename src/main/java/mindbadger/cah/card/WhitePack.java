@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 public class WhitePack extends AbstractPack {
 	@Autowired
 	@Qualifier("allWhiteCards")
-	private List<Card> allWhiteCards;
+	protected List<Card> allWhiteCards;
 
 	@Override
 	protected void initialisePack() {		

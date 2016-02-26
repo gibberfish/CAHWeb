@@ -10,7 +10,7 @@ public class BlackPack extends AbstractPack {
 	
 	@Autowired
 	@Qualifier("allBlackCards")
-	private List<Card> allBlackCards;
+	protected List<Card> allBlackCards;
 
 	@Override
 	protected void initialisePack() {		
