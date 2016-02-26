@@ -21,8 +21,9 @@ public abstract class Game {
 
 	public void addPlayerToGame (Player player) {
 		if (player != null) {
-			this.players.add(player);
-			player.setGame(this);
+			Player gameSpecificPlayer = createGameSpecificPlayer(player);
+			gameSpecificPlayer.setGame(this);
+			this.players.add(gameSpecificPlayer);
 		}
 	}
 	
@@ -37,4 +38,6 @@ public abstract class Game {
 	public int getGameId() {
 		return gameId;
 	}
+	
+	public abstract Player createGameSpecificPlayer (Player playerNotInGame);
 }

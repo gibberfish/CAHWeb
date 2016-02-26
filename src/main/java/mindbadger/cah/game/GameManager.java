@@ -56,6 +56,10 @@ public class GameManager {
 			newGame.addPlayerToGame(player);
 			player.setGame(newGame);
 			
+			//TODO Probably don't need this now. Instead get the game itself to create the correct player wrapper.
+			//Player gameSpecificPlayer = newGame.createGameSpecificPlayer(player);
+			//players.replacePlayerNotInGameWithGameSpecificPlayer(gameSpecificPlayer);
+			
 			List<Game> gamesForThisType = gamesForType.get(gameType);
 			if (gamesForThisType == null) {
 				gamesForThisType = new ArrayList<Game> ();

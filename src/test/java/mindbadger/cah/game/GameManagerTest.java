@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import mindbadger.cah.players.CardsAgainstHumanityPlayer;
 import mindbadger.cah.players.Player;
 import mindbadger.cah.players.PlayerNotInGame;
 import mindbadger.cah.players.PlayerSessions;
@@ -107,7 +108,8 @@ public class GameManagerTest {
 		assertEquals (GAME_TYPE_1, newGame.getGameType());
 		assertEquals (1, newGame.getGameId());
 		assertEquals (1, newGame.getPlayers().size());
-		assertEquals (PLAYER1, newGame.getPlayers().get(0));
+		assertFalse (PLAYER1 == newGame.getPlayers().get(0));
+		assertEquals (PLAYER1, newGame.getPlayers().get(0).getRootPlayer());
 		assertEquals(newGame, PLAYER1.getGame());
 		assertTrue (newGame instanceof CardsAgainstHumanityGame);
 	}
@@ -133,7 +135,8 @@ public class GameManagerTest {
 		assertEquals (GAME_TYPE_1, firstNewGame.getGameType());
 		assertEquals (1, firstNewGame.getGameId());
 		assertEquals (1, firstNewGame.getPlayers().size());
-		assertEquals (PLAYER1, firstNewGame.getPlayers().get(0));
+		assertFalse (PLAYER1 == firstNewGame.getPlayers().get(0));
+		assertEquals (PLAYER1, firstNewGame.getPlayers().get(0).getRootPlayer());
 		assertEquals(firstNewGame, PLAYER1.getGame());
 		assertTrue (firstNewGame instanceof CardsAgainstHumanityGame);
 		
@@ -141,7 +144,8 @@ public class GameManagerTest {
 		assertEquals (GAME_TYPE_1, secondNewGame.getGameType());
 		assertEquals (2, secondNewGame.getGameId());
 		assertEquals (1, secondNewGame.getPlayers().size());
-		assertEquals (PLAYER2, secondNewGame.getPlayers().get(0));
+		assertFalse (PLAYER2 == secondNewGame.getPlayers().get(0));
+		assertEquals (PLAYER2, secondNewGame.getPlayers().get(0).getRootPlayer());
 		assertEquals(secondNewGame, PLAYER2.getGame());
 		assertTrue (secondNewGame instanceof CardsAgainstHumanityGame);
 	}
@@ -167,7 +171,8 @@ public class GameManagerTest {
 		assertEquals (GAME_TYPE_1, firstNewGame.getGameType());
 		assertEquals (1, firstNewGame.getGameId());
 		assertEquals (1, firstNewGame.getPlayers().size());
-		assertEquals (PLAYER1, firstNewGame.getPlayers().get(0));
+		assertFalse (PLAYER1 == firstNewGame.getPlayers().get(0));
+		assertEquals (PLAYER1, firstNewGame.getPlayers().get(0).getRootPlayer());
 		assertEquals(firstNewGame, PLAYER1.getGame());
 		assertTrue (firstNewGame instanceof CardsAgainstHumanityGame);
 		
@@ -175,7 +180,8 @@ public class GameManagerTest {
 		assertEquals (GAME_TYPE_2, secondNewGame.getGameType());
 		assertEquals (2, secondNewGame.getGameId());
 		assertEquals (1, secondNewGame.getPlayers().size());
-		assertEquals (PLAYER2, secondNewGame.getPlayers().get(0));
+		assertFalse (PLAYER2 == secondNewGame.getPlayers().get(0));
+		assertEquals (PLAYER2, secondNewGame.getPlayers().get(0).getRootPlayer());
 		assertEquals(secondNewGame, PLAYER2.getGame());
 		assertTrue (secondNewGame instanceof FluxxGame);
 	}
@@ -194,4 +200,26 @@ public class GameManagerTest {
 		assertEquals(0, gamesReturned.size());
 		assertEquals (0, gamesOfType1.size());
 	}
+
+	//TODO Probably don't need this now - get the Game to create it's own player wrapper
+//	@Test
+//	public void shouldChangePlayerToGameSpecificVersion () {
+//		// Given
+//		
+//		// When
+//		objectUnderTest.createNewGameAndAddFirstPlayer(TYPE1_ID, PLAYER1_NAME);
+//		
+//		// Then
+//		
+//		
+//		List<Game> gamesOfType1 = objectUnderTest.getGamesForType(TYPE1_ID);
+//		Game newGame = gamesOfType1.get(0);
+//		Player player = newGame.getPlayers().get(0);
+//		
+//		assertFalse (player == PLAYER1);
+//		assertTrue (player instanceof CardsAgainstHumanityPlayer);
+//
+//		verify(mockPlayerSessions).replacePlayerNotInGameWithGameSpecificPlayer(player);
+//	}
+
 }
