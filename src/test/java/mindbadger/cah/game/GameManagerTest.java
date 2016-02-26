@@ -29,6 +29,10 @@ public class GameManagerTest {
 	private static final String TYPE_2_DISPLAY_NAME = "Game Type 2";
 	private static final String TYPE2_ID = "TYPE2";
 	private static final String TYPE2_CLASS = "FluxxGame";
+	private static final String TYPE_3_GAME_URL = "Invalid type url";
+	private static final String TYPE_3_DISPLAY_NAME = "Invalid Game Type";
+	private static final String TYPE3_ID = "INVALIDTYPE";
+	private static final String TYPE3_CLASS = "NoSuchGame";
 	private static final GameType GAME_TYPE_1 = new GameType(TYPE1_ID,TYPE_1_DISPLAY_NAME,TYPE_1_GAME_URL,TYPE1_CLASS);
 	private static final GameType GAME_TYPE_2 = new GameType(TYPE2_ID,TYPE_2_DISPLAY_NAME,TYPE_2_GAME_URL,TYPE2_CLASS);
 	private static final Player PLAYER1 = new Player(PLAYER1_NAME);
@@ -176,4 +180,18 @@ public class GameManagerTest {
 		assertTrue (secondNewGame instanceof FluxxGame);
 	}
 
+	@Test
+	public void shouldNotCreateNewGameIfInvalidTypeSupplied () {
+		// Given
+		
+		// When
+		objectUnderTest.createNewGameAndAddFirstPlayer(TYPE3_ID, PLAYER2_NAME);
+		
+		// Then
+		Map<Integer, Game> gamesReturned = objectUnderTest.getGames();
+		List<Game> gamesOfType1 = objectUnderTest.getGamesForType(TYPE3_ID);
+
+		assertEquals(0, gamesReturned.size());
+		assertEquals (0, gamesOfType1.size());
+	}
 }

@@ -37,11 +37,10 @@ public class GameManager {
 	}
 	
 	public synchronized void createNewGameAndAddFirstPlayer (String gameType, String playerName) {
+		logger.info("createNewGameAndAddFirstPlayer, gameType: " + gameType + ", playerName: " + playerName);
+
 		GameType gameTypeObject = gameTypes.get(gameType);
 		
-		logger.info("createNewGameAndAddFirstPlayer, gameType: " + gameType + ", playerName: " + playerName);
-		
-//		Game newGame = new Game(nextGameId, gameTypeObject);
 		Class<?>[] type = { Integer.class, GameType.class };
 		Class<?> myClass;
 		Game newGame = null;
@@ -50,40 +49,27 @@ public class GameManager {
 			Constructor<?> cons = myClass.getConstructor(type);
 			Object[] obj = { nextGameId, gameTypeObject};
 			newGame = (Game) cons.newInstance(obj);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+
+			nextGameId++;
+			
+			Player player = players.getPlayer(playerName);
+			newGame.addPlayerToGame(player);
+			player.setGame(newGame);
+			
+			List<Game> gamesForThisType = gamesForType.get(gameType);
+			if (gamesForThisType == null) {
+				gamesForThisType = new ArrayList<Game> ();
+			}
+			gamesForThisType.add(newGame);
+			this.games.put(newGame.getGameId(), newGame);
+			
+			logger.info("New Game: " + this.games.get(newGame.getGameId()));
+			
+			this.gamesForType.put(gameType, gamesForThisType);
+		} catch (Exception e) {
+			logger.error("Failed to create new Game Class: " + e.getMessage());
 			e.printStackTrace();
 		}
-		catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		
-		nextGameId++;
-		
-		Player player = players.getPlayer(playerName);
-		newGame.addPlayerToGame(player);
-		player.setGame(newGame);
-		
-		List<Game> gamesForThisType = gamesForType.get(gameType);
-		if (gamesForThisType == null) {
-			gamesForThisType = new ArrayList<Game> ();
-		}
-		gamesForThisType.add(newGame);
-		this.games.put(newGame.getGameId(), newGame);
-		
-		logger.info("New Game: " + this.games.get(newGame.getGameId()));
-		
-		this.gamesForType.put(gameType, gamesForThisType);
 	}
 	
 	public List<Game> getGamesForType (String gameType) {
