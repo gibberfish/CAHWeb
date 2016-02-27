@@ -5,9 +5,11 @@ import mindbadger.gameserver.game.Game;
 public abstract class PlayerInGame implements Player {
 
 	private Player playerNotInGame;
+	private PlayerState playerState;
 	
 	public PlayerInGame(Player playerNotInGame) {
 		this.playerNotInGame = playerNotInGame;
+		this.playerState = PlayerState.JOINED;
 	}
 
 	@Override
@@ -28,5 +30,15 @@ public abstract class PlayerInGame implements Player {
 	@Override
 	public Player getRootPlayer() {
 		return playerNotInGame;
-	}	
+	}
+	
+	@Override
+	public PlayerState getPlayerState() {
+		return this.playerState;
+	}
+
+	@Override
+	public void setPlayerState(PlayerState state) {
+		this.playerState = state;
+	}
 }

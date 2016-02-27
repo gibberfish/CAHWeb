@@ -1,4 +1,4 @@
-package mindbadger.cah.player;
+package mindbadger.fluxx;
 
 import mindbadger.gameserver.player.Player;
 import mindbadger.gameserver.player.PlayerInGame;

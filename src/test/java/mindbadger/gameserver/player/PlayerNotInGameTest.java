@@ -34,8 +34,23 @@ public class PlayerNotInGameTest {
 		assertNull (player.getGame());
 		assertEquals (PLAYER_NAME, player.getName());
 		assertEquals (player, player.getRootPlayer());
+		assertEquals (PlayerState.NOT_IN_GAME, player.getPlayerState());
 	}
 
+	@Test
+	public void shouldNotBeAbleToChangeState () {
+		// Given
+		Player player = new PlayerNotInGame(PLAYER_NAME);
+		
+		// When
+		try {
+			player.setPlayerState(PlayerState.JOINED);
+			fail("Should not be able to change state");
+		} catch (Exception e) {
+			assertEquals ("Cannot change the state", e.getMessage());
+		}
+	}
+	
 	@Test
 	public void shouldAddPlayerToGame () {
 		// Given

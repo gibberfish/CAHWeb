@@ -30,4 +30,14 @@ public class PlayerNotInGame implements Player {
 	public Player getRootPlayer() {
 		return this;
 	}
+
+	@Override
+	public PlayerState getPlayerState() {
+		return PlayerState.NOT_IN_GAME;
+	}
+
+	@Override
+	public void setPlayerState(PlayerState state) {
+		throw new IllegalStateException("Cannot change the state");
+	}
 }

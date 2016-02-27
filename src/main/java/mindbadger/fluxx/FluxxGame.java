@@ -1,6 +1,5 @@
-package mindbadger.cah.game;
+package mindbadger.fluxx;
 
-import mindbadger.cah.player.FluxxPlayer;
 import mindbadger.gameserver.game.Game;
 import mindbadger.gameserver.game.GameType;
 import mindbadger.gameserver.player.Player;

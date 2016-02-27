@@ -45,6 +45,20 @@ public class PlayerInGameTest {
 		assertEquals (mockGame, objectUnderTest.getGame());
 		assertEquals (PLAYER_NAME, objectUnderTest.getName());
 		assertEquals (playerNotInGame, objectUnderTest.getRootPlayer());
+		assertEquals (PlayerState.JOINED, objectUnderTest.getPlayerState());
+	}
+	
+	@Test
+	public void shouldChangePlayerState () {
+		// Given
+		objectUnderTest = new PlayerInGame (playerNotInGame) {
+		};
+		
+		// When
+		objectUnderTest.setPlayerState(PlayerState.PLAYING);
+			
+		// Then
+		assertEquals (PlayerState.PLAYING, objectUnderTest.getPlayerState());
 	}
 	
 	@Test
