@@ -11,6 +11,7 @@ public abstract class Game {
 	protected int gameId;
 	protected GameType gameType;
 	protected int minimumPlayers;
+	protected GameState gameState;
 	
 	@JsonSerialize(using = PlayerListSerializer.class)
 	protected List<Player> players = new ArrayList<Player> ();
@@ -18,6 +19,7 @@ public abstract class Game {
 	public Game (Integer gameId, GameType gameType) {
 		this.gameId = gameId;
 		this.gameType = gameType;
+		this.gameState = GameState.NEW;
 	}
 
 	public void addPlayerToGame (Player player) {
@@ -38,6 +40,14 @@ public abstract class Game {
 
 	public int getGameId() {
 		return gameId;
+	}
+
+	public GameState getGameState () {
+		return this.gameState;
+	}
+	
+	public void setGameState (GameState gameState) {
+		this.gameState = gameState;
 	}
 	
 	public abstract Player createGameSpecificPlayer (Player playerNotInGame);

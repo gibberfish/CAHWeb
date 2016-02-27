@@ -52,15 +52,26 @@ public class GameTest {
 		assertEquals (GAME_TYPE_1, gameType);
 		assertEquals (0, players.size());
 		assertEquals(3,  objectUnderTest.getMinimumPlayers());
+		assertEquals (GameState.NEW, objectUnderTest.getGameState());
 	}
 
+	@Test
+	public void shouldChangeGameState () {
+		// Given
+		
+		// When
+		objectUnderTest.setGameState(GameState.PLAYING);
+		
+		// Then
+		assertEquals (GameState.PLAYING, objectUnderTest.getGameState());
+	}
+	
 	@Test
 	public void shouldAddPlayerToGame () {
 		// Given
 		
 		// When
 		objectUnderTest.addPlayerToGame(PLAYER1);
-		
 		
 		// Then
 		List<Player> players = objectUnderTest.getPlayers();
