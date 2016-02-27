@@ -1,21 +1,17 @@
 package mindbadger.cah.card;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-/*
- * The pack is a list 
- */
-public abstract class AbstractPack {
+public class PackOfCards {
 	protected List<Card> pack;
 
-	public AbstractPack () {
-		initialisePack();
+	public PackOfCards (List<Card> cards) {
+		pack = new ArrayList<Card>(cards);
 	}
-	
-	protected abstract void initialisePack ();
 	
 	public List<Card> getPack () {
 		return this.pack;

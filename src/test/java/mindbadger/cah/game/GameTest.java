@@ -20,8 +20,7 @@ public class GameTest {
 	private static final String TYPE_1_GAME_URL = "Type 1 url";
 	private static final String TYPE_1_DISPLAY_NAME = "Game Type 1";
 	private static final String TYPE1_ID = "TYPE1";
-	private static final String TYPE1_CLASS = "CardsAgainstHumanityGame";
-	private static final GameType GAME_TYPE_1 = new GameType(TYPE1_ID,TYPE_1_DISPLAY_NAME,TYPE_1_GAME_URL,TYPE1_CLASS);
+	private static final GameType GAME_TYPE_1 = new GameType(TYPE1_ID,TYPE_1_DISPLAY_NAME,TYPE_1_GAME_URL);
 	private static final Player PLAYER1 = new PlayerNotInGame(PLAYER1_NAME);
 	private static final Player PLAYER2 = new PlayerNotInGame(PLAYER2_NAME);
 	

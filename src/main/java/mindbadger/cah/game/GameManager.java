@@ -1,7 +1,5 @@
 package mindbadger.cah.game;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +20,9 @@ public class GameManager {
 	@Autowired
 	PlayerSessions players;
 
+	@Autowired
+	Map<String, GameFactory> gameFactorys;
+	
 	Map<String, GameType> gameTypes = new HashMap<String, GameType>();
 
 	private int nextGameId = 1;
@@ -39,26 +40,16 @@ public class GameManager {
 	public synchronized void createNewGameAndAddFirstPlayer (String gameType, String playerName) {
 		logger.info("createNewGameAndAddFirstPlayer, gameType: " + gameType + ", playerName: " + playerName);
 
-		GameType gameTypeObject = gameTypes.get(gameType);
+		GameFactory gameFactory = gameFactorys.get(gameType+"GameFactory");
 		
-		Class<?>[] type = { Integer.class, GameType.class };
-		Class<?> myClass;
-		Game newGame = null;
-		try {
-			myClass = Class.forName("mindbadger.cah.game."+gameTypeObject.getClazz());
-			Constructor<?> cons = myClass.getConstructor(type);
-			Object[] obj = { nextGameId, gameTypeObject};
-			newGame = (Game) cons.newInstance(obj);
-
+		if (gameFactory != null) {
+			Game newGame = gameFactory.createGame(nextGameId);
+	
 			nextGameId++;
 			
 			Player player = players.getPlayer(playerName);
 			newGame.addPlayerToGame(player);
 			player.setGame(newGame);
-			
-			//TODO Probably don't need this now. Instead get the game itself to create the correct player wrapper.
-			//Player gameSpecificPlayer = newGame.createGameSpecificPlayer(player);
-			//players.replacePlayerNotInGameWithGameSpecificPlayer(gameSpecificPlayer);
 			
 			List<Game> gamesForThisType = gamesForType.get(gameType);
 			if (gamesForThisType == null) {
@@ -70,9 +61,8 @@ public class GameManager {
 			logger.info("New Game: " + this.games.get(newGame.getGameId()));
 			
 			this.gamesForType.put(gameType, gamesForThisType);
-		} catch (Exception e) {
-			logger.error("Failed to create new Game Class: " + e.getMessage());
-			e.printStackTrace();
+		} else {
+			logger.error("Invalid game type: " + gameType);
 		}
 	}
 	
