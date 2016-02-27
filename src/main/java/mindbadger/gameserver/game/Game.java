@@ -10,6 +10,7 @@ import mindbadger.gameserver.player.Player;
 public abstract class Game {
 	protected int gameId;
 	protected GameType gameType;
+	protected int minimumPlayers;
 	
 	@JsonSerialize(using = PlayerListSerializer.class)
 	protected List<Player> players = new ArrayList<Player> ();
@@ -40,4 +41,5 @@ public abstract class Game {
 	}
 	
 	public abstract Player createGameSpecificPlayer (Player playerNotInGame);
+	public abstract int getMinimumPlayers ();
 }

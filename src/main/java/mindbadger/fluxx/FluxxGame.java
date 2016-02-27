@@ -15,4 +15,9 @@ public class FluxxGame extends Game {
 		return new FluxxPlayer(playerNotInGame);
 	}
 
+	@Override
+	public int getMinimumPlayers() {
+		return 2;
+	}
+
 }

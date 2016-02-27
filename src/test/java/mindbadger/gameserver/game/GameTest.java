@@ -1,15 +1,12 @@
 package mindbadger.gameserver.game;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import mindbadger.gameserver.game.Game;
-import mindbadger.gameserver.game.GameType;
 import mindbadger.gameserver.player.Player;
 import mindbadger.gameserver.player.PlayerNotInGame;
 
@@ -33,6 +30,11 @@ public class GameTest {
 			public Player createGameSpecificPlayer(Player playerNotInGame) {
 				return PLAYER2;
 			}
+
+			@Override
+			public int getMinimumPlayers() {
+				return 3;
+			}
 		};
 	}
 	
@@ -49,6 +51,7 @@ public class GameTest {
 		assertEquals (GAME_ID, gameId);
 		assertEquals (GAME_TYPE_1, gameType);
 		assertEquals (0, players.size());
+		assertEquals(3,  objectUnderTest.getMinimumPlayers());
 	}
 
 	@Test

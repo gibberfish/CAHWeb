@@ -36,4 +36,9 @@ public class CardsAgainstHumanityGame extends Game {
 	public void setBlackPack(PackOfCards blackPack) {
 		this.blackPack = blackPack;
 	}
+
+	@Override
+	public int getMinimumPlayers() {
+		return 3;
+	}
 }
