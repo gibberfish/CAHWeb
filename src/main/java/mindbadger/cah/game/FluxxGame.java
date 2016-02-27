@@ -1,7 +1,9 @@
 package mindbadger.cah.game;
 
-import mindbadger.cah.players.FluxxPlayer;
-import mindbadger.cah.players.Player;
+import mindbadger.cah.player.FluxxPlayer;
+import mindbadger.gameserver.game.Game;
+import mindbadger.gameserver.game.GameType;
+import mindbadger.gameserver.player.Player;
 
 public class FluxxGame extends Game {
 

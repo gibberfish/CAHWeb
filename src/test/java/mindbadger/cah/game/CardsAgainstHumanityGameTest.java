@@ -9,8 +9,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import mindbadger.cah.card.PackOfCards;
-import mindbadger.cah.players.CardsAgainstHumanityPlayer;
-import mindbadger.cah.players.Player;
+import mindbadger.cah.player.CardsAgainstHumanityPlayer;
+import mindbadger.gameserver.game.GameType;
+import mindbadger.gameserver.player.Player;
 
 public class CardsAgainstHumanityGameTest {
 	private CardsAgainstHumanityGame objectUnderTest;

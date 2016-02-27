@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import mindbadger.cah.card.Card;
 import mindbadger.cah.card.PackOfCards;
+import mindbadger.gameserver.game.Game;
+import mindbadger.gameserver.game.GameFactory;
+import mindbadger.gameserver.game.GameType;
 
 @Component("cardsAgainstHumanityGameFactory")
 public class CardsAgainstHumanityGameFactory implements GameFactory{
