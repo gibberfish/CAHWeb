@@ -53,11 +53,22 @@ $(function() {
 	} else {
 		$('#welcome-back').text("Welcome back " + name + ". Please choose a game below...");
 	
-		Websocket.connectWebsocket(name);
+		Websocket.connectWebsocket(name, handleWebsocketResponseForLobbyPage);
 		
 		Ajax.getGameTypes(retrieveGameTypesAndDisplay);
 	}
 });
+
+/* **************************** PAGE-SPECIFIC WEBSOCKET RESPONSE HANDLING ******************************* */
+function handleWebsocketResponseForLobbyPage (gameStateActionResponseObject) {
+	var player = gameStateActionResponseObject.player,
+    command = gameStateActionResponseObject.command,
+    game = gameStateActionResponseObject.game
+
+    var result = "I have received a message from " + player + ". Command = " + command + ", game = " + game;
+	console.log("WEBSOCKET Messsage on Lobby: " + result);
+}
+
 
 /* **************************** PAGE PANEL MANIPULATION ******************************* */
 
@@ -207,13 +218,13 @@ module.exports.addPlayerToExistingGame = function (gameId, name, successFunction
 var socket = new SockJS('/gameserver');
 var stompClient = Stomp.over(socket);
 
-module.exports.connectWebsocket = function (name) {
+module.exports.connectWebsocket = function (name, functionToCallOnResponse) {
     stompClient.connect({"name" : name}, function(frame) {
         console.log('WEBSOCKET Connected: ' + frame);
         
         stompClient.subscribe('/gamestate/gameStateUpdates', function(gameStateActionResponse){
             var gameStateActionResponseObject = JSON.parse(gameStateActionResponse.body);
-            handleGameStateChange(name, gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value, gameStateActionResponseObject.game);
+            handleGameStateChange(name, gameStateActionResponseObject, functionToCallOnResponse);
         });
 
         // Immediately send a connected action so that we get a response as to which game we may already be in
@@ -229,7 +240,11 @@ module.exports.disconnectWebsocket = function (name) {
     console.log("WEBSOCKET Disconnected");
 }
         
-var handleGameStateChange = function(name, player, command, value, game) {
+var handleGameStateChange = function(name, gameStateActionResponseObject, functionToCallOnResponse) {
+	var player = gameStateActionResponseObject.player,
+	    command = gameStateActionResponseObject.command,
+	    game = gameStateActionResponseObject.game
+	
 	var gameId, gameType, gamePage;
 	if (game != undefined) {
 		gameId = game.gameId;
@@ -243,8 +258,7 @@ var handleGameStateChange = function(name, player, command, value, game) {
 		ensureWeAreOnTheCorrectPage(gamePage);
 	}
 	
-	var result = "I have received a message from " + player + ". Command = " + command + ", value = " + value + ", game = " + gameId + " of type " + gameType;
-	console.log("WEBSOCKET Messsage: " + result);
+	functionToCallOnResponse (gameStateActionResponseObject);
 }
 module.exports.handleGameStateChange = handleGameStateChange;
 

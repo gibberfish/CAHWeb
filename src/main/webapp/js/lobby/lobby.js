@@ -32,11 +32,22 @@ $(function() {
 	} else {
 		$('#welcome-back').text("Welcome back " + name + ". Please choose a game below...");
 	
-		Websocket.connectWebsocket(name);
+		Websocket.connectWebsocket(name, handleWebsocketResponseForLobbyPage);
 		
 		Ajax.getGameTypes(retrieveGameTypesAndDisplay);
 	}
 });
+
+/* **************************** PAGE-SPECIFIC WEBSOCKET RESPONSE HANDLING ******************************* */
+function handleWebsocketResponseForLobbyPage (gameStateActionResponseObject) {
+	var player = gameStateActionResponseObject.player,
+    command = gameStateActionResponseObject.command,
+    game = gameStateActionResponseObject.game
+
+    var result = "I have received a message from " + player + ". Command = " + command + ", game = " + game;
+	console.log("WEBSOCKET Messsage on Lobby: " + result);
+}
+
 
 /* **************************** PAGE PANEL MANIPULATION ******************************* */
 

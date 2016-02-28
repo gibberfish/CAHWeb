@@ -5,7 +5,7 @@ var name = "";
 
 $(function() {
 	name = Cookie.readCookie ("name");
-	Websocket.connectWebsocket(name);
+	Websocket.connectWebsocket(name, handleWebsocketResponseForCahPage);
 	
 	$(".my").mouseenter(mouseOverCardInMyHand);
 	$(".my").mouseleave(mouseLeavesCardInMyHand);
@@ -39,3 +39,15 @@ function slowOpenDialog (dialog) {
 			});
 		});		
 };
+
+
+
+/* **************************** PAGE-SPECIFIC WEBSOCKET RESPONSE HANDLING ******************************* */
+function handleWebsocketResponseForCahPage (gameStateActionResponseObject) {
+	var player = gameStateActionResponseObject.player,
+    command = gameStateActionResponseObject.command,
+    game = gameStateActionResponseObject.game
+
+    var result = "I have received a message from " + player + ". Command = " + command + ", game = " + game;
+	console.log("WEBSOCKET Messsage on CAH Page: " + result);
+}
