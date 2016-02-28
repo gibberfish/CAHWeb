@@ -53,7 +53,11 @@ function handleWebsocketResponseForCahPage (gameStateActionResponseObject) {
 	console.log("Players: " + JSON.stringify(players));
 	
 	for (var i in players) {
-		displayPlayer(i, players[i].name);
+		var playerName = players[i].name;
+		if (players[i].name == name) {
+			playerName += " (me)";
+		}
+		displayPlayer(i, playerName);
 	}
     
     var result = "I have received a message from " + player + ". Command = " + command + ", game = " + game;
