@@ -48,8 +48,13 @@ function handleWebsocketResponseForCahPage (gameStateActionResponseObject) {
 	var player = gameStateActionResponseObject.player,
     command = gameStateActionResponseObject.command,
     game = gameStateActionResponseObject.game
-
-    displayPlayer(0, player);
+    
+    players = game.players;
+	console.log("Players: " + JSON.stringify(players));
+	
+	for (var i in players) {
+		displayPlayer(i, players[i].name);
+	}
     
     var result = "I have received a message from " + player + ". Command = " + command + ", game = " + game;
 	console.log("WEBSOCKET Messsage on CAH Page: " + result);
@@ -58,7 +63,8 @@ function handleWebsocketResponseForCahPage (gameStateActionResponseObject) {
 
 /* **************************** HTML MANIPULATION ******************************* */
 function displayPlayer (index, player) {
-	var playerTab = $("#player"+(index+1));
+	console.log("displayPlayer: " + index + " : " + player);
+	var playerTab = $("#player"+index);
 	
 	var output = '<div class="personName">'+player+'</div>';
 	output += '<img class="person-img"/>';
