@@ -1,5 +1,7 @@
 package mindbadger.cah.game;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import mindbadger.cah.card.PackOfCards;
 import mindbadger.cah.player.CardsAgainstHumanityPlayer;
 import mindbadger.gameserver.game.Game;
@@ -8,7 +10,10 @@ import mindbadger.gameserver.player.Player;
 
 public class CardsAgainstHumanityGame extends Game {
 
+	@JsonIgnore
 	private PackOfCards whitePack;
+	
+	@JsonIgnore
 	private PackOfCards blackPack;
 	
 	public CardsAgainstHumanityGame(Integer gameId, GameType gameType) {

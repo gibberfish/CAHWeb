@@ -7,7 +7,7 @@ module.exports.connectWebsocket = function (name) {
         
         stompClient.subscribe('/gamestate/gameStateUpdates', function(gameStateActionResponse){
             var gameStateActionResponseObject = JSON.parse(gameStateActionResponse.body);
-            handleGameStateChange(gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value, gameStateActionResponseObject.game);
+            handleGameStateChange(name, gameStateActionResponseObject.player, gameStateActionResponseObject.command, gameStateActionResponseObject.value, gameStateActionResponseObject.game);
         });
 
         // Immediately send a connected action so that we get a response as to which game we may already be in
@@ -23,7 +23,7 @@ module.exports.disconnectWebsocket = function (name) {
     console.log("WEBSOCKET Disconnected");
 }
         
-var handleGameStateChange = function(player, command, value, game) {
+var handleGameStateChange = function(name, player, command, value, game) {
 	var gameId, gameType, gamePage;
 	if (game != undefined) {
 		gameId = game.gameId;
@@ -33,7 +33,9 @@ var handleGameStateChange = function(player, command, value, game) {
 		gamePage = "index.html";
 	}
 	
-	ensureWeAreOnTheCorrectPage(gamePage);
+	if (name == player) {
+		ensureWeAreOnTheCorrectPage(gamePage);
+	}
 	
 	var result = "I have received a message from " + player + ". Command = " + command + ", value = " + value + ", game = " + gameId + " of type " + gameType;
 	console.log("WEBSOCKET Messsage: " + result);
