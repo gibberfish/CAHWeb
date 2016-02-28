@@ -13,9 +13,6 @@ public class LogoutAction extends Action {
 	protected GameStateChange executeCommand(String sessionId, String player, PlayerAction command) {
         logger.info("Logout [sessionId: " + sessionId +"; name: "+ player + " ]");
         GameStateChange gsc = new GameStateChange();
-        gsc.setPlayer(player);
-        gsc.setCommand(command.getAction());
-        gsc.setValue("Logout Succesful");
         return gsc;
     }
 

@@ -17,6 +17,7 @@ import mindbadger.gameserver.player.PlayerSessions;
 import mindbadger.gameserver.websocket.GameStateChange;
 
 public class ActionTest {
+	private static final String COMMAND = "COMMAND";
 	private static final String PLAYER_NAME = "PLAYER1";
 	private static final String SESSION_ID = "Session1";
 	private static final Integer GAME_ID = 1234;
@@ -52,10 +53,11 @@ public class ActionTest {
 		
 		when(mockSessions.getPlayerForSession(SESSION_ID)).thenReturn(mockPlayer);
 		when(mockPlayer.getName()).thenReturn(PLAYER_NAME);
+		when(mockPlayerAction.getAction()).thenReturn(COMMAND);
 	}
 	
 	@Test
-	public void shouldGetPlayerNameBeforeExecutingCommand () {
+	public void shouldGetPlayerNameAndCommandBeforeExecutingCommand () {
 		// Given
 		when (mockPlayer.getGame()).thenReturn(mockGame);
 		when (mockGame.getGameId()).thenReturn(GAME_ID);
@@ -66,6 +68,7 @@ public class ActionTest {
 		// Then
 		assertEquals (gameStateChange, returnedGameStateChange);
 		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
+		assertEquals (COMMAND, returnedGameStateChange.getCommand());
 		verify(mockSessions).getPlayerForSession(SESSION_ID);
 	}
 	
