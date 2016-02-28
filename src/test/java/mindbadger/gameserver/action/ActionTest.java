@@ -67,7 +67,7 @@ public class ActionTest {
 		
 		// Then
 		assertEquals (gameStateChange, returnedGameStateChange);
-		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
+		assertEquals (mockPlayer, returnedGameStateChange.getPlayer());
 		assertEquals (COMMAND, returnedGameStateChange.getCommand());
 		verify(mockSessions).getPlayerForSession(SESSION_ID);
 	}
@@ -83,7 +83,7 @@ public class ActionTest {
 		
 		// Then
 		assertEquals (gameStateChange, returnedGameStateChange);
-		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
+		assertEquals (mockPlayer, returnedGameStateChange.getPlayer());
 		assertEquals (mockGame, returnedGameStateChange.getGame());
 		verify(mockSessions).getPlayerForSession(SESSION_ID);
 	}
@@ -98,7 +98,7 @@ public class ActionTest {
 		
 		// Then
 		assertEquals (gameStateChange, returnedGameStateChange);
-		assertEquals (PLAYER_NAME, returnedGameStateChange.getPlayer());
+		assertEquals (mockPlayer, returnedGameStateChange.getPlayer());
 		assertNull (returnedGameStateChange.getGame());
 		verify(mockSessions).getPlayerForSession(SESSION_ID);
 	}

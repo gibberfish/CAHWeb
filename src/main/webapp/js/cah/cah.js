@@ -5,7 +5,9 @@ var name = "";
 
 $(function() {
 	name = Cookie.readCookie ("name");
-	Websocket.connectWebsocket(name, handleWebsocketResponseForCahPage);
+	Websocket.connectWebsocket(name, handleWebsocketResponseForCahPage);	
+	
+	
 	
 	$(".my").mouseenter(mouseOverCardInMyHand);
 	$(".my").mouseleave(mouseLeavesCardInMyHand);
@@ -58,7 +60,16 @@ function handleWebsocketResponseForCahPage (gameStateActionResponseObject) {
 		}
 		displayPlayer(i, playerName);
 	}
-    
+
+	if (game.state == 'NEW') {
+		// Show the modal
+		$('#ready-modal').modal({
+			show: true,
+			backdrop: 'static',
+			keyboard: false
+		});
+	}
+	
     var result = "I have received a message from " + player + ". Command = " + command + ", game = " + game;
 	console.log("WEBSOCKET Messsage on CAH Page: " + result);
 }

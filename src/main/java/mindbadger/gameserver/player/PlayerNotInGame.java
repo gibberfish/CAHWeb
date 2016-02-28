@@ -1,5 +1,7 @@
 package mindbadger.gameserver.player;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import mindbadger.gameserver.game.Game;
 
 public class PlayerNotInGame implements Player {
@@ -26,6 +28,7 @@ public class PlayerNotInGame implements Player {
 		this.game = game;
 	}
 
+	@JsonIgnore
 	@Override
 	public Player getRootPlayer() {
 		return this;

@@ -1,17 +1,18 @@
 package mindbadger.gameserver.websocket;
 
 import mindbadger.gameserver.game.Game;
+import mindbadger.gameserver.player.Player;
 
 public class GameStateChange {
     
-	private String player;
+	private Player player;
 	private String command;
 	private Game game;
 	
-	public String getPlayer() {
+	public Player getPlayer() {
 		return player;
 	}
-	public void setPlayer(String player) {
+	public void setPlayer(Player player) {
 		this.player = player;
 	}
 	public String getCommand() {

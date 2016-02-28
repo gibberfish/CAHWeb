@@ -19,7 +19,7 @@ public abstract class Action {
 		String playerNameForSession = player.getName();
 		GameStateChange commandResults = executeCommand(sessionId, playerNameForSession, command);
 		
-		commandResults.setPlayer(playerNameForSession);
+		commandResults.setPlayer(player);
 		commandResults.setCommand(command.getAction());
 		Game game = player.getGame();
 		logger.info("Action has set player name " + playerNameForSession + " onto the game state change.");

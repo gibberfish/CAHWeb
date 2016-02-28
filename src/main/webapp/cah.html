@@ -4,7 +4,7 @@
 		<title>Cards Against Humanity</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
+		<link rel="stylesheet" type="text/css" href="css\bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="css\cah.css"/>
 	</head>
 	<body>
@@ -62,6 +62,24 @@
 			<!-- preload the images -->
 			<div style='display:none'>
 				<img src='img/x.png' alt='' />
+			</div>
+		</div>
+
+
+
+		<div class="modal fade" id="ready-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+			<div class="modal-dialog">
+				<div class="readymodal-container">
+					<h2>Please confirm you are ready to play.</h2>
+					<h3>(if you are waiting for other players to join, please don't click ready until they join)</h3>
+					<form class="form-horizontal" role="form">
+					  <div class="form-group"> 
+						<div class="col-sm-12">
+						  <input type="submit" id="ready" name="ready" class="readymodal-submit" value="Ready">
+						</div>
+					  </div>
+					</form>
+				</div>
 			</div>
 		</div>
 		

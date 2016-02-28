@@ -1,9 +1,12 @@
 package mindbadger.gameserver.player;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import mindbadger.gameserver.game.Game;
 
 public abstract class PlayerInGame implements Player {
 
+	@JsonIgnore
 	private Player playerNotInGame;
 	private PlayerState playerState;
 	
