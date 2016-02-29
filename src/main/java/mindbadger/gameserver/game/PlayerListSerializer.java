@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import mindbadger.gameserver.player.Player;
+import mindbadger.gameserver.player.PlayerState;
 
 public class PlayerListSerializer extends JsonSerializer<List<Player>> {
     @Override
@@ -18,18 +19,23 @@ public class PlayerListSerializer extends JsonSerializer<List<Player>> {
     	
         final List<SimplePlayer> simplePlayers = new ArrayList<SimplePlayer> ();
         for (final Player player : players) {
-        	simplePlayers.add(new SimplePlayer(player.getName()));                
+        	simplePlayers.add(new SimplePlayer(player.getName(), player.getPlayerState()));
         }
         generator.writeObject(simplePlayers);
     }
     
     static class SimplePlayer {
     	private String name;
-    	SimplePlayer (String name) {
+    	private PlayerState playerState;
+    	SimplePlayer (String name, PlayerState playerState) {
     		this.name = name;
+    		this.playerState = playerState;
     	}
     	public String getName() {
     		return name;
+    	}
+    	public PlayerState getPlayerState () {
+    		return playerState;
     	}
     }
 }

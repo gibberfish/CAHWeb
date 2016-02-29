@@ -71,7 +71,7 @@ public class GameTest {
 		// Given
 		
 		// When
-		objectUnderTest.addPlayerToGame(PLAYER1);
+		Player playerAdded = objectUnderTest.addPlayerToGame(PLAYER1);
 		
 		// Then
 		List<Player> players = objectUnderTest.getPlayers();
@@ -80,5 +80,7 @@ public class GameTest {
 		Player player = players.get(0);
 		assertEquals (PLAYER2, player);
 		assertEquals (objectUnderTest, PLAYER2.getGame());
+		
+		assertEquals (PLAYER2, playerAdded);
 	}
 }

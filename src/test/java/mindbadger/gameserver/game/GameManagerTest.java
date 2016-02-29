@@ -19,6 +19,7 @@ import mindbadger.gameserver.game.GameFactory;
 import mindbadger.gameserver.game.GameManager;
 import mindbadger.gameserver.game.GameType;
 import mindbadger.gameserver.player.Player;
+import mindbadger.gameserver.player.PlayerInGame;
 import mindbadger.gameserver.player.PlayerNotInGame;
 import mindbadger.gameserver.player.PlayerSessions;
 
@@ -39,6 +40,10 @@ public class GameManagerTest {
 	private static final GameType GAME_TYPE_2 = new GameType(TYPE2_ID,TYPE_2_DISPLAY_NAME,TYPE_2_GAME_URL);
 	private static final Player PLAYER1 = new PlayerNotInGame(PLAYER1_NAME);
 	private static final Player PLAYER2 = new PlayerNotInGame(PLAYER2_NAME);
+	private static final Player PLAYER1INGAME = new PlayerInGame(PLAYER1) {
+	};
+	private static final Player PLAYER2INGAME = new PlayerInGame(PLAYER2) {
+	};
 	private static final Integer TYPE1_GAME_1_ID = 1;
 	private static final Integer TYPE1_GAME_2_ID = 2;
 	private static final Integer TYPE2_GAME_1_ID = 2;
@@ -85,6 +90,9 @@ public class GameManagerTest {
 		objectUnderTest.players = mockPlayerSessions;
 		objectUnderTest.gameFactorys = gameFactorys;
 		
+		when (mockType1Game1.addPlayerToGame(PLAYER1)).thenReturn(PLAYER1INGAME);
+		when (mockType1Game2.addPlayerToGame(PLAYER2)).thenReturn(PLAYER2INGAME);
+		when (mockType2Game1.addPlayerToGame(PLAYER2)).thenReturn(PLAYER2INGAME);
 	}
 	
 	@Test
@@ -141,6 +149,8 @@ public class GameManagerTest {
 		assertEquals (mockType1Game1, newGame);
 		verify(mockType1Game1).addPlayerToGame(PLAYER1);
 		assertEquals(newGame, PLAYER1.getGame());
+		
+		verify (mockPlayerSessions).replacePlayerNotInGameWithGameSpecificPlayer(PLAYER1INGAME);
 	}
 
 	@Test
@@ -172,7 +182,10 @@ public class GameManagerTest {
 		Game secondNewGame = gamesOfType1.get(1);
 		assertEquals (mockType1Game2, secondNewGame);
 		verify(mockType1Game2).addPlayerToGame(PLAYER2);
-		assertEquals(secondNewGame, PLAYER2.getGame());		
+		assertEquals(secondNewGame, PLAYER2.getGame());
+		
+		verify (mockPlayerSessions).replacePlayerNotInGameWithGameSpecificPlayer(PLAYER1INGAME);
+		verify (mockPlayerSessions).replacePlayerNotInGameWithGameSpecificPlayer(PLAYER2INGAME);
 	}
 
 	@Test
@@ -204,7 +217,10 @@ public class GameManagerTest {
 		Game secondNewGame = gamesOfType2.get(0);
 		assertEquals (mockType2Game1, secondNewGame);
 		verify(mockType2Game1).addPlayerToGame(PLAYER2);
-		assertEquals(secondNewGame, PLAYER2.getGame());		
+		assertEquals(secondNewGame, PLAYER2.getGame());
+		
+		verify (mockPlayerSessions).replacePlayerNotInGameWithGameSpecificPlayer(PLAYER1INGAME);
+		verify (mockPlayerSessions).replacePlayerNotInGameWithGameSpecificPlayer(PLAYER2INGAME);
 	}
 
 	@Test

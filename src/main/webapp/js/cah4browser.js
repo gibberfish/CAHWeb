@@ -2,12 +2,17 @@
 
 var Cookie = require('../common/cookie.js');
 var Websocket = require('../websocket/websocket.js');
+var Ajax = require('../cah/cahAjax.js');
 var name = "";
 
 $(function() {
 	name = Cookie.readCookie ("name");
 	Websocket.connectWebsocket(name, handleWebsocketResponseForCahPage);	
 	
+	$("#ready").click (function () {
+		Ajax.playerReady(name, playerIsReady);		
+		//TODO OR SHOULD WE USE A WEBSOCKET ACTION HERE???
+	});
 	
 	
 	$(".my").mouseenter(mouseOverCardInMyHand);
@@ -15,6 +20,17 @@ $(function() {
 	
 	$(".btn").click(popupModal);
 });
+
+function playerIsReady () {
+	console.log("Player ready");
+	$('#ready-modal').modal({
+		show: false,
+		backdrop: false,
+		keyboard: true
+	});
+}
+
+
 
 function mouseOverCardInMyHand () {
 	$(this).removeClass("in-background");
@@ -47,22 +63,25 @@ function slowOpenDialog (dialog) {
 
 /* **************************** PAGE-SPECIFIC WEBSOCKET RESPONSE HANDLING ******************************* */
 function handleWebsocketResponseForCahPage (gameStateActionResponseObject) {
-	var player = gameStateActionResponseObject.player,
-    command = gameStateActionResponseObject.command,
-    game = gameStateActionResponseObject.game
-    
-    players = game.players;
+	var playerPerformingAction = gameStateActionResponseObject.player,
+    	command = gameStateActionResponseObject.command,
+    	game = gameStateActionResponseObject.game;
+	
+    var	players = game.players;
+    var thisPlayer;
+	
 	console.log("Players: " + JSON.stringify(players));
 	
 	for (var i in players) {
 		var playerName = players[i].name;
 		if (players[i].name == name) {
 			playerName += " (me)";
+			thisPlayer = players[i];
 		}
 		displayPlayer(i, playerName);
 	}
 
-	if (game.state == 'NEW') {
+	if (game.gameState == 'NEW' && thisPlayer.playerState == 'JOINED') {
 		// Show the modal
 		$('#ready-modal').modal({
 			show: true,
@@ -71,7 +90,7 @@ function handleWebsocketResponseForCahPage (gameStateActionResponseObject) {
 		});
 	}
 	
-    var result = "I have received a message from " + player + ". Command = " + command + ", game = " + game;
+    var result = "I have received a message from " + playerPerformingAction + ". Command = " + command + ", game = " + game;
 	console.log("WEBSOCKET Messsage on CAH Page: " + result);
 }
 
@@ -91,7 +110,17 @@ function displayPlayer (index, player) {
 	playerTab.addClass('active');
 }
 
-},{"../common/cookie.js":2,"../websocket/websocket.js":3}],2:[function(require,module,exports){
+},{"../cah/cahAjax.js":2,"../common/cookie.js":3,"../websocket/websocket.js":4}],2:[function(require,module,exports){
+
+module.exports.playerReady = function (name, successFunction) {
+	$.post({
+		url: "/player/ready",
+		data: {player: name},
+		success: successFunction
+	});
+}
+
+},{}],3:[function(require,module,exports){
 
 module.exports.readCookie = function (cookieName) {
 	var name = cookieName + "=";
@@ -111,7 +140,7 @@ module.exports.writeCookie = function (cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + "; " + expires;
 }
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var socket = new SockJS('/gameserver');
 var stompClient = Stomp.over(socket);
 
@@ -151,7 +180,7 @@ var handleGameStateChange = function(name, gameStateActionResponseObject, functi
 		gamePage = "index.html";
 	}
 	
-	if (name == player) {
+	if (name == player.name) {
 		ensureWeAreOnTheCorrectPage(gamePage);
 	}
 	

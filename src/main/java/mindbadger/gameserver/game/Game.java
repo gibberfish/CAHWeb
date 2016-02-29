@@ -22,11 +22,14 @@ public abstract class Game {
 		this.gameState = GameState.NEW;
 	}
 
-	public void addPlayerToGame (Player player) {
+	public Player addPlayerToGame (Player player) {
 		if (player != null) {
 			Player gameSpecificPlayer = createGameSpecificPlayer(player);
 			gameSpecificPlayer.setGame(this);
 			this.players.add(gameSpecificPlayer);
+			return gameSpecificPlayer;
+		} else {
+			return player;
 		}
 	}
 	

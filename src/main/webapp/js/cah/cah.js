@@ -1,12 +1,17 @@
 
 var Cookie = require('../common/cookie.js');
 var Websocket = require('../websocket/websocket.js');
+var Ajax = require('../cah/cahAjax.js');
 var name = "";
 
 $(function() {
 	name = Cookie.readCookie ("name");
 	Websocket.connectWebsocket(name, handleWebsocketResponseForCahPage);	
 	
+	$("#ready").click (function () {
+		Ajax.playerReady(name, playerIsReady);		
+		//TODO OR SHOULD WE USE A WEBSOCKET ACTION HERE???
+	});
 	
 	
 	$(".my").mouseenter(mouseOverCardInMyHand);
@@ -14,6 +19,17 @@ $(function() {
 	
 	$(".btn").click(popupModal);
 });
+
+function playerIsReady () {
+	console.log("Player ready");
+	$('#ready-modal').modal({
+		show: false,
+		backdrop: false,
+		keyboard: true
+	});
+}
+
+
 
 function mouseOverCardInMyHand () {
 	$(this).removeClass("in-background");
@@ -46,22 +62,25 @@ function slowOpenDialog (dialog) {
 
 /* **************************** PAGE-SPECIFIC WEBSOCKET RESPONSE HANDLING ******************************* */
 function handleWebsocketResponseForCahPage (gameStateActionResponseObject) {
-	var player = gameStateActionResponseObject.player,
-    command = gameStateActionResponseObject.command,
-    game = gameStateActionResponseObject.game
-    
-    players = game.players;
+	var playerPerformingAction = gameStateActionResponseObject.player,
+    	command = gameStateActionResponseObject.command,
+    	game = gameStateActionResponseObject.game;
+	
+    var	players = game.players;
+    var thisPlayer;
+	
 	console.log("Players: " + JSON.stringify(players));
 	
 	for (var i in players) {
 		var playerName = players[i].name;
 		if (players[i].name == name) {
 			playerName += " (me)";
+			thisPlayer = players[i];
 		}
 		displayPlayer(i, playerName);
 	}
 
-	if (game.state == 'NEW') {
+	if (game.gameState == 'NEW' && thisPlayer.playerState == 'JOINED') {
 		// Show the modal
 		$('#ready-modal').modal({
 			show: true,
@@ -70,7 +89,7 @@ function handleWebsocketResponseForCahPage (gameStateActionResponseObject) {
 		});
 	}
 	
-    var result = "I have received a message from " + player + ". Command = " + command + ", game = " + game;
+    var result = "I have received a message from " + playerPerformingAction + ". Command = " + command + ", game = " + game;
 	console.log("WEBSOCKET Messsage on CAH Page: " + result);
 }
 

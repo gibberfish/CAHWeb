@@ -48,8 +48,9 @@ public class GameManager {
 			nextGameId++;
 			
 			Player player = players.getPlayer(playerName);
-			newGame.addPlayerToGame(player);
-			player.setGame(newGame);
+			Player gameSpecificPlayer = newGame.addPlayerToGame(player);
+			gameSpecificPlayer.setGame(newGame);
+			players.replacePlayerNotInGameWithGameSpecificPlayer(gameSpecificPlayer);
 			
 			List<Game> gamesForThisType = gamesForType.get(gameType);
 			if (gamesForThisType == null) {

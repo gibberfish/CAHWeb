@@ -254,7 +254,7 @@ var handleGameStateChange = function(name, gameStateActionResponseObject, functi
 		gamePage = "index.html";
 	}
 	
-	if (name == player) {
+	if (name == player.name) {
 		ensureWeAreOnTheCorrectPage(gamePage);
 	}
 	

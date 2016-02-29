@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import mindbadger.gameserver.game.Game;
 import mindbadger.gameserver.game.GameManager;
+import mindbadger.gameserver.game.GameType;
+import mindbadger.gameserver.player.Player;
 import mindbadger.gameserver.player.PlayerSessions;
 
 @RestController
-public class GamesForTypeService {
-	final static Logger logger = Logger.getLogger(GamesForTypeService.class);
+public class GameService {
+	final static Logger logger = Logger.getLogger(GameService.class);
 	
 	@Autowired
 	PlayerSessions players;
@@ -30,13 +32,17 @@ public class GamesForTypeService {
 		return gameManager.getGamesForType(gameType);
     }
 	
+	//TODO Take logic out of this service and add to a new method in the game manager
 	@RequestMapping(value="/game/addPlayerToExistingGame", method=RequestMethod.POST)
     public void addPlayerToExistingGame(@RequestParam(value="gameId") String gameId, @RequestParam(value="player") String player) {
 		logger.info("addPlayerToExistingGame, gameId: " + gameId + ", player: " + player);
 		Game game = gameManager.getGameForId(Integer.parseInt(gameId));
 		logger.info("..got game: " + game);
 		if (game != null) {
-			game.addPlayerToGame(players.getPlayer(player));
+			Player playerInGame = game.addPlayerToGame(players.getPlayer(player));
+			playerInGame.setGame(game);
+			players.replacePlayerNotInGameWithGameSpecificPlayer(playerInGame);
+
 		}
     }
 
@@ -44,5 +50,10 @@ public class GamesForTypeService {
     public void addPlayerToNewGame(@RequestParam(value="gameType") String gameType, @RequestParam(value="player") String player) {
 		logger.info("addPlayerToNewGame, gameType: " + gameType + ", player: " + player);
 		gameManager.createNewGameAndAddFirstPlayer(gameType, player);
+    }
+	
+	@RequestMapping(value="/game/type/getAll", method=RequestMethod.GET)
+    public @ResponseBody List<GameType> getGameTypes() {
+        return gameManager.getGameTypes();
     }
 }
