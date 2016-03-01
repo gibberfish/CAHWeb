@@ -30,5 +30,6 @@ public abstract class Action {
 		return commandResults;
 	}
 	
+	//TODO Replace the player action with a Map of command parameters (the concrete action class will already have the type within it) 
 	protected abstract GameStateChange executeCommand (String sessionId, String player, PlayerAction command);
 }

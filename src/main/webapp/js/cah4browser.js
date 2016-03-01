@@ -154,13 +154,17 @@ module.exports.connectWebsocket = function (name, functionToCallOnResponse) {
         });
 
         // Immediately send a connected action so that we get a response as to which game we may already be in
-        sendCommandToGame("login", name);
+        var map = new Object();
+        map["name"] = name;
+        sendCommandToGame("login", map);
     });
 }
 
 module.exports.disconnectWebsocket = function (name) {
     if (stompClient != null) {
-    	sendCommandToGame("logout", name);
+        var map = new Object();
+        map["name"] = name;
+    	sendCommandToGame("logout", map);
         stompClient.disconnect();
     }
     console.log("WEBSOCKET Disconnected");
@@ -188,8 +192,9 @@ var handleGameStateChange = function(name, gameStateActionResponseObject, functi
 }
 module.exports.handleGameStateChange = handleGameStateChange;
 
-var sendCommandToGame = function(command, value) {
-    stompClient.send("/cah/gameserver", {}, JSON.stringify({ 'action': command, 'value': value }));
+//TODO Change value to be a map of key-value pairs for the command
+var sendCommandToGame = function(command, map) {
+    stompClient.send("/cah/gameserver", {}, JSON.stringify({ 'action': command, 'parameters': map }));
 }
 module.exports.sendCommandToGame = sendCommandToGame;
 

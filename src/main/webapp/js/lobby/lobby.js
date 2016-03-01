@@ -87,11 +87,15 @@ function displayGamesForType (data) {
 
 function newPlayerAddedToGame () {
 	console.log("Added New Player to New Game");
-	Websocket.sendCommandToGame("createGame", name);
+	var map = new Object();
+    map["name"] = name;
+	Websocket.sendCommandToGame("createGame", map);
 }
 
 function newPlayerAddedToExistingGame () {
 	console.log("Added New Player to Existing Game");
+	var map = new Object();
+    map["name"] = name;
 	Websocket.sendCommandToGame("joinGame", name);
 }
 /* **************************** DIRECT HTML GENERATION ******************************* */
